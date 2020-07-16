@@ -1,7 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="w-full">
     <Header />
-    <Hero title="Getting started" />
+    <Hero
+      title="Getting Started"
+      msg="Get started with Microsoft internal content tools."
+    />
     <Tabs />
     <TabPanels />
     <Footer />
