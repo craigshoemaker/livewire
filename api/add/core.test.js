@@ -17,3 +17,15 @@ test("createResource should create data object from GitHub URL", async () => {
   };
   expect(resource).toEqual(expected);
 });
+
+test("isGitHub URL validates GitHub URLs", async () => {
+  const url = "https://github.com/craigshoemaker/livewire";
+  const isMatch = core.isGitHubUrl(url);
+  expect(isMatch).toBeTruthy();
+});
+
+test("isGitHub URL does not validate non-GitHub URLs", async () => {
+  const url = "https://gitlab.com/craigshoemaker/livewire";
+  const isMatch = core.isGitHubUrl(url);
+  expect(isMatch).toBeFalsy();
+});

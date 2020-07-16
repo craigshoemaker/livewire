@@ -5,3 +5,13 @@ content-type: application/json
 {
     "url": "https://github.com/craigshoemaker/livewire"
 }
+
+###
+
+# Tests response when non-GitHub URL is provided
+POST http://localhost:7071/api/add HTTP/1.1
+content-type: application/json
+
+{
+    "url": "https://example.com/craigshoemaker/livewire"
+}

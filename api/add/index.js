@@ -1,10 +1,17 @@
-const { createResource } = require("./core");
+const { createResource, isGitHubUrl } = require("./core");
 const params = require("../modules/params");
 
 module.exports = async function (context, req) {
-  context.bindings.tableBinding = [];
   const url = params.get(req, "url");
-  const resource = createResource(url);
-  context.bindings.tableBinding.push(resource);
-  context.done();
+  if (isGitHubUrl(url)) {
+    const resource = createResource(url);
+    context.bindings.tableBinding = [];
+    context.bindings.tableBinding.push(resource);
+    context.done();
+  } else {
+    context.res = {
+      status: 400,
+      body: "A GitHub URL is required.",
+    };
+  }
 };
