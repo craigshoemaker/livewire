@@ -1,6 +1,8 @@
 <template>
-  <footer>
-    Footer
+  <footer class="p-12">
+    <div class="container mx-auto text-center">
+      &copy; Microsoft 2020
+    </div>
   </footer>
 </template>
 
