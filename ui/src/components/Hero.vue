@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto mt-8 mb-8">
-    <h1 class="text-4xl font-semibold">{{ title }}</h1>
-    <p>{{ msg }}</p>
+    <h1 class="text-4xl font-semibold">{{ panels[panel].title }}</h1>
+    <p>{{ panels[panel].description }}</p>
   </div>
 </template>
 
@@ -9,8 +9,8 @@
 export default {
   name: "Hero",
   props: {
-    title: String,
-    msg: String,
+    panel: String,
+    panels: Object,
   },
 };
 </script>

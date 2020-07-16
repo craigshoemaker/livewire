@@ -1,9 +1,24 @@
 <template>
   <div class="container mx-auto">
     <ul class="tabs">
-      <li class="selected">Getting Started</li>
-      <li>Tools</li>
-      <li>VS Code Extensions</li>
+      <li
+        v-bind:class="{ selected: panel === 'getting-started' }"
+        @click="changeTab('getting-started')"
+      >
+        Getting Started
+      </li>
+      <li
+        v-bind:class="{ selected: panel === 'tools' }"
+        @click="changeTab('tools')"
+      >
+        Tools
+      </li>
+      <li
+        v-bind:class="{ selected: panel === 'vscode-extensions' }"
+        @click="changeTab('vscode-extensions')"
+      >
+        VS Code Extensions
+      </li>
     </ul>
   </div>
 </template>
@@ -11,6 +26,13 @@
 <script>
 export default {
   name: "Tabs",
-  props: {},
+  props: {
+    panel: String,
+  },
+  methods: {
+    changeTab(id) {
+      this.$emit("panelChanged", id);
+    },
+  },
 };
 </script>

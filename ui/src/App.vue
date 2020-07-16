@@ -2,11 +2,20 @@
   <div id="app" class="w-full">
     <Header />
     <Hero
-      title="Getting Started"
-      msg="Get started with Microsoft internal content tools."
+      v-bind:panel="selectedPanel"
+      v-bind:panels="panels"
+      v-on:panelChanged="panelChanged($event)"
     />
-    <Tabs />
-    <TabPanels />
+    <Tabs
+      v-bind:panel="selectedPanel"
+      v-bind:panels="panels"
+      v-on:panelChanged="panelChanged($event)"
+    />
+    <TabPanels
+      v-bind:panel="selectedPanel"
+      v-bind:panels="panels"
+      v-on:panelChanged="panelChanged($event)"
+    />
     <Footer />
   </div>
 </template>
@@ -26,6 +35,33 @@ export default {
     Tabs,
     TabPanels,
     Footer,
+  },
+  props: {},
+  data() {
+    return {
+      selectedPanel: "getting-started",
+      panels: {
+        "getting-started": {
+          title: "Getting Started",
+          description: "Get started with Microsoft internal content tools.",
+        },
+        tools: {
+          title: "Tools",
+          description:
+            "Find tools that help keep you productive while writing and managing content.",
+        },
+        "vscode-extensions": {
+          title: "VS Code Extensions",
+          description:
+            "Use a series of VS Code extensions to help author and maintain Microsoft content.",
+        },
+      },
+    };
+  },
+  methods: {
+    panelChanged(e) {
+      this.selectedPanel = e;
+    },
   },
 };
 </script>
