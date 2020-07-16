@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "npm run serve-vue && npm run build-css",
+    "serve-vue": "vue-cli-service serve",
     "build": "npm run build-vue & npm run build-css",
     "build-css": "postcss src/assets/app.css -o dist/css/app.css",
     "build-vue": "vue-cli-service build",
