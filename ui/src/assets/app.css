@@ -1,6 +1,31 @@
 @tailwind base;
 
-/**/
+header {
+  @apply border border-gray-200 mb-2 p-3;
+}
+
+.tabs {
+  border-bottom: 1px solid #f2f2f2;
+  padding-bottom: 5px;
+}
+
+.tabs li {
+  display: inline;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.tabs li:hover {
+  background-color: #f2f2f2;
+}
+
+.tabs .selected {
+  border-left: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
+  border-top: 3px solid #0065b3;
+  border-bottom: 1px solid #fff;
+  background-color: #fff;
+}
 
 @tailwind components;
 @tailwind utilities;
