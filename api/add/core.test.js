@@ -7,6 +7,26 @@ test("getKeyByURL should extract key from GitHub URL", async () => {
   expect(key).toBe(expected);
 });
 
+test("getKeyByURL should extract key from VS Code marketplace URL", async () => {
+  const url =
+    "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack";
+  const key = core.getKeyByUrl(url);
+  const expected = "docsmsft.docs-authoring-pack";
+  expect(key).toBe(expected);
+});
+
+test("createResource should create data object from GitHub URL", async () => {
+  const url =
+    "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack";
+  const resource = core.createResource(url);
+  const expected = {
+    PartitionKey: "extension",
+    RowKey: "docsmsft.docs-authoring-pack",
+    url: url,
+  };
+  expect(resource).toEqual(expected);
+});
+
 test("createResource should create data object from GitHub URL", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
   const resource = core.createResource(url);

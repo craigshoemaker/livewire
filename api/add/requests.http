@@ -8,7 +8,17 @@ content-type: application/json
 
 ###
 
-# Tests response when non-GitHub URL is provided
+# Tests response when marketplace URL is provided
+POST http://localhost:7071/api/add HTTP/1.1
+content-type: application/json
+
+{
+    "url": "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack"
+}
+
+###
+
+# Tests response when unsupported URL is provided
 POST http://localhost:7071/api/add HTTP/1.1
 content-type: application/json
 
