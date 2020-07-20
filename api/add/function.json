@@ -8,13 +8,6 @@
       "methods": ["post"]
     },
     {
-      "tableName": "resources",
-      "connection": "STORAGE_CONNECTION_STRING",
-      "name": "tableBinding",
-      "type": "table",
-      "direction": "out"
-    },
-    {
       "type": "http",
       "direction": "out",
       "name": "res"
