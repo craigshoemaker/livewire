@@ -2,7 +2,7 @@ const { get, add, remove } = require("./resourcesData");
 const { v4: uuid } = require("uuid");
 
 test("get() returns resource based on PartitionKey and RowKey values", async () => {
-  const resource = await get("repository", "livewire");
+  const resource = await get("repository", "craigshoemaker-livewire");
   expect(resource.url._).toBe("https://github.com/craigshoemaker/livewire");
 });
 
