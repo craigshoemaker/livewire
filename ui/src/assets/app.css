@@ -36,5 +36,38 @@ footer {
   background-color: #e3e3e3;
 }
 
+button.action {
+  background-color: #2ea44f;
+  @apply text-white rounded-md text-sm p-2;
+}
+
+input:focus,
+button:focus {
+  outline: 0;
+}
+
+.fadeout-5sec-delay {
+  -webkit-animation: 1s ease 5s normal forwards 1 fadeout;
+  animation: 1s ease 5s normal forwards 1 fadeout;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;

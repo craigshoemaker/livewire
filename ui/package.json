@@ -13,6 +13,7 @@
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "autoprefixer": "^9.8.5",
+    "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6",
