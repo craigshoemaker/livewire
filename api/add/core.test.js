@@ -1,13 +1,13 @@
 const core = require("./core");
 
-test("getKeyByURL should extract key from GitHub URL", async () => {
+test("getKeyByURL() should extract key from GitHub URL", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
   const key = core.getKeyByUrl(url);
   const expected = "craigshoemaker-livewire";
   expect(key).toBe(expected);
 });
 
-test("getKeyByURL should extract key from VS Code marketplace URL", async () => {
+test("getKeyByURL() should extract key from VS Code marketplace URL", async () => {
   const url =
     "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack";
   const key = core.getKeyByUrl(url);
@@ -15,7 +15,7 @@ test("getKeyByURL should extract key from VS Code marketplace URL", async () => 
   expect(key).toBe(expected);
 });
 
-test("createResource should create data object from GitHub URL", async () => {
+test("createResource() should create data object from GitHub URL", async () => {
   const url =
     "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack";
   const resource = core.createResource(url);
@@ -27,7 +27,7 @@ test("createResource should create data object from GitHub URL", async () => {
   expect(resource).toEqual(expected);
 });
 
-test("createResource should create data object from GitHub URL", async () => {
+test("createResource() should create data object from GitHub URL", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
   const resource = core.createResource(url);
   const expected = {
@@ -38,14 +38,16 @@ test("createResource should create data object from GitHub URL", async () => {
   expect(resource).toEqual(expected);
 });
 
-test("isGitHub URL validates GitHub URLs", async () => {
+test("isGitHubURL() validates GitHub URLs", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
   const isMatch = core.isGitHubUrl(url);
   expect(isMatch).toBeTruthy();
 });
 
-test("isGitHub URL does not validate non-GitHub URLs", async () => {
+test("isGitHubURL() does not validate non-GitHub URLs", async () => {
   const url = "https://gitlab.com/craigshoemaker/livewire";
   const isMatch = core.isGitHubUrl(url);
   expect(isMatch).toBeFalsy();
 });
+
+test();
