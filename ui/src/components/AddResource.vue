@@ -3,20 +3,41 @@
     <div class="w-3/4 text-right pr-3">
       <input
         type="text"
-        v-if="showSearchBox"
         v-model="url"
+        v-if="showExtensionUrlBox"
         class="w-full border rounded-md p-1 shadow-sm"
-        placeholder="GitHub or VS Code Marketplace URL"
+        placeholder="VS Code Marketplace URL"
       />
+      <span v-if="showGitHubUrlBox">
+        <input
+          type="text"
+          v-model="url"
+          class="w-3/5 border rounded-md p-1 shadow-sm"
+          placeholder="GitHub repository URL"
+        />
+        <input
+          type="text"
+          v-model="branch"
+          class="w-1/5 border rounded-md p-1 shadow-sm"
+          placeholder="branch name"
+        />
+      </span>
       <span
-        v-if="showMessage"
+        v-if="message.length > 0"
+        :class="message.length > 0 ? 'fadeout-5sec-delay' : ''"
         class="inline-block mt-1 text-gray-500"
-        :class="showMessage ? 'fadeout-5sec-delay' : ''"
       >{{ message }}</span>
     </div>
     <div class="w-1/4">
       <button class="action" v-if="showAddButton" @click="add()">Add</button>
-      <button class="action" v-if="showSubmitButton" @click="submit()">Submit</button>
+      <span v-if="showDecisionButtons">
+        <button class="link" @click="repo()">Repository</button> |
+        <button class="link" @click="extension()">Extension</button>
+      </span>
+      <span v-if="showSubmitButton">
+        <button class="action" @click="submit()">Submit</button>
+        <button class="link" @click="cancel()">Cancel</button>
+      </span>
     </div>
   </div>
 </template>
@@ -33,59 +54,105 @@ export default {
   methods: {
     add() {
       this.showAddButton = false;
+      this.showSubmitButton = false;
+      this.showGitHubUrlBox = false;
+      this.showExtensionUrlButton = false;
+      this.showDecisionButtons = true;
+      this.message = "";
+    },
+
+    repo() {
+      this.showDecisionButtons = false;
       this.showSubmitButton = true;
-      this.showSearchBox = true;
-      this.showMessage = false;
+      this.showGitHubUrlBox = true;
+      this.isRepo = true;
+      this.isExtension = false;
     },
+
+    extension() {
+      this.showDecisionButtons = false;
+      this.showSubmitButton = true;
+      this.showExtensionUrlBox = true;
+      this.isExtension = true;
+      this.isRepo = false;
+    },
+
+    cancel() {
+      this.showAddButton = true;
+      this.showSubmitButton = false;
+      this.showGitHubUrlBox = false;
+      this.showExtensionUrlButton = false;
+      this.showExtensionUrlBox = false;
+      this.showDecisionButtons = false;
+      this.message = "";
+    },
+
     isGitHubURL() {
-      return this.url.match(GITHUB_PATTERN);
+      return GITHUB_PATTERN.test(this.url);
     },
+
     isExtensionURL() {
-      return this.url.match(VSCODE_MARKETPLACE_PATTERN);
+      return VSCODE_MARKETPLACE_PATTERN.test(this.url);
     },
+
+    hasBranchName() {
+      return this.branch.length > 0;
+    },
+
     async submit() {
       this.showAddButton = true;
       this.showSubmitButton = false;
-      this.showSearchBox = false;
-      this.showMessage = false;
+      this.showGitHubUrlBox = false;
+      this.showExtensionUrlBox = false;
+
       this.message = "";
 
-      const isValid = this.isGitHubURL() || this.isExtensionURL();
+      const isValidGitHubURL = this.isGitHubURL() && this.hasBranchName();
+      const isValidExtensionURL = this.isExtensionURL();
 
-      if (isValid) {
-        this.showMessage = true;
+      if (this.isRepo && !isValidGitHubURL) {
+        this.message = "Enter a GitHub repository URL and branch name.";
+      } else if (this.isExtension && !isValidExtensionURL) {
+        this.message = "Enter a VS Code extension marketplace URL.";
+      }
 
+      if (this.message.length === 0) {
         try {
+          this.message = "Sending...";
           const response = await api.post("/add", {
-            url: this.url
+            url: this.url,
+            branch: this.branch
           });
 
           if (response.status === 200) {
             this.message = "Added";
+            this.url = "";
+            this.branch = "";
           } else {
             this.message = response.statusText;
           }
         } catch (ex) {
           this.message = ex.message;
         }
-
-        this.showMessage = true;
-      } else {
-        this.message = "Enter a GitHub or VS Code extension marketplace URL.";
-        this.showMessage = true;
       }
 
-      this.url = "";
+      this.isExtension = false;
+      this.isRepo = false;
     }
   },
   data() {
     return {
       url: "",
+      branch: "",
       message: "",
       showAddButton: true,
       showSubmitButton: false,
-      showSearchBox: false,
-      showMessage: false
+      showGitHubUrlBox: false,
+      showExtensionUrlButton: false,
+      showExtensionUrlBox: false,
+      showDecisionButtons: false,
+      isRepo: false,
+      isExtension: false
     };
   }
 };

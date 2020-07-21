@@ -21,7 +21,7 @@ test("getKeyByURL() should extract key from VS Code marketplace URL", async () =
   expect(key).toBe(expected);
 });
 
-test("createResource() should create data object from GitHub URL", async () => {
+test("createResource() should create data object from VS Code marketplace URL", async () => {
   const url =
     "https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-authoring-pack";
   const resource = core.createResource(url);
@@ -35,11 +35,12 @@ test("createResource() should create data object from GitHub URL", async () => {
 
 test("createResource() should create data object from GitHub URL", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
-  const resource = core.createResource(url);
+  const resource = core.createResource(url, "default");
   const expected = {
     PartitionKey: "repository",
     RowKey: "craigshoemaker-livewire",
     url: url,
+    branch: "default",
   };
   expect(resource).toEqual(expected);
 });
@@ -56,13 +57,13 @@ test("isGitHubURL() does not validate non-GitHub URLs", async () => {
   expect(isMatch).toBeFalsy();
 });
 
-test("addUrlIfDoesNotExist() adds a new URL", async () => {
-  const response = await core.addUrlIfDoesNotExist(url);
+test("addUrlIfDoesNotExist() adds a new GitHub URL", async () => {
+  const response = await core.addUrlIfDoesNotExist(url, "default");
   expect(response.status).toBe(200);
 });
 
-test("addUrlIfDoesNotExist() rejects an existing URL", async () => {
-  const response = await core.addUrlIfDoesNotExist(url);
+test("addUrlIfDoesNotExist() rejects an existing GitHub URL", async () => {
+  const response = await core.addUrlIfDoesNotExist(url, "default");
   expect(response.status).toBe(400);
 });
 

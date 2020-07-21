@@ -24,27 +24,52 @@ const _module = {
       : _module.getExtensionKeyByUrl(url);
   },
 
-  createResource: (url) => {
+  createResource: (url, branch) => {
     const isGitHub = _module.isGitHubUrl(url);
+
+    if (isGitHub && !branch) {
+      throw "A branch name is required when adding a GitHub repository.";
+    }
+
     const partitionKey = isGitHub ? "repository" : "extension";
     const rowKey = _module.getKeyByUrl(url);
-    return {
+
+    const value = {
       PartitionKey: partitionKey,
       RowKey: rowKey,
       url: url,
     };
+
+    if (branch) {
+      value.branch = branch;
+    }
+
+    return value;
   },
 
-  isGitHubUrl: (url) => url.match(_module.GITHUB_PATTERN),
+  isGitHubUrl: (url) => _module.GITHUB_PATTERN.test(url),
 
-  isExtensionUrl: (url) => url.match(_module.VSCODE_MARKETPLACE_PATTERN),
+  isExtensionUrl: (url) => _module.VSCODE_MARKETPLACE_PATTERN.test(url),
 
-  addUrlIfDoesNotExist: async (url) => {
+  hasBranch: (name) => name.length > 0,
+
+  addUrlIfDoesNotExist: async (url, branch) => {
     return new Promise(async (resolve, reject) => {
+      const {
+        createResource,
+        isExtensionUrl,
+        isGitHubUrl,
+        hasBranch,
+      } = _module;
+
       const responses = {
         added: {
           status: 200,
           body: "Added",
+        },
+        branchRequired: {
+          status: 400,
+          body: "A branch name is required when adding a GitHub repository.",
         },
         error: {
           status: 500,
@@ -57,17 +82,23 @@ const _module = {
         invalidUrl: {
           status: 400,
           body:
-            "A GitHub repository or Visual Studio Code extension marketplace URL is required.",
+            "A GitHub repository or Visual Studio Code extension marketplace URL and branch name is required.",
         },
       };
 
-      let response = {};
+      let response = null;
 
       try {
-        const { createResource, isExtensionUrl, isGitHubUrl } = _module;
+        if (!(isGitHubUrl(url) || isExtensionUrl(url))) {
+          response = responses.invalidUrl;
+        }
 
-        if (isGitHubUrl(url) || isExtensionUrl(url)) {
-          const resource = createResource(url);
+        if (isGitHubUrl(url) && !hasBranch(branch)) {
+          response = responses.branchRequired;
+        }
+
+        if (!response) {
+          const resource = createResource(url, branch);
           const getResponse = await get(resource.PartitionKey, resource.RowKey);
           const exists = !!getResponse.Timestamp;
 
@@ -81,8 +112,6 @@ const _module = {
           } else {
             response = responses.exists;
           }
-        } else {
-          response = responses.invalidUrl;
         }
 
         resolve(response);

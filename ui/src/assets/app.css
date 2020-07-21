@@ -41,6 +41,11 @@ button.action {
   @apply text-white rounded-md text-sm p-2;
 }
 
+button.link {
+  color: #2b8fe5;
+  @apply text-sm p-2;
+}
+
 input:focus,
 button:focus {
   outline: 0;

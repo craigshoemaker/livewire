@@ -1,9 +1,10 @@
 const { addUrlIfDoesNotExist } = require("./core");
-const params = require("../modules/params");
+const { get } = require("../modules/params");
 
 module.exports = async function (context, req) {
-  const url = params.get(req, "url");
-  const response = await addUrlIfDoesNotExist(url);
+  const url = get(req, "url");
+  const branch = get(req, "branch");
+  const response = await addUrlIfDoesNotExist(url, branch);
   context.res = response;
   context.done();
 };
