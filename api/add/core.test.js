@@ -1,4 +1,10 @@
 const core = require("./core");
+const { remove } = require("../modules/resourcesData");
+const { v4: uuid } = require("uuid");
+
+let id1 = uuid();
+let id2 = uuid();
+const url = `http://github.com/${id1}/${id2}`;
 
 test("getKeyByURL() should extract key from GitHub URL", async () => {
   const url = "https://github.com/craigshoemaker/livewire";
@@ -50,4 +56,22 @@ test("isGitHubURL() does not validate non-GitHub URLs", async () => {
   expect(isMatch).toBeFalsy();
 });
 
-test();
+test("addUrlIfDoesNotExist() adds a new URL", async () => {
+  const response = await core.addUrlIfDoesNotExist(url);
+  expect(response.status).toBe(200);
+});
+
+test("addUrlIfDoesNotExist() rejects an existing URL", async () => {
+  const response = await core.addUrlIfDoesNotExist(url);
+  expect(response.status).toBe(400);
+});
+
+test("addUrlIfDoesNotExist() rejects a URL in the wrong form", async () => {
+  let url = "http://example.com";
+  const response = await core.addUrlIfDoesNotExist(url);
+  expect(response.status).toBe(400);
+});
+
+afterAll(async () => {
+  await remove("repository", `${id1}-${id2}`);
+});
