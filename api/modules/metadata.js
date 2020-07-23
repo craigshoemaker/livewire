@@ -23,7 +23,7 @@ const _module = {
       returnValue = response.data;
     } catch (ex) {
       if (ex.isAxiosError && ex.response.data && /404/.test(ex.response.data)) {
-        throw httpResponses.custom(404, `File not found at: ${readmeURL}`);
+        throw httpResponses.custom(404, `File not found at: ${configURL}`);
       } else {
         throw ex;
       }
