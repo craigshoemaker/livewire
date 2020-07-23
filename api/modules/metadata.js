@@ -1,4 +1,5 @@
 const axios = require("axios").default;
+const httpResponses = require("./httpResponses");
 
 const _module = {
   readmeURL: (url, branch) => {
@@ -31,9 +32,33 @@ const _module = {
   },
 
   getReadme: async (url, branch) => {
-    const readmeURL = _module.readmeURL(url, branch);
-    const response = await axios.get(readmeURL);
-    return response.data;
+    let returnValue = {};
+    let readmeURL;
+
+    try {
+      readmeURL = _module.readmeURL(url, branch);
+      const response = await axios.get(readmeURL);
+      returnValue = response.data;
+    } catch (ex) {
+      if (ex.isAxiosError && ex.response.data && /404/.test(ex.response.data)) {
+        throw httpResponses.custom(404, `File not found at: ${readmeURL}`);
+      } else {
+        throw ex;
+      }
+    }
+
+    return returnValue;
+  },
+
+  extractFromReadme: async (url, branch) => {
+    let json = {};
+    const text = await _module.getReadme(url, branch);
+
+    if (/title/.test(text)) {
+      json = _module.extract(text);
+    }
+
+    return json;
   },
 };
 
