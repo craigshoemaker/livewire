@@ -1,7 +1,7 @@
 const { get, add } = require("../modules/resourcesData");
 const patterns = require("./patterns");
 const httpResponses = require("./httpResponses");
-const { extractFromReadme: getMetadataFromReadme } = require("./metadata");
+const { getConfig } = require("./metadata");
 
 const _module = {
   type: "repository",
@@ -38,14 +38,14 @@ const _module = {
 
           const doesNotExist = !(await exists(pk, rk));
           if (doesNotExist) {
-            const metadata = await getMetadataFromReadme(url, branch);
+            const metadata = await getConfig(url, branch);
 
             if (metadata) {
               resource.title = metadata.title;
               resource.description = metadata.description;
-              resource.categories = metadata.categories;
-              resource.languages = metadata.languages;
-              resource.technologies = metadata.technologies;
+              resource.categories = JSON.stringify(metadata.categories);
+              resource.languages = JSON.stringify(metadata.languages);
+              resource.technologies = JSON.stringify(metadata.technologies);
             }
 
             const addResult = await add(resource);
