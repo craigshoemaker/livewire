@@ -26,6 +26,7 @@ import Hero from "./components/Hero.vue";
 import Tabs from "./components/Tabs.vue";
 import TabPanels from "./components/TabPanels.vue";
 import Footer from "./components/Footer.vue";
+import Resource from "./components/Resource.vue";
 
 export default {
   name: "App",
@@ -34,6 +35,7 @@ export default {
     Hero,
     Tabs,
     TabPanels,
+    Resource,
     Footer,
   },
   props: {},
