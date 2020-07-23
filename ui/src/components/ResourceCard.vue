@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "Resource",
+  name: "ResourceCard",
   props: {
 
   },
