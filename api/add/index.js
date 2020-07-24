@@ -3,12 +3,9 @@ const { get } = require("../modules/params");
 
 module.exports = async function (context, req) {
   try {
-    const url = get(req, "url");
-    const branch = get(req, "branch");
-    const response = await run(url, branch);
-    context.res = response;
+    const $ = (key) => get(req, key);
+    context.res = await run($("url"), $("branch"));
   } catch (ex) {
     context.res = ex;
   }
-  context.done();
 };
