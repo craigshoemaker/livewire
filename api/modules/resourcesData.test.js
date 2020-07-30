@@ -3,12 +3,12 @@ const { v4: uuid } = require("uuid");
 
 test("get() returns resource based on PartitionKey and RowKey values", async () => {
   const resource = await get("repository", "craigshoemaker-livewire");
-  expect(resource.url._).toBe("https://github.com/craigshoemaker/livewire");
+  expect(resource.url).toBe("https://github.com/craigshoemaker/livewire");
 });
 
-test("get() returns empty object if keys do not exist", async () => {
+test("get() returns empty array if keys do not exist", async () => {
   const resource = await get("unknown", "unknown");
-  expect(resource).toEqual({});
+  expect(resource).toEqual([]);
 });
 
 test("add() creates a table record", async () => {
@@ -22,7 +22,7 @@ test("add() creates a table record", async () => {
   await remove(resource.PartitionKey, resource.RowKey);
   expect(response[".metadata"]).toBeTruthy();
   expect(response[".metadata"].etag).toBeTruthy();
-  expect(actual.url._).toBe(resource.url);
+  expect(actual.url).toBe(resource.url);
 });
 
 test("remove() deletes a table record", async () => {
@@ -36,4 +36,8 @@ test("remove() deletes a table record", async () => {
   await add(resource);
   const response = await remove(resource.PartitionKey, resource.RowKey);
   expect(response.isSuccessful).toBeTruthy();
+});
+
+test("get() returns true", async () => {
+  expect(get({})).toBeTruthy();
 });
