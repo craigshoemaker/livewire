@@ -16,7 +16,7 @@ const _module = {
 
   exists: async (partitionKey, rowKey) => {
     const response = await get(partitionKey, rowKey);
-    const exists = !!response.Timestamp;
+    const exists = !!response.data.Timestamp;
     return exists;
   },
 

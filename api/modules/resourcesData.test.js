@@ -1,17 +1,17 @@
 const { get, add, remove } = require("./resourcesData");
 const { v4: uuid } = require("uuid");
 
-test("get() returns resource based on PartitionKey and RowKey values", async () => {
-  const resource = await get("repository", "craigshoemaker-livewire");
-  expect(resource.url).toBe("https://github.com/craigshoemaker/livewire");
+test("get() should return resource based on PartitionKey and RowKey values", async () => {
+  const response = await get("repository", "craigshoemaker-livewire");
+  expect(response.data.url).toBe("https://github.com/craigshoemaker/livewire");
 });
 
-test("get() returns empty array if keys do not exist", async () => {
-  const resource = await get("unknown", "unknown");
-  expect(resource).toEqual([]);
+test("get() should return an empty array if keys do not exist", async () => {
+  const response = await get("unknown", "unknown");
+  expect(response.data).toEqual([]);
 });
 
-test("add() creates a table record", async () => {
+test("add() should create a table record", async () => {
   const resource = {
     PartitionKey: uuid(),
     RowKey: uuid(),
@@ -22,10 +22,10 @@ test("add() creates a table record", async () => {
   await remove(resource.PartitionKey, resource.RowKey);
   expect(response[".metadata"]).toBeTruthy();
   expect(response[".metadata"].etag).toBeTruthy();
-  expect(actual.url).toBe(resource.url);
+  expect(actual.data.url).toBe(resource.url);
 });
 
-test("remove() deletes a table record", async () => {
+test("remove() should delete a table record", async () => {
   const partitionKey = uuid();
   const rowKey = uuid();
   const resource = {
@@ -36,8 +36,4 @@ test("remove() deletes a table record", async () => {
   await add(resource);
   const response = await remove(resource.PartitionKey, resource.RowKey);
   expect(response.isSuccessful).toBeTruthy();
-});
-
-test("get() returns true", async () => {
-  expect(get({})).toBeTruthy();
 });

@@ -1,5 +1,6 @@
 const storage = require("azure-storage");
 const config = require("./config");
+const adapter = require("./dataAdapter");
 
 const dataService = storage.createTableService(
   config.STORAGE_CONNECTION_STRING
@@ -12,18 +13,6 @@ if (!!!process.env.PRODUCTION) {
   TABLE_NAME = `${TABLE_NAME}DEV`;
 }
 
-const flatten = (entry) => {
-  const record = {};
-  for (let prop in entry) {
-    if (entry[prop]["_"]) {
-      record[prop] = entry[prop]["_"];
-    } else {
-      record[prop] = entry[prop];
-    }
-  }
-  return record;
-};
-
 const getData = (query) => {
   return new Promise((resolve, reject) => {
     dataService.queryEntities(TABLE_NAME, query, null, (error, response) => {
@@ -33,14 +22,17 @@ const getData = (query) => {
         let value = [];
         if (response.entries.length === 1) {
           const record = response.entries[0];
-          value = flatten(record);
+          value = adapter.adapt(record);
         } else {
           response.entries.forEach((entry) => {
-            const record = flatten(entry);
+            const record = adapter.adapt(entry);
             value.push(record);
           });
         }
-        resolve(value);
+        resolve({
+          data: value,
+          facets: adapter.facets(),
+        });
       }
     });
   });
