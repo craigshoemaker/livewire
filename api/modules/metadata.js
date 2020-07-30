@@ -1,6 +1,8 @@
 const axios = require("axios").default;
 const httpResponses = require("./httpResponses");
 
+const CONFIG_FILE_NAME = "livewire.config.json";
+
 const _module = {
   getURL: (url, branch) => {
     url = url
@@ -8,7 +10,7 @@ const _module = {
       .replace("//www.", "//")
       .replace("github.com", "raw.githubusercontent.com");
 
-    url = `${url}/${branch}/livewire.config.json`;
+    url = `${url}/${branch}/${CONFIG_FILE_NAME}`;
 
     return url;
   },
@@ -23,7 +25,11 @@ const _module = {
       returnValue = response.data;
     } catch (ex) {
       if (ex.isAxiosError && ex.response.data && /404/.test(ex.response.data)) {
-        throw httpResponses.custom(404, `File not found at: ${configURL}`);
+        throw httpResponses.custom(
+          200,
+          `${CONFIG_FILE_NAME} not found at: ${configURL}`,
+          { innerStatus: 404 }
+        );
       } else {
         throw ex;
       }

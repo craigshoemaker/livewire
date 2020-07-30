@@ -1,6 +1,10 @@
 <template>
   <div class="flex flex-row pt-2">
-    <div class="w-3/4 text-right pr-3">
+    <div class="w-4/5 text-right pr-3">
+      <span v-if="showDecisionButtons">
+        <button class="link" @click="repo()">Repository</button> |
+        <button class="link" @click="extension()">Extension</button>
+      </span>
       <input
         type="text"
         v-model="url"
@@ -28,12 +32,8 @@
         class="inline-block mt-1 text-gray-500"
       >{{ message }}</span>
     </div>
-    <div class="w-1/4">
+    <div class="w-1/5">
       <button class="action" v-if="showAddButton" @click="add()">Add</button>
-      <span v-if="showDecisionButtons">
-        <button class="link" @click="repo()">Repository</button> |
-        <button class="link" @click="extension()">Extension</button>
-      </span>
       <span v-if="showSubmitButton">
         <button class="action" @click="submit()">Submit</button>
         <button class="link" @click="cancel()">Cancel</button>
@@ -121,24 +121,43 @@ export default {
           this.message = "Sending...";
           const response = await api.post("/add", {
             url: this.url,
-            branch: this.branch
+            branch: this.branch,
           });
 
-          if (response.status === 200) {
+          const responseState = {
+            added: response.status === 200 && !response.data.innerStatus,
+            config404:
+              response.status === 200 &&
+              response.data.innerStatus &&
+              response.data.innerStatus === 404,
+            request404: response.status === 404,
+          };
+
+          if (responseState.added) {
             this.message = "Added";
             this.url = "";
             this.branch = "";
-          } else {
-            this.message = response.statusText;
+          }
+
+          if (responseState.config404) {
+            this.message = "Repository requires a livewire.config.json file.";
+          }
+
+          if (responseState.request404) {
+            this.message = response.data.message;
           }
         } catch (ex) {
-          this.message = ex.message;
+          if (ex.data && ex.data.message) {
+            this.message = ex.data.message;
+          } else {
+            this.message = ex.message;
+          }
         }
       }
 
       this.isExtension = false;
       this.isRepo = false;
-    }
+    },
   },
   data() {
     return {
@@ -152,8 +171,8 @@ export default {
       showExtensionUrlBox: false,
       showDecisionButtons: false,
       isRepo: false,
-      isExtension: false
+      isExtension: false,
     };
-  }
+  },
 };
 </script>

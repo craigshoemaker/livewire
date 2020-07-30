@@ -64,7 +64,11 @@ const _module = {
           resolve(validationErrorResponse);
         }
       } catch (exception) {
-        reject(exception);
+        if (exception.status === 200) {
+          resolve(exception);
+        } else {
+          reject(exception);
+        }
       }
     });
   },
