@@ -3,6 +3,7 @@
     <div class="container mx-auto">
       <div v-if="panel === 'getting-started'">
         Getting Started
+        <ResourceCard />
       </div>
       <div v-if="panel === 'tools'">
         Tools
@@ -15,8 +16,13 @@
 </template>
 
 <script>
+import ResourceCard from "./ResourceCard.vue";
+
 export default {
   name: "TabPanels",
+  components: { 
+    ResourceCard
+  },
   props: {
     panel: String,
   },

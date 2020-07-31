@@ -74,5 +74,17 @@ button:focus {
   }
 }
 
+.tags div { 
+  @apply mt-2;
+}
+
+.resource-card{
+  @apply w-2/5 border rounded-sm overflow-hidden shadow-md bg-white;
+}
+
+.resource-tag{
+  @apply inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2;
+}
+
 @tailwind components;
 @tailwind utilities;
