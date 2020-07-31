@@ -19,6 +19,7 @@ const getData = (query) => {
       if (error) {
         reject(error);
       } else {
+        adapter.init();
         let value = [];
         if (response.entries.length === 1) {
           const record = response.entries[0];

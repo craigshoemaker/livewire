@@ -1,5 +1,5 @@
 const rules = [];
-const facets = {};
+let facets = {};
 
 const flatten = (obj) => {
   const val = {};
@@ -37,6 +37,8 @@ const deserializeArray = (obj) => {
 rules.push(deserializeArray);
 
 const _module = {
+  init: () => (facets = {}),
+
   adapt: (record) => {
     let value = { ...record };
     rules.forEach((rule) => {
