@@ -1,8 +1,8 @@
-module.exports = async function (context, timer) {
-  var timeStamp = new Date().toISOString();
+const { updateAll } = require("./core");
 
-  if (timer.IsPastDue) {
-    context.log("JavaScript is running late!");
+module.exports = async function (context, timer) {
+  const response = await updateAll();
+  if (response.errorCode) {
+    throw new Error(response.errorCode);
   }
-  context.log("JavaScript timer trigger function ran!", timeStamp);
 };
