@@ -2,6 +2,9 @@ const { get, add } = require("./dataService");
 const patterns = require("../utils/patterns");
 const httpResponses = require("../utils/httpResponses");
 const { getConfig } = require("../metadata");
+const metadata = require("../../modules/metadata");
+const { send } = require("../../modules/messenger");
+const axios = require("axios").default;
 
 const _module = {
   type: "repository",
@@ -71,6 +74,34 @@ const _module = {
         }
       }
     });
+  },
+
+  update: async (url, branch, version, resource) => {
+    const config = await metadata.getConfig(url, branch);
+    const usernameAndRepoNameExpression = /https:\/\/github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)/;
+    const [match, username, repoName] = url.match(
+      usernameAndRepoNameExpression
+    );
+
+    const isChanged = config.version && config.version.toString() !== version;
+    const hasRequiredData = username && repoName;
+
+    if (isChanged && hasRequiredData) {
+      const { data: githubConfig } = await axios.get(
+        `https://api.github.com/repos/${username}/${repoName}`
+      );
+
+      const message = { ...resource, ...config };
+      message.forks = githubConfig.forks_count;
+      message.issues = githubConfig.open_issues_count;
+      message.stars = githubConfig.stargazers_count;
+      message.watchers = githubConfig.watchers_count;
+      message.updated = githubConfig.updated_at;
+
+      await send(message);
+    } else {
+      // No changes to any data.... do nothing
+    }
   },
 
   validate: (url, branch) => {

@@ -1,6 +1,6 @@
-const { updateAll } = require("./core");
+const { run } = require("./core");
 
-test("updateAll() should not return an error code", async () => {
-  const response = await updateAll();
+test("run() should not return an error code", async () => {
+  const response = await run();
   expect(response.success).toBeTruthy();
 });
