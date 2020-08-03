@@ -40,18 +40,34 @@ const getData = (query) => {
 };
 
 const _module = {
-  get: (arg1, arg2) => {
-    if (typeof arg1 === "string") {
-      return _module.getByKey(arg1, arg2);
+  get: (keyOrList, rowKey) => {
+    const isCollectionQuery = !rowKey;
+    if (isCollectionQuery) {
+      return _module.getCollection(keyOrList);
     } else {
-      return _module.getCollection(arg1);
+      return _module.getByKey(keyOrList, rowKey);
     }
   },
 
-  getCollection: (params) => {
+  getCollection: (selectList, where) => {
     return new Promise(async (resolve, reject) => {
       try {
         const query = new storage.TableQuery();
+
+        if (selectList) {
+          query.select(selectList.replace(/ /g, "").split(","));
+        }
+
+        if (where) {
+          const matches = where.match(/([A-Za-z0-9]*) ?\= ?([A-Za-z0-9]*)/);
+          if (matches && matches.length === 3) {
+            const expression = `${matches[1]} eq ?`;
+            query.where(expression, matches[2]);
+          }
+        }
+
+        //.where("PartitionKey eq ?", partitionKey)
+
         const response = await getData(query);
         resolve(response);
       } catch (error) {
