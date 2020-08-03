@@ -1,7 +1,7 @@
-const { get, add } = require("../modules/resourcesData");
-const patterns = require("./patterns");
-const httpResponses = require("./httpResponses");
-const { getConfig } = require("./metadata");
+const { get, add } = require("./resourcesData");
+const patterns = require("../patterns");
+const httpResponses = require("../httpResponses");
+const { getConfig } = require("../metadata");
 
 const _module = {
   type: "repository",

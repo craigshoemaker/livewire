@@ -1,7 +1,7 @@
-const { get, add } = require("../modules/resourcesData");
-const patterns = require("./patterns");
-const httpResponses = require("./httpResponses");
-const { extractFromReadme: getMetadataFromReadme } = require("./metadata");
+const { get, add } = require("./resourcesData");
+const patterns = require("../patterns");
+const httpResponses = require("../httpResponses");
+const { extractFromReadme: getMetadataFromReadme } = require("../metadata");
 
 const _module = {
   type: "extension",
