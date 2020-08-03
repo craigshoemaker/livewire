@@ -6,7 +6,7 @@ const {
 const {
   STORAGE_ACCOUNT_KEY: storageKey,
   STORAGE_ACCOUNT_NAME: accountName,
-} = require("./config");
+} = require("./utils/config");
 
 let QUEUE_NAME = "messages";
 

@@ -1,5 +1,5 @@
 const factory = require("../modules/entities/entityFactory");
-const httpResponses = require("../modules/httpResponses");
+const httpResponses = require("../modules/utils/httpResponses");
 
 const _module = {
   run: async (url, branch) => {

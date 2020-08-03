@@ -1,6 +1,6 @@
 const repository = require("./repository");
 const extension = require("./extension");
-const patterns = require("../patterns");
+const patterns = require("../utils/patterns");
 
 module.exports = {
   create: (url) => {

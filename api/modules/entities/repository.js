@@ -1,6 +1,6 @@
 const { get, add } = require("./dataService");
-const patterns = require("../patterns");
-const httpResponses = require("../httpResponses");
+const patterns = require("../utils/patterns");
+const httpResponses = require("../utils/httpResponses");
 const { getConfig } = require("../metadata");
 
 const _module = {

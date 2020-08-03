@@ -1,5 +1,5 @@
 const storage = require("azure-storage");
-const config = require("../config");
+const config = require("../utils/config");
 const adapter = require("../dataAdapter");
 
 const dataService = storage.createTableService(

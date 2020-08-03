@@ -1,5 +1,5 @@
 const { run } = require("./core");
-const { get } = require("../modules/params");
+const { get } = require("../modules/utils/params");
 
 module.exports = async function (context, req) {
   try {

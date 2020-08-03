@@ -1,5 +1,5 @@
 const axios = require("axios").default;
-const httpResponses = require("./httpResponses");
+const httpResponses = require("./utils/httpResponses");
 
 const CONFIG_FILE_NAME = "livewire.config.json";
 

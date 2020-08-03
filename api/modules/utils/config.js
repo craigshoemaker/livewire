@@ -10,7 +10,7 @@ if (process.env.PRODUCTION) {
   storageAccountName = process.env.STORAGE_ACCOUNT_NAME;
   storageAccountKey = process.env.STORAGE_ACCOUNT_KEY;
 } else {
-  const filePath = join(__dirname, "../local.settings.json");
+  const filePath = join(__dirname, "../../local.settings.json");
   const file = readFileSync(filePath, "utf8");
   const localConfig = JSON.parse(file);
   storageConnectionString = localConfig.Values.STORAGE_CONNECTION_STRING;
