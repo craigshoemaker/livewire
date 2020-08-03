@@ -1,4 +1,4 @@
-const data = require("../modules/entities/resourcesData");
+const data = require("../modules/entities/dataService");
 
 const _module = {
   get: async () => {

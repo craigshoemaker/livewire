@@ -1,4 +1,4 @@
-const factory = require("../modules/entities/resourceFactory");
+const factory = require("../modules/entities/entityFactory");
 const httpResponses = require("../modules/httpResponses");
 
 const _module = {

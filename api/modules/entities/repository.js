@@ -1,16 +1,17 @@
 const { get, add } = require("./dataService");
 const patterns = require("../patterns");
 const httpResponses = require("../httpResponses");
-const { extractFromReadme: getMetadataFromReadme } = require("../metadata");
+const { getConfig } = require("../metadata");
 
 const _module = {
-  type: "extension",
+  type: "repository",
 
-  create: (url) => {
+  create: (url, branch) => {
     return {
-      PartitionKey: "extension",
+      PartitionKey: "repository",
       RowKey: _module.getRowKey(url),
       url: url,
+      branch: branch,
     };
   },
 
@@ -20,23 +21,33 @@ const _module = {
     return exists;
   },
 
-  getRowKey: (url) => url.replace(patterns.VSCODE_MARKETPLACE, ""),
+  getRowKey: (url) => url.replace(patterns.GITHUB, "").replace("/", "-"),
 
-  tryAdd: async (url) => {
+  tryAdd: async (url, branch) => {
     return new Promise(async (resolve, reject) => {
       const { create, exists, validate } = _module;
 
       try {
-        const validationErrorResponse = validate(url);
+        const validationErrorResponse = validate(url, branch);
         const isValid = !!!validationErrorResponse;
 
         if (isValid) {
           let validResponse;
-          const resource = create(url);
+          const resource = create(url, branch);
           const { PartitionKey: pk, RowKey: rk } = resource;
 
           const doesNotExist = !(await exists(pk, rk));
           if (doesNotExist) {
+            const metadata = await getConfig(url, branch);
+
+            if (metadata) {
+              resource.title = metadata.title;
+              resource.description = metadata.description;
+              resource.categories = JSON.stringify(metadata.categories);
+              resource.languages = JSON.stringify(metadata.languages);
+              resource.technologies = JSON.stringify(metadata.technologies);
+            }
+
             const addResult = await add(resource);
 
             if (addResult[".metadata"] && addResult[".metadata"].etag) {
@@ -53,18 +64,26 @@ const _module = {
           resolve(validationErrorResponse);
         }
       } catch (exception) {
-        reject(exception);
+        if (exception.status === 200) {
+          resolve(exception);
+        } else {
+          reject(exception);
+        }
       }
     });
   },
 
-  validate: (url) => {
+  validate: (url, branch) => {
     let returnValue = null;
 
     const messages = [];
 
-    if (!patterns.VSCODE_MARKETPLACE.test(url)) {
-      messages.push("A VS Code marketplace URL is required.");
+    if (!patterns.GITHUB.test(url)) {
+      messages.push("A GitHub repository URL is required.");
+    }
+
+    if (!branch || branch.length === 0) {
+      messages.push("A branch name is required.");
     }
 
     if (messages.length > 0) {

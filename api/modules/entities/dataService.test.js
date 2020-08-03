@@ -1,4 +1,4 @@
-const { get, add, remove } = require("./resourcesData");
+const { get, add, remove } = require("./dataService");
 const { v4: uuid } = require("uuid");
 
 test("get() should return resource based on PartitionKey and RowKey values", async () => {

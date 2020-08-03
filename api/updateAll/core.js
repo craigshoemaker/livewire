@@ -1,4 +1,4 @@
-const dataService = require("../modules/entities/resourcesData");
+const dataService = require("../modules/entities/dataService");
 const metadata = require("../modules/metadata");
 const axios = require("axios").default;
 const { send } = require("../modules/messenger");

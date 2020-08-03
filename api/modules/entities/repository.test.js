@@ -1,5 +1,5 @@
-const resource = require("./repositoryResource");
-const { add, remove } = require("./resourcesData");
+const resource = require("./repository");
+const { add, remove } = require("./dataService");
 
 beforeAll(async () => {
   const value = resource.create("http://github.com/test/test", "default");

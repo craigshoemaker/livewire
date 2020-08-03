@@ -1,13 +1,13 @@
-const repositoryResource = require("./repositoryResource");
-const extensionResource = require("./extensionResource");
+const repository = require("./repository");
+const extension = require("./extension");
 const patterns = require("../patterns");
 
 module.exports = {
   create: (url) => {
     if (patterns.GITHUB.test(url)) {
-      return repositoryResource;
+      return repository;
     } else if (patterns.VSCODE_MARKETPLACE.test(url)) {
-      return extensionResource;
+      return extension;
     } else {
       throw `Unknown resource type based on the url: ${url}`;
     }

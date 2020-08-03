@@ -1,17 +1,16 @@
-const { get, add } = require("./resourcesData");
+const { get, add } = require("./dataService");
 const patterns = require("../patterns");
 const httpResponses = require("../httpResponses");
-const { getConfig } = require("../metadata");
+const { extractFromReadme: getMetadataFromReadme } = require("../metadata");
 
 const _module = {
-  type: "repository",
+  type: "extension",
 
-  create: (url, branch) => {
+  create: (url) => {
     return {
-      PartitionKey: "repository",
+      PartitionKey: "extension",
       RowKey: _module.getRowKey(url),
       url: url,
-      branch: branch,
     };
   },
 
@@ -21,33 +20,23 @@ const _module = {
     return exists;
   },
 
-  getRowKey: (url) => url.replace(patterns.GITHUB, "").replace("/", "-"),
+  getRowKey: (url) => url.replace(patterns.VSCODE_MARKETPLACE, ""),
 
-  tryAdd: async (url, branch) => {
+  tryAdd: async (url) => {
     return new Promise(async (resolve, reject) => {
       const { create, exists, validate } = _module;
 
       try {
-        const validationErrorResponse = validate(url, branch);
+        const validationErrorResponse = validate(url);
         const isValid = !!!validationErrorResponse;
 
         if (isValid) {
           let validResponse;
-          const resource = create(url, branch);
+          const resource = create(url);
           const { PartitionKey: pk, RowKey: rk } = resource;
 
           const doesNotExist = !(await exists(pk, rk));
           if (doesNotExist) {
-            const metadata = await getConfig(url, branch);
-
-            if (metadata) {
-              resource.title = metadata.title;
-              resource.description = metadata.description;
-              resource.categories = JSON.stringify(metadata.categories);
-              resource.languages = JSON.stringify(metadata.languages);
-              resource.technologies = JSON.stringify(metadata.technologies);
-            }
-
             const addResult = await add(resource);
 
             if (addResult[".metadata"] && addResult[".metadata"].etag) {
@@ -64,26 +53,18 @@ const _module = {
           resolve(validationErrorResponse);
         }
       } catch (exception) {
-        if (exception.status === 200) {
-          resolve(exception);
-        } else {
-          reject(exception);
-        }
+        reject(exception);
       }
     });
   },
 
-  validate: (url, branch) => {
+  validate: (url) => {
     let returnValue = null;
 
     const messages = [];
 
-    if (!patterns.GITHUB.test(url)) {
-      messages.push("A GitHub repository URL is required.");
-    }
-
-    if (!branch || branch.length === 0) {
-      messages.push("A branch name is required.");
+    if (!patterns.VSCODE_MARKETPLACE.test(url)) {
+      messages.push("A VS Code marketplace URL is required.");
     }
 
     if (messages.length > 0) {
