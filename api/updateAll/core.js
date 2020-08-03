@@ -7,7 +7,7 @@ const _module = {
   updateAll: async () => {
     const response = await dataService.getCollection(
       null, // select all values
-      "PartitionKey = repository" // where
+      "PartitionKey = repository" // only repository resources
     );
     const { data: resources } = response;
     resources.forEach(async (resource) => {
@@ -31,8 +31,11 @@ const _module = {
         message.watchers = githubConfig.watchers_count;
         message.updated = githubConfig.updated_at;
 
-        const sendResponse = await send(message);
-        console.log();
+        const { errorCode } = await send(message);
+
+        if (errorCode) {
+          throw new Error(errorCode);
+        }
       } else {
         console.log("no changes");
       }
