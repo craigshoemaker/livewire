@@ -27,10 +27,8 @@ const _module = {
   getRowKey: (url) => url.replace(patterns.GITHUB, "").replace("/", "-"),
 
   getUsernameAndRepoName: (url) => {
-    const usernameAndRepoNameExpression = /https:\/\/github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)/;
-    const [match, username, repoName] = url.match(
-      usernameAndRepoNameExpression
-    );
+    const pattern = /https:\/\/github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)/;
+    const [match, username, repoName] = url.match(pattern);
     return { username, repoName };
   },
 
