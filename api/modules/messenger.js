@@ -20,7 +20,11 @@ const _module = {
     const url = `https://${accountName}.queue.core.windows.net`;
     const client = new QueueServiceClient(url, credentials);
     const queue = client.getQueueClient(QUEUE_NAME);
-    const response = await queue.sendMessage(JSON.stringify(message));
+
+    let base64 = Buffer.from(JSON.stringify(message));
+    base64 = base64.toString("base64");
+
+    const response = await queue.sendMessage(base64);
     return response;
   },
 };
