@@ -102,6 +102,8 @@ const _module = {
       message.watchers = githubConfig.watchers_count;
       message.updated = githubConfig.updated_at;
 
+      delete message[".metadata"];
+
       await send(message);
     } else {
       // No changes to data.... do nothing
