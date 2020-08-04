@@ -1,6 +1,6 @@
 
 
-POST http://localhost:7071/api/update HTTP/1.1
+POST http://localhost:7071/api/ping HTTP/1.1
 content-type: application/json
 
 {
