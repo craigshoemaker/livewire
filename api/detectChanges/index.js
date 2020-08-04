@@ -1,4 +1,4 @@
-const { updateAll } = require("./core");
+const { run } = require("./core");
 
 module.exports = async function (context, timer) {
   const response = await run();
