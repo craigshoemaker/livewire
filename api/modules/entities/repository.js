@@ -86,7 +86,7 @@ const _module = {
 
   update: async (url, branch, version, resource) => {
     const config = await metadata.getConfig(url, branch);
-    const { username, repoName } = this.getUsernameAndRepoName(url);
+    const { username, repoName } = _module.getUsernameAndRepoName(url);
 
     const isChanged = config.version && config.version.toString() !== version;
     const hasRequiredData = username && repoName;

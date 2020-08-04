@@ -1,8 +1,8 @@
-const data = require("../modules/entities/dataService");
+const { get } = require("../modules/entities/dataService");
 
 const _module = {
   get: async () => {
-    const response = await data.get();
+    const response = await get();
     return response;
   },
 };
