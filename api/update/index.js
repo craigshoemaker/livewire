@@ -4,8 +4,14 @@ const { get } = require("../modules/utils/params");
 module.exports = async function (context, req) {
   try {
     const $ = (key) => get(req, key);
-    context.res = await run($("url"), $("branch"));
+    await run($("url"), $("branch"));
+    context.res = {
+      body: "success",
+    };
   } catch (ex) {
-    context.res = ex;
+    context.res = {
+      status: 500,
+      body: JSON.stringify(ex),
+    };
   }
 };
