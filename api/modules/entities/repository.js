@@ -26,6 +26,14 @@ const _module = {
 
   getRowKey: (url) => url.replace(patterns.GITHUB, "").replace("/", "-"),
 
+  getUsernameAndRepoName: (url) => {
+    const usernameAndRepoNameExpression = /https:\/\/github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)/;
+    const [match, username, repoName] = url.match(
+      usernameAndRepoNameExpression
+    );
+    return { username, repoName };
+  },
+
   tryAdd: async (url, branch) => {
     return new Promise(async (resolve, reject) => {
       const { create, exists, validate } = _module;
@@ -78,18 +86,14 @@ const _module = {
 
   update: async (url, branch, version, resource) => {
     const config = await metadata.getConfig(url, branch);
-    const usernameAndRepoNameExpression = /https:\/\/github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)/;
-    const [match, username, repoName] = url.match(
-      usernameAndRepoNameExpression
-    );
+    const { username, repoName } = this.getUsernameAndRepoName(url);
 
     const isChanged = config.version && config.version.toString() !== version;
     const hasRequiredData = username && repoName;
 
     if (isChanged && hasRequiredData) {
-      const { data: githubConfig } = await axios.get(
-        `https://api.github.com/repos/${username}/${repoName}`
-      );
+      const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
+      const { data: githubConfig } = await axios.get(apiUrl);
 
       const message = { ...resource, ...config };
       message.forks = githubConfig.forks_count;
@@ -100,7 +104,7 @@ const _module = {
 
       await send(message);
     } else {
-      // No changes to any data.... do nothing
+      // No changes to data.... do nothing
     }
   },
 

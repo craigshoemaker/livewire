@@ -91,6 +91,7 @@ const _module = {
       }
     });
   },
+
   add: (resource) => {
     // TODO: need to support different types (Boolean, Ints), when necessary
 
@@ -109,6 +110,7 @@ const _module = {
       });
     });
   },
+
   remove: (partitionKey, rowKey) => {
     return new Promise((resolve, reject) => {
       const resource = {
