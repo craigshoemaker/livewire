@@ -1,5 +1,5 @@
 const dataService = require("../modules/entities/dataService");
-const { update } = require("../modules/entities/repository");
+const { dispatchChanges } = require("../modules/entities/repository");
 
 const _module = {
   run: async () => {
@@ -13,7 +13,7 @@ const _module = {
         const { data: resources } = response;
         resources.forEach(async (resource) => {
           const { url, branch, version } = resource;
-          await update(url, branch, version, resource);
+          await dispatchChanges(url, branch, version, resource);
         });
         resolve({ success: true });
       } catch (error) {

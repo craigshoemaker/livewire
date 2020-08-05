@@ -82,7 +82,7 @@ const _module = {
     });
   },
 
-  update: async (url, branch, version, resource) => {
+  dispatchChanges: async (url, branch, version, resource) => {
     const config = await metadata.getConfig(url, branch);
     const { username, repoName } = _module.getUsernameAndRepoName(url);
 

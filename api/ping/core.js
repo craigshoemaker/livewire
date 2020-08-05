@@ -1,11 +1,19 @@
-const { update, getRowKey } = require("../modules/entities/repository");
+const {
+  dispatchChanges,
+  getRowKey,
+} = require("../modules/entities/repository");
 const { get } = require("../modules/entities/dataService");
 
 const _module = {
   run: async (url, branch) => {
     const rowKey = getRowKey(url);
     const { data: resource } = await get("repository", rowKey);
-    return await update(url, branch, "livewire.force.update", resource);
+    return await dispatchChanges(
+      url,
+      branch,
+      "livewire.force.update",
+      resource
+    );
   },
 };
 
