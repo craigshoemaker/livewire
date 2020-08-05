@@ -102,9 +102,11 @@ const _module = {
 
       delete message[".metadata"];
 
-      await send(message);
+      return await send(message);
     } else {
-      // No changes to data.... do nothing
+      return {
+        status: "No changes",
+      };
     }
   },
 

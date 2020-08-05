@@ -5,7 +5,7 @@ const _module = {
   run: async (url, branch) => {
     const rowKey = getRowKey(url);
     const { data: resource } = await get("repository", rowKey);
-    await update(url, branch, "livewire.force.update", resource);
+    return await update(url, branch, "livewire.force.update", resource);
   },
 };
 
