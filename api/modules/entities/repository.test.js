@@ -24,7 +24,7 @@ test("create() should return object", async () => {
   expect(value.branch).toBe(branch);
 });
 
-test("exists() should return true if data the database", async () => {
+test("exists() should return true if data is in the database", async () => {
   const exists = await resource.exists("repository", "test-test");
   expect(exists).toBeTruthy();
 });

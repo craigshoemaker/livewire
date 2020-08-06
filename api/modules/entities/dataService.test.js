@@ -2,13 +2,13 @@ const { get, add, remove } = require("./dataService");
 const { v4: uuid } = require("uuid");
 
 test("get() should return resource based on PartitionKey and RowKey values", async () => {
-  const response = await get("repository", "craigshoemaker-livewire");
-  expect(response.data.url).toBe("https://github.com/craigshoemaker/livewire");
+  const entity = await get("repository", "craigshoemaker-livewire");
+  expect(entity.url).toBe("https://github.com/craigshoemaker/livewire");
 });
 
 test("get() should return an empty array if keys do not exist", async () => {
-  const response = await get("unknown", "unknown");
-  expect(response.data).toEqual([]);
+  const entity = await get("unknown", "unknown");
+  expect(entity).toEqual({});
 });
 
 test("add() should create a table record", async () => {
@@ -22,7 +22,7 @@ test("add() should create a table record", async () => {
   await remove(resource.PartitionKey, resource.RowKey);
   expect(response[".metadata"]).toBeTruthy();
   expect(response[".metadata"].etag).toBeTruthy();
-  expect(actual.data.url).toBe(resource.url);
+  expect(actual.url).toBe(resource.url);
 });
 
 test("remove() should delete a table record", async () => {

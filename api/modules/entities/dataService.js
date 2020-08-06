@@ -47,12 +47,12 @@ const patterns = {
 };
 
 const _module = {
-  get: (keyOrList, rowKey) => {
+  get: async (keyOrList, rowKey) => {
     const isCollectionQuery = !rowKey;
     if (isCollectionQuery) {
-      return _module.getCollection(keyOrList);
+      return await _module.getCollection(keyOrList);
     } else {
-      return _module.getByKey(keyOrList, rowKey);
+      return await _module.getByKey(keyOrList, rowKey);
     }
   },
 
@@ -87,7 +87,11 @@ const _module = {
     return new Promise((resolve, reject) => {
       dataService.retrieveEntity(TABLE_NAME, pk, rk, (error, result) => {
         if (error) {
-          reject(error);
+          if (error.code === "ResourceNotFound") {
+            resolve({});
+          } else {
+            reject(error);
+          }
         } else {
           let value;
           if (removeDataProperties) {

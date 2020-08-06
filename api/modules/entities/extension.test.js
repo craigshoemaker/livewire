@@ -27,12 +27,12 @@ test("create() should return object", async () => {
   expect(value.url).toBe(url);
 });
 
-test("exists() should return true if data the database", async () => {
+test("exists() should return true if data is in the database", async () => {
   const exists = await resource.exists("extension", "test");
   expect(exists).toBeTruthy();
 });
 
-test("exists() should return false if data the database", async () => {
+test("exists() should return false if data is not in the database", async () => {
   const exists = await resource.exists("extension", "does-not-exist");
   expect(exists).toBeFalsy();
 });
