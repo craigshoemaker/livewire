@@ -1,4 +1,4 @@
-const { get, add } = require("./dataService");
+const { get, add, update } = require("./dataService");
 const patterns = require("../utils/patterns");
 const httpResponses = require("../utils/httpResponses");
 const { getConfig } = require("../metadata");
@@ -108,6 +108,11 @@ const _module = {
         status: "No changes",
       };
     }
+  },
+
+  update: async (entity) => {
+    const response = await update(entity);
+    return response;
   },
 
   validate: (url, branch) => {

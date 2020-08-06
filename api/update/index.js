@@ -1,3 +1,5 @@
+const { run } = require("./core");
+
 module.exports = async function (context, message) {
-  context.log(message);
+  await run(message);
 };

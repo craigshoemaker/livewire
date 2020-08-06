@@ -1,11 +1,12 @@
 const storage = require("azure-storage");
 const config = require("../utils/config");
 const adapter = require("../dataAdapter");
+const { create } = require("./repository");
 
 const dataService = storage.createTableService(
   config.STORAGE_CONNECTION_STRING
 );
-const gen = storage.TableUtilities.entityGenerator;
+const entityGenerator = storage.TableUtilities.entityGenerator;
 
 let TABLE_NAME = "resources";
 
@@ -37,6 +38,12 @@ const getData = (query) => {
       }
     });
   });
+};
+
+const patterns = {
+  dateTime: /[0-9]{4,4}\-[0-9]{2,2}\-[0-9]{2,2}T([0-9]{2,2}:){2,2}[0-9]{2,2}[Zz]/,
+  int32: /^[0-9]*[^\.]$/,
+  boolean: /true|false/,
 };
 
 const _module = {
@@ -76,36 +83,98 @@ const _module = {
     });
   },
 
-  getByKey: (partitionKey, rowKey) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const query = new storage.TableQuery()
-          .top(1)
-          .where("PartitionKey eq ?", partitionKey)
-          .and("RowKey eq ?", rowKey);
-
-        const result = await getData(query);
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
+  getByKey: (pk, rk, removeDataProperties = true) => {
+    return new Promise((resolve, reject) => {
+      dataService.retrieveEntity(TABLE_NAME, pk, rk, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          let value;
+          if (removeDataProperties) {
+            value = adapter.adapt(result);
+          } else {
+            value = result;
+          }
+          resolve(value);
+        }
+      });
     });
   },
 
-  add: (resource) => {
-    // TODO: need to support different types (Boolean, Ints), when necessary
+  getDTOValue: (value, propName, dateValue) => {
+    let generator, returnValue;
 
-    return new Promise((resolve, reject) => {
-      const dto = {};
-      for (let prop in resource) {
-        dto[prop] = gen.String(resource[prop]);
+    if (dateValue) {
+      value = dateValue.toISOString();
+      generator = entityGenerator.DateTime;
+    } else if (patterns.dateTime.test(value)) {
+      generator = entityGenerator.DateTime;
+    } else if (patterns.int32.test(value)) {
+      value = value.toString();
+      generator = entityGenerator.Int32;
+    } else if (patterns.boolean.test(value)) {
+      generator = entityGenerator.Boolean;
+    } else {
+      generator = entityGenerator.String;
+    }
+
+    returnValue = generator(value);
+
+    if (!/PartitionKey|RowKey|Timestamp/.test(propName)) {
+      delete returnValue.$;
+    }
+
+    return returnValue;
+  },
+
+  // DTO = Data Transfer Object
+  createDTO: (entity) => {
+    const dto = {};
+    const { getDTOValue: getValue, createDTO: create } = _module;
+    for (let prop in entity) {
+      if (/\.metadata/.test(prop)) {
+        dto[prop] = entity[prop]; // do not process
+      } else if (Array.isArray(entity[prop])) {
+        dto[prop] = getValue(JSON.stringify(entity[prop]), prop);
+      } else if (entity[prop].getDate) {
+        dto[prop] = getValue(null, null, entity[prop]);
+      } else if (typeof entity[prop] === "object") {
+        dto[prop] = create(entity[prop], prop);
+      } else {
+        dto[prop] = getValue(entity[prop], prop);
       }
+    }
+    return dto;
+  },
 
+  add: (resource) => {
+    return new Promise((resolve, reject) => {
+      const dto = _module.createDTO(resource);
       dataService.insertEntity(TABLE_NAME, dto, (error, result, response) => {
         if (error) {
           reject(error);
         } else {
           resolve(result);
+        }
+      });
+    });
+  },
+
+  update: (entity) => {
+    return new Promise(async (resolve, reject) => {
+      const { PartitionKey: pk, RowKey: rk } = entity;
+      const { createDTO, getByKey } = _module;
+
+      let current = await getByKey(pk, rk);
+      let merged = { ...current, ...entity };
+      const dto = createDTO(merged);
+
+      dataService.replaceEntity(TABLE_NAME, dto, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          console.log(result);
+          resolve({ message: "success" });
         }
       });
     });
