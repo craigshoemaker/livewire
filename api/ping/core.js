@@ -7,12 +7,12 @@ const { get } = require("../modules/entities/dataService");
 const _module = {
   run: async (url, branch) => {
     const rowKey = getRowKey(url);
-    const { data: resource } = await get("repository", rowKey);
+    const repository = await get("repository", rowKey);
     return await dispatchChanges(
       url,
       branch,
       "livewire.force.update",
-      resource
+      repository
     );
   },
 };
