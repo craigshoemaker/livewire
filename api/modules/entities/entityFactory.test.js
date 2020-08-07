@@ -12,8 +12,3 @@ test("create() should return a extension when given a VS Code marketplace URL", 
   const resource = factory.create(url);
   expect(resource.type).toBe("extension");
 });
-
-// test("create() should should throw an error when given an unexpected URL pattern.", async () => {
-//   const url = "https://example.com";
-//   expect(factory.create(url)).toThrow();
-// });

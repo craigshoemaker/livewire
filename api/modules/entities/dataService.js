@@ -1,7 +1,6 @@
 const storage = require("azure-storage");
 const config = require("../utils/config");
 const adapter = require("../dataAdapter");
-const { create } = require("./repository");
 
 const dataService = storage.createTableService(
   config.STORAGE_CONNECTION_STRING
@@ -10,7 +9,7 @@ const entityGenerator = storage.TableUtilities.entityGenerator;
 
 let TABLE_NAME = "resources";
 
-if (!!!process.env.PRODUCTION) {
+if (!process.env.PRODUCTION) {
   TABLE_NAME = `${TABLE_NAME}DEV`;
 }
 
