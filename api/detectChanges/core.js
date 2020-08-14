@@ -10,8 +10,8 @@ const _module = {
           "PartitionKey = repository" // only "repository" records
         );
 
-        const { data: resources } = response;
-        resources.forEach(async (resource) => {
+        const { repositories } = response;
+        repositories.forEach(async (resource) => {
           const { url, branch, version } = resource;
           await dispatchChanges(url, branch, version, resource);
         });

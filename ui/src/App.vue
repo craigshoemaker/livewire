@@ -26,6 +26,7 @@ import Hero from "./components/Hero.vue";
 import Tabs from "./components/Tabs.vue";
 import TabPanels from "./components/TabPanels.vue";
 import Footer from "./components/Footer.vue";
+import { api } from "./components/api";
 
 export default {
   name: "App",
@@ -37,6 +38,10 @@ export default {
     Footer,
   },
   props: {},
+  async created() {
+    const response = await api.get("/get");
+    this.data = response.data;
+  },
   data() {
     return {
       selectedPanel: "getting-started",
