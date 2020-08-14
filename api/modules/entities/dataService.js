@@ -13,6 +13,12 @@ if (!process.env.PRODUCTION) {
   TABLE_NAME = `${TABLE_NAME}DEV`;
 }
 
+const pluralize = (pk) => {
+  if (/extension/.test(pk)) return "extensions";
+  if (/repository/.test(pk)) return "repositories";
+  throw new Error("Unimplemented PartitionKey value.");
+};
+
 const getData = (query) => {
   return new Promise((resolve, reject) => {
     dataService.queryEntities(TABLE_NAME, query, null, (error, response) => {
@@ -20,20 +26,25 @@ const getData = (query) => {
         reject(error);
       } else {
         adapter.init();
-        let value = [];
+
+        const data = {
+          repositories: [],
+          extensions: [],
+        };
+
         if (response.entries.length === 1) {
-          const record = response.entries[0];
-          value = adapter.adapt(record);
+          let [record] = response.entries;
+          record = adapter.adapt(record);
+          data[pluralize(record.PartitionKey)].push(record);
         } else {
           response.entries.forEach((entry) => {
             const record = adapter.adapt(entry);
-            value.push(record);
+            data[pluralize(record.PartitionKey)].push(record);
           });
         }
-        resolve({
-          data: value,
-          facets: adapter.facets(),
-        });
+
+        data.facets = adapter.facets();
+        resolve(data);
       }
     });
   });
@@ -66,13 +77,12 @@ const _module = {
 
         if (where) {
           const matches = where.match(/([A-Za-z0-9]*) ?\= ?([A-Za-z0-9]*)/);
-          if (matches && matches.length === 3) {
-            const expression = `${matches[1]} eq ?`;
-            query.where(expression, matches[2]);
+          const [match, propName, value] = matches;
+          if (propName && value) {
+            const expression = `${propName} eq ?`;
+            query.where(expression, value);
           }
         }
-
-        //.where("PartitionKey eq ?", partitionKey)
 
         const response = await getData(query);
         resolve(response);
