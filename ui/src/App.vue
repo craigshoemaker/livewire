@@ -1,20 +1,13 @@
 <template>
   <div id="app" class="w-full">
     <Header />
-    <Hero
-      v-bind:panel="selectedPanel"
-      v-bind:panels="panels"
-      v-on:panelChanged="panelChanged($event)"
-    />
-    <Tabs
-      v-bind:panel="selectedPanel"
-      v-bind:panels="panels"
-      v-on:panelChanged="panelChanged($event)"
-    />
+    <Hero :panel="selectedPanel" :panels="panels" @panelChanged="panelChanged($event)" />
+    <Tabs :panel="selectedPanel" :panels="panels" @panelChanged="panelChanged($event)" />
     <TabPanels
-      v-bind:panel="selectedPanel"
-      v-bind:panels="panels"
-      v-on:panelChanged="panelChanged($event)"
+      :panel="selectedPanel"
+      :panels="panels"
+      :data="appData"
+      @panelChanged="panelChanged($event)"
     />
     <Footer />
   </div>
@@ -40,10 +33,11 @@ export default {
   props: {},
   async created() {
     const response = await api.get("/get");
-    this.data = response.data;
+    this.appData = response.data;
   },
   data() {
     return {
+      appData: {},
       selectedPanel: "getting-started",
       panels: {
         "getting-started": {

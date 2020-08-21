@@ -3,22 +3,15 @@ const { dispatchChanges } = require("../modules/entities/repository");
 
 const _module = {
   run: async () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await dataService.getCollection(
-          null, // select all values
-          "PartitionKey = repository" // only "repository" records
-        );
+    const response = await dataService.getCollection(
+      null, // select all values
+      "PartitionKey = repository" // only "repository" records
+    );
 
-        const { repositories } = response;
-        repositories.forEach(async (resource) => {
-          const { url, branch, version } = resource;
-          await dispatchChanges(url, branch, version, resource);
-        });
-        resolve({ success: true });
-      } catch (error) {
-        reject(error);
-      }
+    const { repositories } = response;
+    repositories.forEach(async (resource) => {
+      const { url, branch, version } = resource;
+      await dispatchChanges(url, branch, version, resource);
     });
   },
 };

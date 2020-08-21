@@ -51,6 +51,26 @@ button:focus {
   outline: 0;
 }
 
+/* FilterSetting */
+.filter-setting {
+  background-color: #eee;
+  @apply w-2/5 border p-2 mt-2 mb-2 shadow-xs rounded-sm;
+}
+
+.filter-setting .options {
+  display: block;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.filter-setting .options label {
+  @apply leading-5 cursor-pointer;
+}
+
+.filter-setting .options input["type="checkbox""]:hover {
+  @apply border;
+}
+
 .fadeout-5sec-delay {
   -webkit-animation: 1s ease 5s normal forwards 1 fadeout;
   animation: 1s ease 5s normal forwards 1 fadeout;
@@ -74,15 +94,15 @@ button:focus {
   }
 }
 
-.tags div { 
+.tags div {
   @apply mt-2;
 }
 
-.resource-card{
+.resource-card {
   @apply w-2/5 border rounded-sm overflow-hidden shadow-md bg-white;
 }
 
-.resource-tag{
+.resource-tag {
   @apply inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2;
 }
 
