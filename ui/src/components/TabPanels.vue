@@ -2,28 +2,29 @@
   <div class="tabs-panel-container mt-3 p-8">
     <div class="container mx-auto">
       <div v-if="panel === 'getting-started'">
-        Getting Started
-        <ResourceCard />
+        <GettingStartedPanel :data="data" />
       </div>
       <div v-if="panel === 'tools'">
-        <FilterSetting title="Categories" v-bind:names="data.facets.categories" />
-        <FilterSetting title="Languages" v-bind:names="data.facets.languages" />
-        <FilterSetting title="Technologies" v-bind:names="data.facets.technologies" />
+        <ToolsPanel :data="data" />
       </div>
-      <div v-if="panel === 'vscode-extensions'">VS Code extensions</div>
+      <div v-if="panel === 'vscode-extensions'">
+        <ExtensionsPanel :data="data" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ResourceCard from "./ResourceCard.vue";
-import FilterSetting from "./FilterSetting";
+import GettingStartedPanel from "./panels/GettingStartedPanel";
+import ToolsPanel from "./panels/ToolsPanel";
+import ExtensionsPanel from "./panels/ExtensionsPanel";
 
 export default {
   name: "TabPanels",
   components: {
-    ResourceCard,
-    FilterSetting,
+    ExtensionsPanel,
+    GettingStartedPanel,
+    ToolsPanel,
   },
   props: {
     panel: String,

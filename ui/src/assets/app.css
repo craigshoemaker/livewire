@@ -85,6 +85,10 @@ button:focus {
   }
 }
 
+button.search {
+  background-color: hsl(206deg 100% 28%);
+}
+
 @-webkit-keyframes fadeout {
   0% {
     opacity: 1;
