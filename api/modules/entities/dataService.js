@@ -16,7 +16,7 @@ if (!process.env.PRODUCTION) {
 const pluralize = (pk) => {
   if (/extension/.test(pk)) return "extensions";
   if (/repository/.test(pk)) return "repositories";
-  throw new Error("Unimplemented PartitionKey value.");
+  return pk;
 };
 
 const getData = (query) => {
