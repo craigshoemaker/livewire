@@ -1,11 +1,16 @@
 <template>
-  <div>Extensions Panel</div>
-</template>
+  <div>Extensions Panel
+    <ResourceList />
+  </div>
+  
+</template>   
 
 <script>
+import ResourceList from "../ResourceList";
+
 export default {
   name: "ExtensionsPanels",
-  components: {},
+  components: { ResourceList, },
   props: {
     data: Object,
   },
