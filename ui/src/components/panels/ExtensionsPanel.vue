@@ -1,8 +1,8 @@
 <template>
-  <div>Extensions Panel
-    <ResourceList />
+  <div>
+    Extensions Panel
+    <ResourceList title="Resources" v-bind:resources="data.repositories" />
   </div>
-  
 </template>   
 
 <script>

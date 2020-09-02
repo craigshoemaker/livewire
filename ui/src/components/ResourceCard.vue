@@ -30,7 +30,10 @@
 <script>
 export default {
   name: "ResourceCard",
-  props: {  },
+  props: { 
+    title:String
+   },
+  /*
   data() {
     return {
       title: "Docs Authoring Pack for VS Code",
@@ -41,6 +44,7 @@ export default {
       languages: ["JavaScript","HTML","CSS"],
       technologies: ["Functions", "Node.js","Vue.js"],
     };
-  },  
+  },
+  */  
 };
 </script>

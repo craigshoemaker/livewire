@@ -10,21 +10,28 @@
   </div>
 
   <div class="tags px-6 py-4">
-    <div>
-      <span class="font-semibold">Resource Cards go here:</span> <span class="resource-tag" v-for="category in categories" :key="category">{{category}}</span>
+    <div v-for="resource in resources" :key="resource">
+      <ResourceCard :title="resource.title" />
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import ResourceCard from "../ResourceCard";
+
 export default {
   name: "ResourceList",
-  props: {  },
-  data() {
-    return {
-      
-    };
-  },  
+  components: { ResourceCard},
+  props: { resources : Array },
 };
 </script>
+<!--
+      title: "Docs Authoring Pack for VS Code",
+      url: "url",
+      video: "link",
+      description: "The Docs Authoring Pack is a collection of VS Code extensions to aid with Markdown authoring for docs.microsoft.com",
+      categories: ["Search"],
+      languages: ["JavaScript","HTML","CSS"],
+      technologies: ["Functions", "Node.js","Vue.js"],
+->
