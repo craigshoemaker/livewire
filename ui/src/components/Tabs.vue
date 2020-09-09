@@ -14,8 +14,8 @@
         Tools
       </li>
       <li
-        v-bind:class="{ selected: panel === 'vscode-extensions' }"
-        @click="changeTab('vscode-extensions')"
+        v-bind:class="{ selected: panel === 'extensions' }"
+        @click="changeTab('extensions')"
       >
         VS Code Extensions
       </li>

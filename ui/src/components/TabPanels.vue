@@ -7,7 +7,7 @@
       <div v-if="panel === 'tools'">
         <ToolsPanel :data="data" />
       </div>
-      <div v-if="panel === 'vscode-extensions'">
+      <div v-if="panel === 'extensions'">
         <ExtensionsPanel :data="data" />
       </div>
     </div>
