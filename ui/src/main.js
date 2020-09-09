@@ -8,14 +8,14 @@ Vue.config.productionTip = false;
 
 Vue.use(VueRouter)
 
-const Foo = { template: '<div></div>' }
+const BlankTemplate = { template: '<div></div>' }
 
 const router = new VueRouter({
   mode: 'history', // use hashless route
   routes: [
-    { path: '/getting-started', name: "getting-started", component: Foo},
-    { path: '/tools', name: "tools", component: Foo},
-    { path: '/extensions', name: "extensions", component: Foo},
+    { path: '/getting-started', name: "getting-started", component: BlankTemplate },
+    { path: '/tools', name: "tools", component: BlankTemplate },
+    { path: '/extensions', name: "extensions", component: BlankTemplate },
     { path: '/', redirect: '/getting-started'},
     { path: "*", redirect: '/getting-started'}
   ]
