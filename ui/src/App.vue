@@ -38,18 +38,18 @@ export default {
   data() {
     return {
       appData: {},
-      selectedPanel: "getting-started",
+      selectedPanel: this.$route.name,
       panels: {
         "getting-started": {
           title: "Getting Started",
           description: "Get started with Microsoft internal content tools.",
         },
-        tools: {
+        "tools": {
           title: "Tools",
           description:
             "Find tools that help keep you productive while writing and managing content.",
         },
-        "vscode-extensions": {
+        "extensions": {
           title: "VS Code Extensions",
           description:
             "Use a series of VS Code extensions to help author and maintain Microsoft content.",
@@ -59,8 +59,14 @@ export default {
   },
   methods: {
     panelChanged(e) {
-      this.selectedPanel = e;
+      this.$router.push(e)
+          .catch(()=>{}); // catch DuplicateNavigation
     },
   },
+  watch: {
+    '$route' (to) {
+      this.selectedPanel = to.name;
+    }
+  }
 };
 </script>
