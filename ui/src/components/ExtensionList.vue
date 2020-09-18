@@ -1,29 +1,29 @@
 <template>
-<div class="resource-list">
+<div class="extension-list">
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2">
-      <a v-bind:href="url" target="_blank">{{title}}</a>
+      <a v-bind:href="url" target="_blank">{{RowKey}}</a>
       </div>
     <p class="text-gray-700 text-base">
-      {{description}}
+      {{url}}
     </p>
   </div>
 
   <div class="tags px-6 py-4">
-    <div v-for="resource in resources" :key="resource">
-      <ResourceCard :title="resource.title" />
+    <div v-for="extension in extensions" :key="extension">
+      <ExtensionCard :title="extension.RowKey" />
     </div>
   </div>
 </div>
 </template>
 
 <script>
-import ResourceCard from "./ResourceCard";
+import ExtensionCard from "./ExtensionCard";
 
 export default {
-  name: "ResourceList",
-  components: { ResourceCard},
-  props: { resources : Array },
+  name: "ExtensionList",
+  components: { ExtensionCard},
+  props: { extensions : Array },
 };
 </script>
 <!--

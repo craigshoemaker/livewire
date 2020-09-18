@@ -1,16 +1,16 @@
 <template>
   <div>
     Extensions Panel
-    <ResourceList title="Resources" v-bind:resources="data.repositories" />
+    <ExtensionList title="Extensions" v-bind:extensions="data.extensions" />
   </div>
 </template>   
 
 <script>
-import ResourceList from "../ResourceList";
+import ExtensionList from "../ExtensionList";
 
 export default {
   name: "ExtensionsPanels",
-  components: { ResourceList, },
+  components: { ExtensionList, },
   props: {
     data: Object,
   },
