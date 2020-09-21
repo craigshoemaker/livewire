@@ -1,6 +1,5 @@
 <template>
   <div>
-    Extensions Panel
     <ExtensionList title="Extensions" v-bind:extensions="data.extensions" />
   </div>
 </template>   

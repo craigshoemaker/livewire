@@ -1,27 +1,14 @@
 <template>
 <div class="extension-card">
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">
-      <a v-bind:href="url" target="_blank">{{title}}</a>
-      </div>
-    <p class="text-gray-700 text-base">
-      {{description}}
-    </p>
-  </div>
-
-  <div class="px-6 py-4">
-    Video Icon
-  </div>
-
-  <div class="tags px-6 py-4">
+    <div class="tags px-6 py-4">
     <div>
-      <span class="font-semibold">RowKey:</span> <span class="extension-tag">{{RowKey}}</span>
+      <span class="font-semibold">RowKey:</span> <span class="extension-tag">{{Extension.RowKey}}</span>
     </div>
     <div>
-      <span class="font-semibold">Timestamp:</span> <span class="extension-tag">{{Timestamp}}</span>
+      <span class="font-semibold">Timestamp:</span> <span class="extension-tag">{{Extension.Timestamp}}</span>
     </div>
     <div>
-      <span class="font-semibold">URL:</span> <span class="extension-tag">{{url}}</span>
+      <span class="font-semibold">URL:</span> <a :href="Extension.url"><span class="extension-tag">{{Extension.url}}</span></a>
     </div>
   </div>
 </div>
@@ -31,9 +18,7 @@
 export default {
   name: "ExtensionCard",
   props: { 
-    RowKey:String,
-    url:String,
-    Timestamp:String,
+    Extension: Object
    },
 
 };

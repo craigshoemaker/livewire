@@ -1,5 +1,7 @@
 <template>
 <div class="extension-list">
+
+    <!--
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2">
       <a v-bind:href="url" target="_blank">{{RowKey}}</a>
@@ -8,10 +10,11 @@
       {{url}}
     </p>
   </div>
+  -->
 
   <div class="tags px-6 py-4">
-    <div v-for="extension in extensions" :key="extension">
-      <ExtensionCard :title="extension.RowKey" />
+    <div :key="extension.id" v-for="extension in extensions">
+      <ExtensionCard v-bind:extension="extension" />
     </div>
   </div>
 </div>
