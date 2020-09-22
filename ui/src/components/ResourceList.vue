@@ -1,17 +1,11 @@
 <template>
 <div class="resource-list">
   <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">
-      <a v-bind:href="url" target="_blank">{{title}}</a>
-      </div>
-    <p class="text-gray-700 text-base">
-      {{description}}
-    </p>
-  </div>
+    <div v-for="resource in resources" :key="resource.RowKey">
 
-  <div class="tags px-6 py-4">
-    <div v-for="resource in resources" :key="resource">
-      <ResourceCard :resource="resource" />
+      <ResourceCard v-if="resource.PartitionKey==='repository'" :resource="resource" />
+      <ExtensionCard v-if="resource.PartitionKey==='extension'" :resource="resource" />
+
     </div>
   </div>
 </div>
@@ -19,10 +13,14 @@
 
 <script>
 import ResourceCard from "./ResourceCard";
+import ExtensionCard from "./ExtensionCard";
 
 export default {
   name: "ResourceList",
-  components: { ResourceCard},
+  components: { 
+    ResourceCard,
+    ExtensionCard
+    },
   props: { resources : Array },
 };
 </script>
