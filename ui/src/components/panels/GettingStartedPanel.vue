@@ -1,16 +1,16 @@
 <template>
   <div>
-    <ResourceList title="Resources" v-bind:resources="data.repositories" />
+    <ResourceCardList title="Resources" v-bind:resources="data.repositories" />
   </div>
 </template>
 
 <script>
-import ResourceList from "../ResourceList";
+import ResourceCardList from "../ResourceCardList";
 
 export default {
   name: "GettingStartedPanel",
   components: {
-    ResourceList,
+    ResourceCardList,
   },
   props: {
     data: Object,

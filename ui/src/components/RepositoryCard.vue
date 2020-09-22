@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "ResourceCard",
+  name: "RepositoryCard",
   props: { 
     resource:Object
    },

@@ -3,7 +3,7 @@
   <div class="px-6 py-4">
     <div v-for="resource in resources" :key="resource.RowKey">
 
-      <ResourceCard v-if="resource.PartitionKey==='repository'" :resource="resource" />
+      <RepositoryCard v-if="resource.PartitionKey==='repository'" :resource="resource" />
       <ExtensionCard v-if="resource.PartitionKey==='extension'" :resource="resource" />
 
     </div>
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import ResourceCard from "./ResourceCard";
+import RepositoryCard from "./RepositoryCard";
 import ExtensionCard from "./ExtensionCard";
 
 export default {
-  name: "ResourceList",
+  name: "ResourceCardList",
   components: { 
-    ResourceCard,
+    RepositoryCard,
     ExtensionCard
     },
   props: { resources : Array },
