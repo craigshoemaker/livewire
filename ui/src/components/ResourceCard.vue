@@ -15,13 +15,9 @@
 
   <div class="tags px-6 py-4">
     <div>
-      <span class="font-semibold">Categories:</span> <span class="resource-tag" v-for="category in resource.categories" :key="category">{{category}}</span>
-    </div>
-    <div>
-      <span class="font-semibold">Technologies:</span> <span class="resource-tag" v-for="technology in resource.technologies" :key="technology">{{technology}}</span>
-    </div>
-    <div>
-      <span class="font-semibold">Languages:</span> <span class="resource-tag" v-for="language in resource.languages" :key="language">{{language}}</span>
+      <span class="resource-tag" v-for="category in resource.categories" :key="category">{{category}}</span>
+      <span class="resource-tag" v-for="technology in resource.technologies" :key="technology">{{technology}}</span>
+      <span class="resource-tag" v-for="language in resource.languages" :key="language">{{language}}</span>
     </div>
   </div>
 </div>

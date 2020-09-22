@@ -1,6 +1,5 @@
 <template>
   <div>
-    ToolsPanel
     <Search />
     <FilterSetting title="Categories" v-bind:names="data.facets.categories" />
     <FilterSetting title="Languages" v-bind:names="data.facets.languages" />
