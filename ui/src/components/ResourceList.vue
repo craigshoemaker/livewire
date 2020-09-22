@@ -11,7 +11,7 @@
 
   <div class="tags px-6 py-4">
     <div v-for="resource in resources" :key="resource">
-      <ResourceCard :title="resource.title" />
+      <ResourceCard :resource="resource" />
     </div>
   </div>
 </div>
@@ -26,12 +26,3 @@ export default {
   props: { resources : Array },
 };
 </script>
-<!--
-      title: "Docs Authoring Pack for VS Code",
-      url: "url",
-      video: "link",
-      description: "The Docs Authoring Pack is a collection of VS Code extensions to aid with Markdown authoring for docs.microsoft.com",
-      categories: ["Search"],
-      languages: ["JavaScript","HTML","CSS"],
-      technologies: ["Functions", "Node.js","Vue.js"],
--->

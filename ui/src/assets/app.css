@@ -102,7 +102,7 @@ button.search {
   @apply mt-2;
 }
 
-.resource-card, .extension-card {
+.card {
   @apply w-2/5 border rounded-sm overflow-hidden shadow-md bg-white;
 }
 

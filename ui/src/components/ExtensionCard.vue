@@ -1,5 +1,5 @@
 <template>
-<div class="extension-card">
+<div class="card">
     <div class="tags px-6 py-4">
     <div>
       <span class="font-semibold">RowKey:</span> <span class="extension-tag">{{Extension.RowKey}}</span>
