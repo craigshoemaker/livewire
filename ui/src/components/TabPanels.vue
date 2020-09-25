@@ -2,13 +2,13 @@
   <div class="tabs-panel-container mt-3 p-8">
     <div class="container mx-auto">
       <div v-if="panel === 'getting-started'">
-        <GettingStartedPanel :data="data" />
+        <GettingStartedPanel />
       </div>
       <div v-if="panel === 'tools'">
-        <ToolsPanel :data="data" />
+        <ToolsPanel />
       </div>
       <div v-if="panel === 'extensions'">
-        <ExtensionsPanel :data="data" />
+        <ExtensionsPanel />
       </div>
     </div>
   </div>
@@ -28,7 +28,6 @@ export default {
   },
   props: {
     panel: String,
-    data: Object,
   },
 };
 </script>

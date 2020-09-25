@@ -1,12 +1,19 @@
 <template>
   <div id="app" class="w-full">
     <Header />
-    <Hero :panel="selectedPanel" :panels="panels" @panelChanged="panelChanged($event)" />
-    <Tabs :panel="selectedPanel" :panels="panels" @panelChanged="panelChanged($event)" />
+    <Hero
+      :panel="selectedPanel"
+      :panels="panels"
+      @panelChanged="panelChanged($event)"
+    />
+    <Tabs
+      :panel="selectedPanel"
+      :panels="panels"
+      @panelChanged="panelChanged($event)"
+    />
     <TabPanels
       :panel="selectedPanel"
       :panels="panels"
-      :data="appData"
       @panelChanged="panelChanged($event)"
     />
     <Footer />
@@ -19,7 +26,7 @@ import Hero from "./components/Hero.vue";
 import Tabs from "./components/Tabs.vue";
 import TabPanels from "./components/TabPanels.vue";
 import Footer from "./components/Footer.vue";
-import { api } from "./components/api";
+import AppDataStore from "./stores/appDataStore.js";
 
 export default {
   name: "App",
@@ -32,8 +39,7 @@ export default {
   },
   props: {},
   async created() {
-    const response = await api.get("/get");
-    this.appData = response.data;
+    await AppDataStore.get();
   },
   data() {
     return {
@@ -44,12 +50,12 @@ export default {
           title: "Getting Started",
           description: "Get started with Microsoft internal content tools.",
         },
-        "tools": {
+        tools: {
           title: "Tools",
           description:
             "Find tools that help keep you productive while writing and managing content.",
         },
-        "extensions": {
+        extensions: {
           title: "VS Code Extensions",
           description:
             "Use a series of VS Code extensions to help author and maintain Microsoft content.",
@@ -59,14 +65,13 @@ export default {
   },
   methods: {
     panelChanged(e) {
-      this.$router.push(e)
-          .catch(()=>{}); // catch DuplicateNavigation
+      this.$router.push(e).catch(() => {}); // catch DuplicateNavigation
     },
   },
   watch: {
-    '$route' (to) {
+    $route(to) {
       this.selectedPanel = to.name;
-    }
-  }
+    },
+  },
 };
 </script>
