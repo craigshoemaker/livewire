@@ -26,7 +26,7 @@ import Hero from "./components/Hero.vue";
 import Tabs from "./components/Tabs.vue";
 import TabPanels from "./components/TabPanels.vue";
 import Footer from "./components/Footer.vue";
-import AppDataStore from "./stores/appDataStore.js";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -39,11 +39,10 @@ export default {
   },
   props: {},
   async created() {
-    await AppDataStore.get();
+    await this.resourcesAction();
   },
   data() {
     return {
-      appData: {},
       selectedPanel: this.$route.name,
       panels: {
         "getting-started": {
@@ -64,6 +63,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("resources", ["resourcesAction"]),
     panelChanged(e) {
       this.$router.push(e).catch(() => {}); // catch DuplicateNavigation
     },

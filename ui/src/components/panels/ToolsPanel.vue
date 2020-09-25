@@ -1,9 +1,9 @@
 <template>
   <div>
     <Search />
-    <FilterSetting title="Categories" v-bind:names="categories" />
-    <FilterSetting title="Languages" v-bind:names="languages" />
-    <FilterSetting title="Technologies" v-bind:names="technologies" />
+    <FilterSetting title="Categories" v-bind:names="facets.categories" />
+    <FilterSetting title="Languages" v-bind:names="facets.languages" />
+    <FilterSetting title="Technologies" v-bind:names="facets.technologies" />
     <ResourceCardList title="Resources" v-bind:resources="repositories" />
   </div>
 </template>
@@ -12,7 +12,7 @@
 import FilterSetting from "../FilterSetting";
 import Search from "../Search";
 import ResourceCardList from "../ResourceCardList";
-import AppDataStore from "../../stores/appDataStore.js";
+import { mapGetters } from "vuex";
 
 export default {
   name: "TabPanels",
@@ -25,12 +25,11 @@ export default {
     panel: String,
   },
   data() {
-    return {
-      categories: AppDataStore.data.facets.categories,
-      languages: AppDataStore.data.facets.languages,
-      technologies: AppDataStore.data.facets.technologies,
-      repositories: AppDataStore.data.repositories,
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters("resources", { repositories: "repositories" }),
+    ...mapGetters("resources", { facets: "facets" }),
   },
 };
 </script>

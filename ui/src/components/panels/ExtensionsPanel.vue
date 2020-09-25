@@ -2,11 +2,10 @@
   <div>
     <ResourceCardList title="Extensions" v-bind:resources="extensions" />
   </div>
-</template>   
+</template>
 
 <script>
 import ResourceCardList from "../ResourceCardList";
-import AppDataStore from "../../stores/appDataStore.js";
 
 export default {
   name: "ExtensionsPanels",
@@ -14,7 +13,7 @@ export default {
   props: {},
   data() {
     return {
-      extensions: AppDataStore.data.extensions,
+      extensions: [],
     };
   },
 };

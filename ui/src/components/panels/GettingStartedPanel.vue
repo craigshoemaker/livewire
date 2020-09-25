@@ -6,7 +6,6 @@
 
 <script>
 import ResourceCardList from "../ResourceCardList";
-import AppDataStore from "../../stores/appDataStore";
 
 export default {
   name: "GettingStartedPanel",
@@ -16,7 +15,7 @@ export default {
   props: {},
   data() {
     return {
-      repositories: AppDataStore.data.repositories,
+      repositories: [],
     };
   },
 };
