@@ -54,7 +54,7 @@ button:focus {
 /* FilterSetting */
 .filter-setting {
   background-color: #eee;
-  @apply w-2/5 border p-2 mt-2 mb-2 shadow-xs rounded-sm;
+  @apply border p-2 mt-2 mb-2 shadow-xs rounded-sm;
 }
 
 .filter-setting .options {
@@ -103,7 +103,7 @@ button.search {
 }
 
 .card {
-  @apply w-2/5 border rounded-sm overflow-hidden shadow-md bg-white;
+  @apply w-3/5 border rounded-sm overflow-hidden shadow-md bg-white;
 }
 
 .resource-tag {
