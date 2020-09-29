@@ -11,7 +11,6 @@ export default {
   },
   mutations: {
     [GET_RESOURCES](state, resources) {
-      // state = { ...resources };
       state.repositories = resources.repositories;
       state.extensions = resources.extensions;
       state.facets = resources.facets;
