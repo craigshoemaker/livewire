@@ -1,21 +1,13 @@
 <template>
   <div id="app" class="w-full">
     <Header />
-    <Hero
-      :panel="selectedPanel"
-      :panels="panels"
-      @panelChanged="panelChanged($event)"
-    />
+    <Hero :panel="selectedPanel" :panels="panels" />
     <Tabs
       :panel="selectedPanel"
       :panels="panels"
-      @panelChanged="panelChanged($event)"
+      @panelChanged="handlePanelChanged($event)"
     />
-    <TabPanels
-      :panel="selectedPanel"
-      :panels="panels"
-      @panelChanged="panelChanged($event)"
-    />
+    <TabPanels :panel="selectedPanel" :panels="panels" />
     <Footer />
   </div>
 </template>
@@ -64,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions("resources", ["resourcesAction"]),
-    panelChanged(e) {
+    handlePanelChanged(e) {
       this.$router.push(e).catch(() => {}); // catch DuplicateNavigation
     },
   },

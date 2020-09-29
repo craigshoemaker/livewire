@@ -12,7 +12,7 @@
         <label v-bind:for="name">
           <input
             type="checkbox"
-            @click="selectFacet(name)"
+            @click="selectFacet($event, name)"
             v-bind:id="name"
             class="checkbox"
             v-bind:value="name"
@@ -32,7 +32,7 @@ export default {
     names: Array,
   },
   computed: {
-    filteredNames: function () {
+    filteredNames: function() {
       const { filterText, names } = this;
 
       if (filterText == "") return names;
@@ -44,11 +44,12 @@ export default {
     },
   },
   methods: {
-    selectFacet(name) {
+    selectFacet($event, name) {
       const { title } = this;
       this.$emit("facetSelected", {
         type: title.toLowerCase(),
         name,
+        isAdded: $event.currentTarget.checked,
       });
     },
   },
