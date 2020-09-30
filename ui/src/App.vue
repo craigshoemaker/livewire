@@ -31,7 +31,7 @@ export default {
   },
   props: {},
   async created() {
-    await this.resourcesAction();
+    await this.getResourcesAction();
   },
   data() {
     return {
@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("resources", ["resourcesAction"]),
+    ...mapActions("resources", ["getResourcesAction"]),
     handlePanelChanged(e) {
       this.$router.push(e).catch(() => {}); // catch DuplicateNavigation
     },

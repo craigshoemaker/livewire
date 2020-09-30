@@ -2,13 +2,13 @@
   <div class="px-6 pb-4">
     <input
       type="text"
-      v-model="searchTerm"
+      v-model="searchText"
       class="text-lg p-2 shadow-inner border rounded-md mr-2"
       placeholder="Search"
     />
     <button
       class="search font-semibold text-white p-2"
-      @click="emitSearchTerm()"
+      @click="emitSearchText()"
     >
       <img
         src="images/magnifier.png"
@@ -25,16 +25,16 @@ export default {
   name: "Search",
   props: {},
   methods: {
-    emitSearchTerm() {
-      const { searchTerm } = this;
+    emitSearchText() {
+      const { searchText } = this;
       this.$emit("search", {
-        term: searchTerm,
+        searchText,
       });
     },
   },
   data() {
     return {
-      searchTerm: "",
+      searchText: "",
     };
   },
 };
