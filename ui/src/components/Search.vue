@@ -5,25 +5,14 @@
       v-model="searchText"
       class="text-lg p-2 shadow-inner border rounded-md mr-2"
       placeholder="Search"
+      @input="emitSearchText()"
     />
-    <button
-      class="search font-semibold text-white p-2"
-      @click="emitSearchText()"
-    >
-      <img
-        src="images/magnifier.png"
-        alt="Magnifier icon"
-        class="inline-block mr-1"
-      />
-      <span>Search</span>
-    </button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Search",
-  props: {},
   methods: {
     emitSearchText() {
       const { searchText } = this;

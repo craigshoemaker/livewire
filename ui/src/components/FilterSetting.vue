@@ -8,14 +8,14 @@
       placeholder="Filter"
     />
     <div class="options mt-2">
-      <div v-for="name in filteredNames" v-bind:key="name">
-        <label v-bind:for="name">
+      <div v-for="name in filteredNames" :key="name">
+        <label :for="name">
           <input
             type="checkbox"
             @click="selectFacet($event, name)"
-            v-bind:id="name"
+            :id="name"
             class="checkbox"
-            v-bind:value="name"
+            :value="name"
           />
           {{ name }}
         </label>
@@ -28,14 +28,14 @@
 export default {
   name: "FilterSetting",
   props: {
-    title: String,
-    names: Array,
+    title: { type: String, default: () => "" },
+    names: { type: Array, default: () => [] },
   },
   computed: {
-    filteredNames: function() {
+    filteredNames() {
       const { filterText, names } = this;
 
-      if (filterText == "") return names;
+      if (filterText === "") return names;
 
       return names.filter((name) => {
         const regex = new RegExp(filterText, "i");

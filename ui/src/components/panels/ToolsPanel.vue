@@ -19,7 +19,7 @@
     </div>
     <div class="w-3/4">
       <Search @search="handleSearch($event)" />
-      <ResourceCardList :resources="repositoriesFiltered" />
+      <ResourceCardList :resources="repositoriesFiltered(filters)" />
     </div>
   </div>
 </template>
@@ -28,14 +28,7 @@
 import FilterSetting from "../FilterSetting";
 import Search from "../Search";
 import ResourceCardList from "../ResourceCardList";
-import { mapActions, mapGetters } from "vuex";
-
-const filters = {
-  languages: [],
-  technologies: [],
-  categories: [],
-  searchText: "",
-};
+import { mapGetters } from "vuex";
 
 export default {
   name: "TabPanels",
@@ -44,16 +37,20 @@ export default {
     Search,
     ResourceCardList,
   },
-  props: {
-    panel: String,
-  },
   data() {
-    return {};
+    return {
+      filters: {
+        languages: [],
+        technologies: [],
+        categories: [],
+        searchText: "",
+      },
+    };
   },
   methods: {
-    ...mapActions("resources", ["getFilteredRepositoriesAction"]),
     handleFacetSelected(e) {
       const { name, type, isAdded } = e;
+      const { filters } = this;
       if (isAdded) {
         filters[type].push(name);
       } else {
@@ -61,19 +58,17 @@ export default {
           (filterText) => filterText !== name
         );
       }
-      this.getFilteredRepositoriesAction(filters);
     },
 
     handleSearch(e) {
-      filters.searchText = e.searchText;
-      this.getFilteredRepositoriesAction(filters);
+      this.filters.searchText = e.searchText;
     },
   },
   computed: {
     ...mapGetters("resources", {
       repositoriesFiltered: "repositoriesFiltered",
+      facets: "facets",
     }),
-    ...mapGetters("resources", { facets: "facets" }),
   },
 };
 </script>
