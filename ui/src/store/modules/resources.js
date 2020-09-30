@@ -1,8 +1,8 @@
-import axios from "axios";
-import { GET_RESOURCES } from "./mutationTypes";
+import axios from 'axios';
+import { GET_RESOURCES } from './mutationTypes';
 
 export default {
-  strict: process.env.NODE_ENV !== "production",
+  strict: process.env.NODE_ENV !== 'production',
   namespaced: true,
   state: {
     repositories: [],
@@ -12,7 +12,7 @@ export default {
   actions: {
     async getResourcesAction({ commit }) {
       try {
-        const response = await axios.get("/api/get");
+        const response = await axios.get('/api/get');
         const { data: resources } = response;
         commit(GET_RESOURCES, resources);
         return resources;
@@ -41,25 +41,25 @@ export default {
 
       if (filters.categories.length > 0) {
         repositories = repositories.filter((repo) =>
-          repo.categories.includes(...filters.categories)
+          repo.categories.includes(...filters.categories),
         );
       }
 
       if (filters.languages.length > 0) {
         repositories = repositories.filter((repo) =>
-          repo.languages.includes(...filters.languages)
+          repo.languages.includes(...filters.languages),
         );
       }
 
       if (filters.technologies.length > 0) {
         repositories = repositories.filter((repo) =>
-          repo.technologies.includes(...filters.technologies)
+          repo.technologies.includes(...filters.technologies),
         );
       }
 
       if (filters.searchText.length > 0) {
         repositories = repositories.filter((repo) => {
-          const regex = new RegExp(filters.searchText, "i");
+          const regex = new RegExp(filters.searchText, 'i');
           return regex.test(repo.title) || regex.test(repo.description);
         });
       }

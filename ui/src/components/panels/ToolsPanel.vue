@@ -1,21 +1,13 @@
 <template>
   <div class="flex">
     <div class="w-1/4">
-      <FilterSetting
-        title="Categories"
-        :names="facets.categories"
-        @facetSelected="handleFacetSelected($event)"
-      />
-      <FilterSetting
-        title="Languages"
-        :names="facets.languages"
-        @facetSelected="handleFacetSelected($event)"
-      />
-      <FilterSetting
-        title="Technologies"
-        :names="facets.technologies"
-        @facetSelected="handleFacetSelected($event)"
-      />
+      <div v-for="setting in filterSettings" :key="setting">
+        <FilterSetting
+          :title="setting | capitalize"
+          :names="facets[setting]"
+          @facetSelected="handleFacetSelected($event)"
+        />
+      </div>
     </div>
     <div class="w-3/4">
       <Search @search="handleSearch($event)" />
@@ -25,13 +17,13 @@
 </template>
 
 <script>
-import FilterSetting from "../FilterSetting";
-import Search from "../Search";
-import ResourceCardList from "../ResourceCardList";
-import { mapGetters } from "vuex";
+import FilterSetting from '../FilterSetting';
+import Search from '../Search';
+import ResourceCardList from '../ResourceCardList';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "TabPanels",
+  name: 'TabPanels',
   components: {
     FilterSetting,
     Search,
@@ -43,9 +35,17 @@ export default {
         languages: [],
         technologies: [],
         categories: [],
-        searchText: "",
+        searchText: '',
       },
+      filterSettings: ['categories', 'languages', 'technologies'],
     };
+  },
+  filters: {
+    capitalize(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    },
   },
   methods: {
     handleFacetSelected(e) {
@@ -55,7 +55,7 @@ export default {
         filters[type].push(name);
       } else {
         filters[type] = filters[type].filter(
-          (filterText) => filterText !== name
+          (filterText) => filterText !== name,
         );
       }
     },
@@ -65,9 +65,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("resources", {
-      repositoriesFiltered: "repositoriesFiltered",
-      facets: "facets",
+    ...mapGetters('resources', {
+      repositoriesFiltered: 'repositoriesFiltered',
+      facets: 'facets',
     }),
   },
 };
