@@ -39,6 +39,14 @@ const getData = (query) => {
         } else {
           response.entries.forEach((entry) => {
             const record = adapter.adapt(entry);
+
+            // Temp logic for mocking extensions data
+            if (record.PartitionKey === "extension") {
+              record.title = "Title";
+              record.description = "Description";
+            }
+            // -----------------------------------------
+
             data[pluralize(record.PartitionKey)].push(record);
           });
         }
