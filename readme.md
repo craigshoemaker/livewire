@@ -3,7 +3,7 @@
 
 ![Livewire architecture](livewire-architecture.png)
 
-The Livewire architecture is based off a series of [serverless functions](https://azure.com/functions) which create a system that remains perpetually updated without the need for data entry. As resources are added to the system Livewire contacts GitHub and the VS Code Marketplace and updates the database with relevant changes in the projects.
+The Livewire architecture is based off a series of [serverless functions](https://azure.com/functions) which create a system that remains perpetually updated without the need for data entry. As resources are added to the system, the Livewire backend contacts GitHub and the VS Code Marketplace and updates the database with relevant changes in the projects.
 
 The following items correspond the the numbers in the above diagram and are the lifeblood of Livewire:
 
