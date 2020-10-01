@@ -1,6 +1,17 @@
 ![Livewire: Microsoft internal content tools browser](./livewire-logo.png)
 
 
+![Livewire architecture](livewire-architecture.png)
+
+The Livewire architecture is based off a series of [serverless functions](https://azure.com/functions) which create a system that remains perpetually updated without the need for data entry. As resources are added to the system Livewire contacts GitHub and the VS Code Marketplace and updates the database with relevant changes in the projects.
+
+The following items correspond the the numbers in the above diagram and are the lifeblood of Livewire:
+
+1. Resources (as GitHub repositories or VS Code extensions) are [added to the database](api/add) by providing a URL to the resource.
+2. [Based on a schedule](api/detectChanges), the system checks GitHub and the VS Code Marketplace for any changes to items. Changes are saved to a message queue for processing.
+3. As messages are added to the queue, the [database is updated](api/update) with the latest changes from the web.
+4. The Livewire UI is then provided with a [shaped and aggregated view of the raw data](api/get) for the display and filtering on the client.
+5. If immediate updates are required for a resource, an [endpoint](api/ping) is available for on-demand updates to the database.
 
 ## Setup
 
