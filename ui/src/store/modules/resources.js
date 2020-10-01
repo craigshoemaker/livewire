@@ -67,7 +67,20 @@ export default {
       return repositories;
     },
     extensions: (state) => state.extensions,
-    extensionsFiltered: (state) => state.extensionsFiltered,
+    extensionsFiltered: (state) => (filters) => {
+      let extensions = state.extensions;
+
+      if (filters.searchText.length > 0) {
+        extensions = extensions.filter((extension) => {
+          const regex = new RegExp(filters.searchText, 'i');
+          return (
+            regex.test(extension.title) || regex.test(extension.description)
+          );
+        });
+      }
+
+      return extensions;
+    },
     recommended: (state) => {
       let { repositories, extensions } = state;
       repositories = repositories.filter((r) => r.isRecommended);

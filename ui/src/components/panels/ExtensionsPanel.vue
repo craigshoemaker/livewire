@@ -1,20 +1,33 @@
 <template>
   <div>
-    <ResourceCardList title="Extensions" v-bind:resources="extensions" />
+    <Search @search="handleSearch($event)" />
+    <ResourceCardList :resources="extensions(filters)" />
   </div>
 </template>
 
 <script>
-import ResourceCardList from "../ResourceCardList";
+import ResourceCardList from '../ResourceCardList';
+import Search from '../Search';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "ExtensionsPanels",
-  components: { ResourceCardList },
+  name: 'ExtensionsPanels',
+  components: { ResourceCardList, Search },
   props: {},
   data() {
     return {
-      extensions: [],
+      filters: {
+        searchText: '',
+      },
     };
+  },
+  methods: {
+    handleSearch(e) {
+      this.filters.searchText = e.searchText;
+    },
+  },
+  computed: {
+    ...mapGetters('resources', { extensions: 'extensionsFiltered' }),
   },
 };
 </script>
