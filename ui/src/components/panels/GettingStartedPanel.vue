@@ -1,22 +1,25 @@
 <template>
   <div>
-    <ResourceCardList title="Resources" v-bind:resources="repositories" />
+    <ResourceCardList title="Resources" :resources="recommended" />
   </div>
 </template>
 
 <script>
-import ResourceCardList from "../ResourceCardList";
+import ResourceCardList from '../ResourceCardList';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "GettingStartedPanel",
+  name: 'GettingStartedPanel',
   components: {
     ResourceCardList,
   },
-  props: {},
   data() {
     return {
       repositories: [],
     };
+  },
+  computed: {
+    ...mapGetters('resources', { recommended: 'recommended' }),
   },
 };
 </script>

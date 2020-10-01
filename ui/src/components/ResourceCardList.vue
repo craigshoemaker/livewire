@@ -1,7 +1,8 @@
 <template>
   <div class="resource-list">
     <div class="px-6 py-4">
-      <div v-for="resource in resources" :key="resource.RowKey">
+      <div v-if="!resources">Loading...</div>
+      <div v-else v-for="resource in resources" :key="resource.RowKey">
         <RepositoryCard
           v-if="resource.PartitionKey === 'repository'"
           :resource="resource"
@@ -21,11 +22,11 @@
 </template>
 
 <script>
-import RepositoryCard from "./RepositoryCard";
-import ExtensionCard from "./ExtensionCard";
+import RepositoryCard from './RepositoryCard';
+import ExtensionCard from './ExtensionCard';
 
 export default {
-  name: "ResourceCardList",
+  name: 'ResourceCardList',
   components: {
     RepositoryCard,
     ExtensionCard,

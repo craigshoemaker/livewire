@@ -68,6 +68,12 @@ export default {
     },
     extensions: (state) => state.extensions,
     extensionsFiltered: (state) => state.extensionsFiltered,
+    recommended: (state) => {
+      let { repositories, extensions } = state;
+      repositories = repositories.filter((r) => r.isRecommended);
+      extensions = extensions.filter((e) => e.isRecommended);
+      return [...repositories, ...extensions];
+    },
     facets: (state) => state.facets,
   },
 };
