@@ -3,7 +3,7 @@
     <div class="w-1/4">
       <div v-for="setting in filterSettings" :key="setting">
         <FilterSetting
-          :title="setting | capitalize"
+          :title="setting | capitalizeFirstCharacter"
           :names="facets[setting]"
           @facetSelected="handleFacetSelected($event)"
         />
@@ -21,6 +21,7 @@ import FilterSetting from '../FilterSetting';
 import Search from '../Search';
 import ResourceCardList from '../ResourceCardList';
 import { mapGetters } from 'vuex';
+import filters from '../filters';
 
 export default {
   name: 'TabPanels',
@@ -41,11 +42,8 @@ export default {
     };
   },
   filters: {
-    capitalize(value) {
-      if (!value) return '';
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
-    },
+    capitalizeFirstCharacter: (value) =>
+      filters.capitalizeFirstCharacter(value),
   },
   methods: {
     handleFacetSelected(e) {
