@@ -31,6 +31,8 @@ export default {
     RepositoryCard,
     ExtensionCard,
   },
-  props: { resources: Array },
+  props: {
+    resources: { type: Array, default: () => [] },
+  },
 };
 </script>

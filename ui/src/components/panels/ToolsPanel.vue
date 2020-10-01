@@ -11,7 +11,7 @@
     </div>
     <div class="w-3/4">
       <Search @search="handleSearch($event)" />
-      <ResourceCardList :resources="repositoriesFiltered(filters)" />
+      <ResourceCardList :resources="repositories(filters)" />
     </div>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     ...mapGetters('resources', {
-      repositoriesFiltered: 'repositoriesFiltered',
+      repositories: 'repositoriesFiltered',
       facets: 'facets',
     }),
   },

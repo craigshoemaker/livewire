@@ -7,10 +7,10 @@
 
 <script>
 export default {
-  name: "Hero",
+  name: 'Hero',
   props: {
-    panel: String,
-    panels: Object,
+    panel: { type: String, default: () => '' },
+    panels: { type: Object, default: () => {} },
   },
 };
 </script>

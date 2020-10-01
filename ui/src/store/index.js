@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import resourcesModule from "./modules/resources";
+import resourcesModule from './modules/resources';
 
 Vue.use(Vuex);
 

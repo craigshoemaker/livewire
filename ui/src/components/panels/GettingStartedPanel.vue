@@ -13,11 +13,6 @@ export default {
   components: {
     ResourceCardList,
   },
-  data() {
-    return {
-      repositories: [],
-    };
-  },
   computed: {
     ...mapGetters('resources', { recommended: 'recommended' }),
   },

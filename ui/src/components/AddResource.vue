@@ -30,7 +30,8 @@
         v-if="message.length > 0"
         :class="message.length > 0 ? 'fadeout-5sec-delay' : ''"
         class="inline-block mt-1 text-gray-500"
-      >{{ message }}</span>
+        >{{ message }}</span
+      >
     </div>
     <div class="w-1/5">
       <button class="action" v-if="showAddButton" @click="add()">Add</button>
@@ -46,11 +47,10 @@
 const GITHUB_PATTERN = /https?:\/\/github\.com\//;
 const VSCODE_MARKETPLACE_PATTERN = /https:\/\/marketplace\.visualstudio\.com\/items\?itemName=/;
 
-import { api } from "./api";
+import { api } from './api';
 
 export default {
-  name: "AddResource",
-  props: {},
+  name: 'AddResource',
   methods: {
     add() {
       this.showAddButton = false;
@@ -58,7 +58,7 @@ export default {
       this.showGitHubUrlBox = false;
       this.showExtensionUrlButton = false;
       this.showDecisionButtons = true;
-      this.message = "";
+      this.message = '';
     },
 
     repo() {
@@ -84,7 +84,7 @@ export default {
       this.showExtensionUrlButton = false;
       this.showExtensionUrlBox = false;
       this.showDecisionButtons = false;
-      this.message = "";
+      this.message = '';
     },
 
     isGitHubURL() {
@@ -105,21 +105,21 @@ export default {
       this.showGitHubUrlBox = false;
       this.showExtensionUrlBox = false;
 
-      this.message = "";
+      this.message = '';
 
       const isValidGitHubURL = this.isGitHubURL() && this.hasBranchName();
       const isValidExtensionURL = this.isExtensionURL();
 
       if (this.isRepo && !isValidGitHubURL) {
-        this.message = "Enter a GitHub repository URL and branch name.";
+        this.message = 'Enter a GitHub repository URL and branch name.';
       } else if (this.isExtension && !isValidExtensionURL) {
-        this.message = "Enter a VS Code extension marketplace URL.";
+        this.message = 'Enter a VS Code extension marketplace URL.';
       }
 
       if (this.message.length === 0) {
         try {
-          this.message = "Sending...";
-          const response = await api.post("/add", {
+          this.message = 'Sending...';
+          const response = await api.post('/add', {
             url: this.url,
             branch: this.branch,
           });
@@ -134,13 +134,13 @@ export default {
           };
 
           if (responseState.added) {
-            this.message = "Added";
-            this.url = "";
-            this.branch = "";
+            this.message = 'Added';
+            this.url = '';
+            this.branch = '';
           }
 
           if (responseState.config404) {
-            this.message = "Repository requires a livewire.config.json file.";
+            this.message = 'Repository requires a livewire.config.json file.';
           }
 
           if (responseState.request404) {
@@ -161,9 +161,9 @@ export default {
   },
   data() {
     return {
-      url: "",
-      branch: "",
-      message: "",
+      url: '',
+      branch: '',
+      message: '',
       showAddButton: true,
       showSubmitButton: false,
       showGitHubUrlBox: false,

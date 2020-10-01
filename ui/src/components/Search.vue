@@ -2,9 +2,9 @@
   <div class="px-6 pb-4">
     <input
       type="text"
-      v-model="searchText"
       class="text-lg p-2 shadow-inner border rounded-md mr-2"
       placeholder="Search"
+      v-model="searchText"
       @input="emitSearchText()"
     />
   </div>
@@ -12,18 +12,18 @@
 
 <script>
 export default {
-  name: "Search",
+  name: 'Search',
   methods: {
     emitSearchText() {
       const { searchText } = this;
-      this.$emit("search", {
+      this.$emit('search', {
         searchText,
       });
     },
   },
   data() {
     return {
-      searchText: "",
+      searchText: '',
     };
   },
 };

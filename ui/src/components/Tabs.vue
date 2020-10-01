@@ -2,22 +2,12 @@
   <div class="container mx-auto">
     <ul class="tabs">
       <li
-        v-bind:class="{ selected: panel === 'getting-started' }"
-        @click="changeTab('getting-started')"
+        v-for="tab in tabs"
+        :key="tab.id"
+        :class="{ selected: panel === tab.id }"
+        @click="changeTab(tab.id)"
       >
-        Getting Started
-      </li>
-      <li
-        v-bind:class="{ selected: panel === 'tools' }"
-        @click="changeTab('tools')"
-      >
-        Tools
-      </li>
-      <li
-        v-bind:class="{ selected: panel === 'extensions' }"
-        @click="changeTab('extensions')"
-      >
-        VS Code Extensions
+        {{ tab.title }}
       </li>
     </ul>
   </div>
@@ -25,13 +15,22 @@
 
 <script>
 export default {
-  name: "Tabs",
+  name: 'Tabs',
   props: {
-    panel: String,
+    panel: { type: String, default: () => '' },
+  },
+  data() {
+    return {
+      tabs: [
+        { title: 'Getting Started', id: 'getting-started' },
+        { title: 'Tools', id: 'tools' },
+        { title: 'VS Code Extensions', id: 'extensions' },
+      ],
+    };
   },
   methods: {
     changeTab(id) {
-      this.$emit("panelChanged", id);
+      this.$emit('panelChanged', id);
     },
   },
 };

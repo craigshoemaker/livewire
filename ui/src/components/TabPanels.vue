@@ -15,19 +15,19 @@
 </template>
 
 <script>
-import GettingStartedPanel from "./panels/GettingStartedPanel";
-import ToolsPanel from "./panels/ToolsPanel";
-import ExtensionsPanel from "./panels/ExtensionsPanel";
+import GettingStartedPanel from './panels/GettingStartedPanel';
+import ToolsPanel from './panels/ToolsPanel';
+import ExtensionsPanel from './panels/ExtensionsPanel';
 
 export default {
-  name: "TabPanels",
+  name: 'TabPanels',
   components: {
     ExtensionsPanel,
     GettingStartedPanel,
     ToolsPanel,
   },
   props: {
-    panel: String,
+    panel: { type: String, default: () => '' },
   },
 };
 </script>

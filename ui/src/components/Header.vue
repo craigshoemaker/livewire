@@ -16,13 +16,12 @@
 </template>
 
 <script>
-import AddResource from "./AddResource";
+import AddResource from './AddResource';
 
 export default {
-  name: "Header",
+  name: 'Header',
   components: {
-    AddResource
+    AddResource,
   },
-  props: {}
 };
 </script>

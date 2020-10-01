@@ -13,15 +13,15 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Hero from "./components/Hero.vue";
-import Tabs from "./components/Tabs.vue";
-import TabPanels from "./components/TabPanels.vue";
-import Footer from "./components/Footer.vue";
-import { mapActions } from "vuex";
+import Header from './components/Header.vue';
+import Hero from './components/Hero.vue';
+import Tabs from './components/Tabs.vue';
+import TabPanels from './components/TabPanels.vue';
+import Footer from './components/Footer.vue';
+import { mapActions } from 'vuex';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Header,
     Hero,
@@ -37,25 +37,25 @@ export default {
     return {
       selectedPanel: this.$route.name,
       panels: {
-        "getting-started": {
-          title: "Getting Started",
-          description: "Get started with Microsoft internal content tools.",
+        'getting-started': {
+          title: 'Getting Started',
+          description: 'Get started with Microsoft internal content tools.',
         },
         tools: {
-          title: "Tools",
+          title: 'Tools',
           description:
-            "Find tools that help keep you productive while writing and managing content.",
+            'Find tools that help keep you productive while writing and managing content.',
         },
         extensions: {
-          title: "VS Code Extensions",
+          title: 'VS Code Extensions',
           description:
-            "Use a series of VS Code extensions to help author and maintain Microsoft content.",
+            'Use a series of VS Code extensions to help author and maintain Microsoft content.',
         },
       },
     };
   },
   methods: {
-    ...mapActions("resources", ["getResourcesAction"]),
+    ...mapActions('resources', ['getResourcesAction']),
     handlePanelChanged(e) {
       this.$router.push(e).catch(() => {}); // catch DuplicateNavigation
     },

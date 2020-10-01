@@ -12,9 +12,9 @@
         <label :for="name">
           <input
             type="checkbox"
+            class="checkbox"
             @click="selectFacet($event, name)"
             :id="name"
-            class="checkbox"
             :value="name"
           />
           {{ name }}
@@ -26,19 +26,19 @@
 
 <script>
 export default {
-  name: "FilterSetting",
+  name: 'FilterSetting',
   props: {
-    title: { type: String, default: () => "" },
+    title: { type: String, default: () => '' },
     names: { type: Array, default: () => [] },
   },
   computed: {
     filteredNames() {
       const { filterText, names } = this;
 
-      if (filterText === "") return names;
+      if (filterText === '') return names;
 
       return names.filter((name) => {
-        const regex = new RegExp(filterText, "i");
+        const regex = new RegExp(filterText, 'i');
         return regex.test(name);
       });
     },
@@ -46,7 +46,7 @@ export default {
   methods: {
     selectFacet($event, name) {
       const { title } = this;
-      this.$emit("facetSelected", {
+      this.$emit('facetSelected', {
         type: title.toLowerCase(),
         name,
         isAdded: $event.currentTarget.checked,
@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      filterText: "",
+      filterText: '',
     };
   },
 };
