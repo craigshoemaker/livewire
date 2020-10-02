@@ -103,7 +103,15 @@ button.search {
 }
 
 .card {
-  @apply w-3/5 border rounded-sm overflow-hidden shadow-md bg-white;
+  @apply m-3 w-3/5 border rounded-sm overflow-hidden shadow-md bg-white;
+}
+
+.card .title {
+  @apply font-bold text-xl mb-2;
+}
+
+.card .title > a {
+    @apply text-blue-500;
 }
 
 .resource-tag {
