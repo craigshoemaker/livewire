@@ -59,6 +59,12 @@ export default {
       this.showExtensionUrlButton = false;
       this.showDecisionButtons = true;
       this.message = '';
+      this.timerId = setTimeout(
+        function() {
+          this.cancel(this.timerId);
+        }.bind(this),
+        5000,
+      );
     },
 
     repo() {
@@ -77,7 +83,18 @@ export default {
       this.isRepo = false;
     },
 
-    cancel() {
+    cancel(timerId) {
+      if (timerId) {
+        this.fromTimer = true;
+      } else {
+        this.fromTimer = false;
+      }
+      if (
+        this.fromTimer &&
+        (this.showGitHubUrlBox == true || this.showExtensionUrlBox == true)
+      ) {
+        return;
+      }
       this.showAddButton = true;
       this.showSubmitButton = false;
       this.showGitHubUrlBox = false;
