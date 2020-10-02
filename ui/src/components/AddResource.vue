@@ -59,12 +59,9 @@ export default {
       this.showExtensionUrlButton = false;
       this.showDecisionButtons = true;
       this.message = '';
-      this.timerId = setTimeout(
-        function() {
-          this.cancel(this.timerId);
-        }.bind(this),
-        5000,
-      );
+      this.timer = setTimeout(() => {
+        this.cancel(this.timer);
+      }, 5000);
     },
 
     repo() {
@@ -84,13 +81,8 @@ export default {
     },
 
     cancel(timerId) {
-      if (timerId) {
-        this.fromTimer = true;
-      } else {
-        this.fromTimer = false;
-      }
       if (
-        this.fromTimer &&
+        timerId &&
         (this.showGitHubUrlBox == true || this.showExtensionUrlBox == true)
       ) {
         return;
