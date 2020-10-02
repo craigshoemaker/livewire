@@ -3,18 +3,18 @@ const patterns = require("../utils/patterns");
 const httpResponses = require("../utils/httpResponses");
 const { getConfig } = require("../metadata");
 const metadata = require("../../modules/metadata");
-const { send } = require("../../modules/messenger");
 const axios = require("axios").default;
 
 const _module = {
   type: "repository",
 
-  create: (url, branch) => {
+  create: (url, branch, version) => {
     return {
       PartitionKey: "repository",
       RowKey: _module.getRowKey(url),
-      url: url,
-      branch: branch,
+      url,
+      branch,
+      version,
     };
   },
 
@@ -82,32 +82,35 @@ const _module = {
     });
   },
 
-  dispatchChanges: async (url, branch, version, resource) => {
-    const config = await metadata.getConfig(url, branch);
+  getChanges: async (resource) => {
+    const { url, branch, version } = resource;
+    const livewireMetadata = await metadata.getConfig(url, branch);
     const { username, repoName } = _module.getUsernameAndRepoName(url);
 
-    const isChanged = config.version && config.version.toString() !== version;
-    const hasRequiredData = username && repoName;
+    const isChanged =
+      livewireMetadata.version &&
+      livewireMetadata.version.toString() !== version;
+
+    const hasRequiredData = !!(username && repoName);
+
+    let value = {};
 
     if (isChanged && hasRequiredData) {
       const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
       const { data: githubConfig } = await axios.get(apiUrl);
 
-      const message = { ...resource, ...config };
-      message.forks = githubConfig.forks_count;
-      message.issues = githubConfig.open_issues_count;
-      message.stars = githubConfig.stargazers_count;
-      message.watchers = githubConfig.watchers_count;
-      message.updated = githubConfig.updated_at;
+      value = { ...resource, ...livewireMetadata };
+      value.forks = githubConfig.forks_count;
+      value.issues = githubConfig.open_issues_count;
+      value.stars = githubConfig.stargazers_count;
+      value.watchers = githubConfig.watchers_count;
+      value.updated = githubConfig.updated_at;
+      value.hasChanges = true;
 
-      delete message[".metadata"];
-
-      return await send(message);
-    } else {
-      return {
-        status: "No changes",
-      };
+      delete value[".metadata"];
     }
+
+    return value;
   },
 
   update: async (entity) => {

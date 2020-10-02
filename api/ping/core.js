@@ -1,19 +1,21 @@
-const {
-  dispatchChanges,
-  getRowKey,
-} = require("../modules/entities/repository");
-const { get } = require("../modules/entities/dataService");
+const { send } = require("../modules/messenger");
+const { create } = require("../modules/entities/entityFactory");
+const dataService = require("../modules/entities/dataService");
 
 const _module = {
   run: async (url, branch) => {
-    const rowKey = getRowKey(url);
-    const repository = await get("repository", rowKey);
-    return await dispatchChanges(
-      url,
-      branch,
-      "livewire.force.update",
-      repository
-    );
+    try {
+      const entity = create(url);
+      const resource = entity.create(url, branch);
+      const { PartitionKey, RowKey } = resource;
+      const data = await dataService.get(PartitionKey, RowKey);
+      const changes = await entity.getChanges(data);
+      if (changes.hasChanges) {
+        await send(changes);
+      }
+    } catch (e) {
+      throw e;
+    }
   },
 };
 

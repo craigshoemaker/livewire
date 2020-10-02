@@ -1,18 +1,24 @@
 const dataService = require("../modules/entities/dataService");
-const { dispatchChanges } = require("../modules/entities/repository");
+const { send } = require("../modules/messenger");
+const { create } = require("../modules/entities/entityFactory");
 
 const _module = {
   run: async () => {
-    const response = await dataService.getCollection(
-      null, // select all values
-      "PartitionKey = repository" // only "repository" records
-    );
+    try {
+      const response = await dataService.getCollection();
+      const { repositories, extensions } = response;
+      const resources = [...repositories, ...extensions];
 
-    const { repositories } = response;
-    repositories.forEach(async (resource) => {
-      const { url, branch, version } = resource;
-      await dispatchChanges(url, branch, version, resource);
-    });
+      resources.forEach(async (resource) => {
+        const entity = create(resource.url);
+        const changes = await entity.getChanges(resource);
+        if (changes.hasChanges) {
+          await send(changes);
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
   },
 };
 

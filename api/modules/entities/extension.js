@@ -22,6 +22,15 @@ const _module = {
 
   getRowKey: (url) => url.replace(patterns.VSCODE_MARKETPLACE, ""),
 
+  getChanges: (resource) => {
+    // TODO: get latest values from VS Code marketplace
+    return {
+      title: "Title",
+      description: "Description",
+      hasChanges: true,
+    };
+  },
+
   tryAdd: async (url) => {
     return new Promise(async (resolve, reject) => {
       const { create, exists, validate } = _module;
