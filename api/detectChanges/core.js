@@ -1,6 +1,6 @@
 const dataService = require("../modules/entities/dataService");
 const { send } = require("../modules/messenger");
-const { create } = require("../modules/entities/entityFactory");
+const { getChanges } = require("../modules/entities/resource");
 
 const _module = {
   run: async () => {
@@ -10,8 +10,7 @@ const _module = {
       const resources = [...repositories, ...extensions];
 
       resources.forEach(async (resource) => {
-        const entity = create(resource.url);
-        const changes = await entity.getChanges(resource);
+        const changes = await getChanges(resource);
         if (changes.hasChanges) {
           await send(changes);
         }

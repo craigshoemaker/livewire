@@ -1,7 +1,8 @@
+const axios = require("axios").default;
 const { get, add } = require("./dataService");
 const patterns = require("../utils/patterns");
 const httpResponses = require("../utils/httpResponses");
-const { extractFromReadme: getMetadataFromReadme } = require("../metadata");
+const repository = require("./repository");
 
 const _module = {
   type: "extension",
@@ -22,13 +23,37 @@ const _module = {
 
   getRowKey: (url) => url.replace(patterns.VSCODE_MARKETPLACE, ""),
 
-  getChanges: (resource) => {
-    // TODO: get latest values from VS Code marketplace
-    return {
-      title: "Title",
-      description: "Description",
-      hasChanges: true,
+  getChanges: async (resource) => {
+    const { RowKey: id } = resource;
+    const url = `https://marketplace.visualstudio.com/items?itemName=${id}`;
+    const { data } = await axios.get(url);
+
+    const githubUrlMatches = data.match(/https:\/\/github\.com\/(.*?)\.git/);
+    const [githubUrl] = githubUrlMatches;
+
+    const descriptionMatches = data.match(
+      /<div class=\"ux-item-shortdesc\">(.*?)<\/div>/
+    );
+    const [dMatch, description] = descriptionMatches;
+
+    const titleMatches = data.match(
+      /<span class=\"ux-item-name\">(.*?)<\/span>/
+    );
+    const [tMatch, title] = titleMatches;
+
+    resource.branch = "master";
+    resource.url = githubUrl;
+
+    const metadata = {
+      title,
+      description,
+      version: true,
     };
+
+    const value = await repository.getChanges(resource, metadata);
+    value.hasChanges = true;
+
+    return value;
   },
 
   tryAdd: async (url) => {

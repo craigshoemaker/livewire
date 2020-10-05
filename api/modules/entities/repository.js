@@ -82,15 +82,18 @@ const _module = {
     });
   },
 
-  getChanges: async (resource) => {
+  getChanges: async (resource, livewireMetadata) => {
     const { url, branch, version } = resource;
-    const livewireMetadata = await metadata.getConfig(url, branch);
+
+    if (!livewireMetadata) {
+      livewireMetadata = await metadata.getConfig(url, branch);
+    }
+
     const { username, repoName } = _module.getUsernameAndRepoName(url);
 
     const isChanged =
       livewireMetadata.version &&
       livewireMetadata.version.toString() !== version;
-
     const hasRequiredData = !!(username && repoName);
 
     let value = {};
