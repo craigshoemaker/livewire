@@ -59,6 +59,9 @@ export default {
       this.showExtensionUrlButton = false;
       this.showDecisionButtons = true;
       this.message = '';
+      this.timer = setTimeout(() => {
+        this.cancel(this.timer);
+      }, 5000);
     },
 
     repo() {
@@ -77,7 +80,13 @@ export default {
       this.isRepo = false;
     },
 
-    cancel() {
+    cancel(timerId) {
+      if (
+        timerId &&
+        (this.showGitHubUrlBox == true || this.showExtensionUrlBox == true)
+      ) {
+        return;
+      }
       this.showAddButton = true;
       this.showSubmitButton = false;
       this.showGitHubUrlBox = false;
