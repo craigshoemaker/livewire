@@ -18,7 +18,7 @@ test("run() should not return an error.", async () => {
     issues: 4,
     stars: 0,
     watchers: 0,
-    updated: "2020-08-04T16:37:45Z",
+    lastUpdated: "2020-08-04T16:37:45Z",
   };
 
   const response = await run(message);

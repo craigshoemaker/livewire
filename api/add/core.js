@@ -1,13 +1,12 @@
-const factory = require("../modules/entities/entityFactory");
+const { add } = require("../modules/entities/resourceService");
 const httpResponses = require("../modules/utils/httpResponses");
 
 const _module = {
-  run: async (url, branch) => {
+  run: async (url) => {
     let response = {};
 
     try {
-      const resource = factory.create(url);
-      response = await resource.tryAdd(url, branch);
+      response = await add(url);
     } catch (ex) {
       if (ex.status) {
         response = ex;

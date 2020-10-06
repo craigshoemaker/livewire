@@ -40,12 +40,8 @@ const getData = (query) => {
           response.entries.forEach((entry) => {
             const record = adapter.adapt(entry);
 
-            // Temp logic for mocking extensions data
-            if (record.PartitionKey === "extension") {
-              record.title = "Title";
-              record.description = "Description";
-            }
-            // -----------------------------------------
+            console.log("Record" + JSON.stringify(record));
+            console.log("PartitionKey: " + record.PartitionKey);
 
             data[pluralize(record.PartitionKey)].push(record);
           });

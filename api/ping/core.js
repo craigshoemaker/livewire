@@ -1,17 +1,15 @@
 const { send } = require("../modules/messenger");
-const { create } = require("../modules/entities/entityFactory");
 const dataService = require("../modules/entities/dataService");
+const resourceService = require("../modules/entities/resourceService");
 
 const _module = {
-  run: async (url, branch) => {
+  run: async (url) => {
     try {
-      const entity = create(url);
-      const resource = entity.create(url, branch);
-      const { PartitionKey, RowKey } = resource;
-      const data = await dataService.get(PartitionKey, RowKey);
-      const changes = await entity.getChanges(data);
-      if (changes.hasChanges) {
-        await send(changes);
+      let resource = resourceService.getStarterObject(url);
+      resource = await dataService.get(resource.PartitionKey, resource.RowKey);
+      resource = await resourceService.getChanges(resource);
+      if (resource.hasChanges) {
+        await send(resource);
       }
     } catch (e) {
       throw e;

@@ -60,13 +60,16 @@ const _module = {
     const { username, repoName } = getUsernameAndRepoName(url);
     const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
     const { data: metadata } = await axios.get(apiUrl);
+    const lastUpdate = metadata.updated_at;
+
+    resource.hasChanges = !!(resource.lastUpdate !== lastUpdate);
 
     resource.forks = metadata.forks_count;
     resource.issues = metadata.open_issues_count;
     resource.stars = metadata.stargazers_count;
     resource.watchers = metadata.watchers_count;
-    resource.updated = metadata.updated_at;
     resource.branch = metadata.default_branch;
+    resource.lastUpdate = lastUpdate;
 
     delete resource[".metadata"];
 

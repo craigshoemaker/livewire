@@ -1,21 +1,7 @@
 const axios = require("axios").default;
-const { getMetadata } = require("./resourceMetadata");
-
 const CONFIG_FILE_NAME = "livewire.config.json";
 
 const _module = {
-  getChanges: async (resource) => {
-    resource = await getMetadata(resource);
-
-    if (/repository/.test(resource.PartitionKey)) {
-      resource = await getLivewireMetadataValues(resource);
-    }
-
-    return resource;
-  },
-
-  /* ---------------------------- */
-
   getGitHubAPIUrl: (url, branch) => {
     url = url
       .replace(/\/$/, "") // remove trailing slash
@@ -27,16 +13,25 @@ const _module = {
     return url;
   },
 
-  getLivewireMetadataValues: async (resource) => {
-    let returnValue = {};
-    let githubApiUrl;
+  deserialize: (data) => {
+    const isNotJSON = !data.title;
 
+    if (isNotJSON) {
+      data = data.replace(/\,\n*\}/, "}"); // remove trailing commas at end of file
+      data = JSON.parse(data);
+    }
+
+    return data;
+  },
+
+  getValues: async (resource) => {
     const url = resource.githubUrl || resource.url;
+    const githubApiUrl = getGitHubAPIUrl(url, resource.branch);
 
     try {
-      githubApiUrl = getGitHubAPIUrl(url, resource.branch);
-      const { data } = await axios.get(githubApiUrl);
-      returnValue = { ...resource, ...data };
+      let { data } = await axios.get(githubApiUrl);
+      data = deserialize(data);
+      resource = { ...resource, ...data };
     } catch (ex) {
       if (ex.isAxiosError && ex.response.data && /404/.test(ex.response.data)) {
         throw httpResponses.custom(
@@ -49,10 +44,10 @@ const _module = {
       }
     }
 
-    return returnValue;
+    return resource;
   },
 };
 
-const { getGitHubAPIUrl, getLivewireMetadataValues } = _module;
+const { getGitHubAPIUrl, deserialize } = _module;
 
 module.exports = _module;

@@ -1,4 +1,4 @@
-const { update } = require("../modules/entities/repository");
+const { update } = require("../modules/entities/resourceService");
 
 const _module = {
   run: async (message) => {
