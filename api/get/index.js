@@ -1,4 +1,4 @@
-const { get } = require("./core");
+const { get } = require("./get");
 
 /*
   returns

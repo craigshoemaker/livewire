@@ -1,4 +1,4 @@
-// const { run } = require("./core");
+// const { run } = require("./ping");
 
 // test("run() should not return errors", async () => {
 //   const url = "https://github.com/craigshoemaker/livewire";

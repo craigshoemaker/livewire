@@ -1,4 +1,4 @@
-const { run } = require("./core");
+const { run } = require("./ping");
 const { get } = require("../modules/utils/params");
 
 module.exports = async function (context, req) {
