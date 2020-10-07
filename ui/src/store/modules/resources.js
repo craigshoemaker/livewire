@@ -12,7 +12,7 @@ export default {
   actions: {
     async getResourcesAction({ commit }) {
       try {
-        const response = await axios.get('/api/get');
+        const response = await axios.get('/api/getResources');
         const { data: resources } = response;
         commit(GET_RESOURCES, resources);
         return resources;

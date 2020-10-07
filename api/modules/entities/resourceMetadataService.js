@@ -26,33 +26,45 @@ const _module = {
   },
 
   getExtensionMetadata: async (resource) => {
-    const { RowKey: id } = resource;
-    const url = `https://marketplace.visualstudio.com/items?itemName=${id}`;
-    const { data } = await axios.get(url);
+    try {
+      const { RowKey: id } = resource;
+      const url = `https://marketplace.visualstudio.com/items?itemName=${id}`;
+      const { data } = await axios.get(url);
 
-    const githubUrlMatches = data.match(/https:\/\/github\.com\/(.*?)\.git/);
-    const [githubUrl] = githubUrlMatches;
+      let githubUrlMatches = data.match(/(https:\/\/github\.com\/.*?)\.git/);
 
-    const descriptionMatches = data.match(
-      /<div class=\"ux-item-shortdesc\">(.*?)<\/div>/
-    );
-    const [dMatch, description] = descriptionMatches;
+      if (!githubUrlMatches) {
+        githubUrlMatches = data.match(/(https:\/\/github\.com\/.*?)\/issues/);
+      }
 
-    const titleMatches = data.match(
-      /<span class=\"ux-item-name\">(.*?)<\/span>/
-    );
-    const [tMatch, title] = titleMatches;
+      const [, githubUrl] = githubUrlMatches;
 
-    const metadata = {
-      title,
-      description,
-      version: "unknown",
-      githubUrl: githubUrl.replace(".git", ""),
-    };
+      const descriptionMatches = data.match(
+        /<div class=\"ux-item-shortdesc\">(.*?)<\/div>/
+      );
+      const [, description] = descriptionMatches;
 
-    const value = { ...resource, ...metadata };
+      const titleMatches = data.match(
+        /<span class=\"ux-item-name\">(.*?)<\/span>/
+      );
+      let [, title] = titleMatches;
 
-    return value;
+      if (!title) {
+        title = githubUrl;
+      }
+
+      const metadata = {
+        title,
+        description,
+        githubUrl,
+      };
+
+      const value = { ...resource, ...metadata };
+
+      return value;
+    } catch (exception) {
+      throw exception;
+    }
   },
 
   getRepositoryMetadata: async (resource) => {
