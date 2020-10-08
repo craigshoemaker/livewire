@@ -6,13 +6,17 @@ const livewireMetadataService = require("./livewireMetadataService");
 
 const _module = {
   getChanges: async (resource) => {
-    resource = await resourceMetadataService.getMetadata(resource);
+    try {
+      resource = await resourceMetadataService.getMetadata(resource);
 
-    if (/repository/.test(resource.PartitionKey)) {
-      resource = await livewireMetadataService.getValues(resource);
+      if (/repository/.test(resource.PartitionKey)) {
+        resource = await livewireMetadataService.getValues(resource);
+      }
+
+      return resource;
+    } catch (error) {
+      throw error;
     }
-
-    return resource;
   },
 
   getStarterObject: (url) => {

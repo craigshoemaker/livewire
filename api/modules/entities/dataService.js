@@ -20,34 +20,41 @@ const pluralize = (pk) => {
 };
 
 const getData = (query) => {
-  return new Promise((resolve, reject) => {
-    dataService.queryEntities(TABLE_NAME, query, null, (error, response) => {
-      if (error) {
-        reject(error);
-      } else {
-        adapter.init();
-
-        const data = {
-          repositories: [],
-          extensions: [],
-        };
-
-        if (response.entries.length === 1) {
-          let [record] = response.entries;
-          record = adapter.adapt(record);
-          data[pluralize(record.PartitionKey)].push(record);
+  try {
+    return new Promise((resolve, reject) => {
+      dataService.queryEntities(TABLE_NAME, query, null, (error, response) => {
+        if (error) {
+          reject(error);
         } else {
-          response.entries.forEach((entry) => {
-            const record = adapter.adapt(entry);
-            data[pluralize(record.PartitionKey)].push(record);
-          });
-        }
+          adapter.init();
 
-        data.facets = adapter.facets();
-        resolve(data);
-      }
+          const data = {
+            repositories: [],
+            extensions: [],
+          };
+
+          if (response.entries.length === 1) {
+            let [record] = response.entries;
+            record = adapter.adapt(record);
+            data[pluralize(record.PartitionKey)].push(record);
+          } else {
+            response.entries.forEach((entry) => {
+              const record = adapter.adapt(entry);
+              data[pluralize(record.PartitionKey)].push(record);
+            });
+          }
+
+          data.facets = adapter.facets();
+          resolve(data);
+        }
+      });
     });
-  });
+  } catch (error) {
+    console.log("\n\n");
+    console.log(error);
+    console.log(JSON.stringify(error));
+    console.log("\n\n");
+  }
 };
 
 const patterns = {
