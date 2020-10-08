@@ -1,4 +1,4 @@
-const { run } = require("./core");
+const { run } = require("./updateResource");
 
 test("run() should not return an error.", async () => {
   const message = {

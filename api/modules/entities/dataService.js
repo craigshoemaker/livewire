@@ -39,10 +39,6 @@ const getData = (query) => {
         } else {
           response.entries.forEach((entry) => {
             const record = adapter.adapt(entry);
-
-            console.log("Record" + JSON.stringify(record));
-            console.log("PartitionKey: " + record.PartitionKey);
-
             data[pluralize(record.PartitionKey)].push(record);
           });
         }
@@ -190,7 +186,6 @@ const _module = {
         if (error) {
           reject(error);
         } else {
-          console.log(result);
           resolve({ message: "success" });
         }
       });

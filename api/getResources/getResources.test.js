@@ -1,4 +1,4 @@
-const { get } = require("./core");
+const { get } = require("./getResources");
 
 test("get() should return an array of data", async () => {
   const response = await get();
