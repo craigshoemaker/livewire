@@ -1,19 +1,19 @@
-const { getCollection } = require("../modules/entities/dataService");
-const { send } = require("../modules/messenger");
-const { getChanges } = require("../modules/entities/resourceService");
+const dataService = require("../modules/entities/dataService");
+const messenger = require("../modules/messenger");
+const resourceService = require("../modules/entities/resourceService");
 
 const _module = {
   run: async () => {
     try {
-      const response = await getCollection();
+      const response = await dataService.getCollection();
       const { repositories, extensions } = response;
       const resources = [...repositories, ...extensions];
 
       resources.forEach(async (resource) => {
-        const changes = await getChanges(resource);
+        const changes = await resourceService.getChanges(resource);
         if (changes.hasChanges) {
           delete changes.hasChanges;
-          await send(changes);
+          await messenger.send(changes);
         }
       });
     } catch (error) {
