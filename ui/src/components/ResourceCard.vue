@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">
+      <div class="title">
         <a :href="resource.url" target="_blank">{{ resource.title }}</a>
       </div>
       <p class="text-gray-700 text-base">
@@ -13,7 +13,7 @@
       <a :href="resource.url" target="_blank">Video Icon</a>
     </div>
 
-    <div class="tags px-6 py-4">
+    <div v-if="/repository/.test(resource.PartitionKey)" class="tags px-6 py-4">
       <div>
         <span
           class="resource-tag"
