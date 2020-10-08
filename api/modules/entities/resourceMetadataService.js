@@ -31,11 +31,9 @@ const _module = {
       const url = `https://marketplace.visualstudio.com/items?itemName=${id}`;
       const { data } = await axios.get(url);
 
-      let githubUrlMatches = data.match(/(https:\/\/github\.com\/.*?)\.git/);
-
-      if (!githubUrlMatches) {
-        githubUrlMatches = data.match(/(https:\/\/github\.com\/.*?)\/issues/);
-      }
+      let githubUrlMatches = data.match(
+        /(https:\/\/github\.com\/[\w\.@\:\/\-~]+)\.git/
+      );
 
       const [, githubUrl] = githubUrlMatches;
 
@@ -68,24 +66,32 @@ const _module = {
   },
 
   getRepositoryMetadata: async (resource) => {
-    const url = resource.githubUrl || resource.url;
-    const { username, repoName } = getUsernameAndRepoName(url);
-    const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
-    const { data: metadata } = await axios.get(apiUrl);
-    const lastUpdate = metadata.updated_at;
+    try {
+      const url = resource.githubUrl || resource.url;
+      const { username, repoName } = getUsernameAndRepoName(url);
+      const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
+      const { data: metadata } = await axios.get(apiUrl);
+      const lastUpdate = metadata.updated_at;
 
-    resource.hasChanges = !!(resource.lastUpdate !== lastUpdate);
+      resource.hasChanges = !!(resource.lastUpdate !== lastUpdate);
 
-    resource.forks = metadata.forks_count;
-    resource.issues = metadata.open_issues_count;
-    resource.stars = metadata.stargazers_count;
-    resource.watchers = metadata.watchers_count;
-    resource.branch = metadata.default_branch;
-    resource.lastUpdate = lastUpdate;
+      resource.forks = metadata.forks_count;
+      resource.issues = metadata.open_issues_count;
+      resource.stars = metadata.stargazers_count;
+      resource.watchers = metadata.watchers_count;
+      resource.branch = metadata.default_branch;
+      resource.lastUpdate = lastUpdate;
 
-    delete resource[".metadata"];
+      delete resource[".metadata"];
 
-    return resource;
+      return resource;
+    } catch (error) {
+      console.log("\n\n");
+      console.log(error);
+      console.log(JSON.stringify(error));
+      console.log("\n\n");
+      throw error;
+    }
   },
 };
 
