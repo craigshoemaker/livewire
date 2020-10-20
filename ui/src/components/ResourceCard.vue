@@ -15,24 +15,41 @@
 
     <div v-if="/repository/.test(resource.PartitionKey)">
       <div class="mt-4">
-        <span
-          class="resource-tag"
-          v-for="category in resource.categories"
-          :key="category"
-          >{{ category }}</span
-        >
-        <span
-          class="resource-tag"
-          v-for="technology in resource.technologies"
-          :key="technology"
-          >{{ technology }}</span
-        >
-        <span
-          class="resource-tag"
-          v-for="language in resource.languages"
-          :key="language"
-          >{{ language }}</span
-        >
+        <div class="flex">
+          <div class="facet-label">Categories</div>
+          <div class="facet-list">
+            <span
+              class="resource-tag"
+              v-for="category in resource.categories"
+              :key="category"
+              >{{ category }}</span
+            >
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="facet-label">Technologies</div>
+          <div class="facet-list">
+            <span
+              class="resource-tag"
+              v-for="technology in resource.technologies"
+              :key="technology"
+              >{{ technology }}</span
+            >
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="facet-label">Languages</div>
+          <div class="facet-list">
+            <span
+              class="resource-tag"
+              v-for="language in resource.languages"
+              :key="language"
+              >{{ language }}</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
