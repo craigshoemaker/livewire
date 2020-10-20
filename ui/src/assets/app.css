@@ -103,7 +103,8 @@ button.search {
 }
 
 .card {
-  @apply m-3 w-3/5 border rounded-sm overflow-hidden shadow-md bg-white;
+  min-height: 22rem;
+  @apply inline-block m-3 w-5/12 border rounded-sm overflow-hidden shadow-md bg-white;
 }
 
 .card .title {
@@ -115,7 +116,7 @@ button.search {
 }
 
 .resource-tag {
-  @apply m-1 inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2;
+  @apply m-1 inline-block bg-gray-200 px-1 py-1 text-sm font-semibold text-gray-700 mr-2;
 }
 
 .facet-label {
