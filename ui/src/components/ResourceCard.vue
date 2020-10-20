@@ -1,6 +1,6 @@
 <template>
-  <div class="card">
-    <div class="px-6 py-4">
+  <div class="card p-6">
+    <div>
       <div class="title">
         <a :href="resource.url" target="_blank">{{ resource.title }}</a>
       </div>
@@ -9,12 +9,12 @@
       </p>
     </div>
 
-    <div class="px-6 py-4">
-      <a :href="resource.url" target="_blank">Video Icon</a>
+    <div v-if="resource.videoURL" class="mt-4">
+      <a :href="resource.videoURL" target="_blank">Demo video</a>
     </div>
 
-    <div v-if="/repository/.test(resource.PartitionKey)" class="tags px-6 py-4">
-      <div>
+    <div v-if="/repository/.test(resource.PartitionKey)">
+      <div class="mt-4">
         <span
           class="resource-tag"
           v-for="category in resource.categories"

@@ -67,7 +67,7 @@ button:focus {
   @apply leading-5 cursor-pointer;
 }
 
-.filter-setting .options input["type="checkbox""]:hover {
+.filter-setting .options input["type='checkbox'"]:hover {
   @apply border;
 }
 
@@ -111,7 +111,7 @@ button.search {
 }
 
 .card .title > a {
-    @apply text-blue-500;
+  @apply text-blue-700;
 }
 
 .resource-tag {
