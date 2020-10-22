@@ -103,8 +103,12 @@ button.search {
 }
 
 .card {
-  min-height: 22rem;
+  min-height: 18rem;
   @apply inline-block m-3 w-5/12 border rounded-sm overflow-hidden shadow-md bg-white;
+}
+
+.card:hover {
+  @apply border-gray-500;
 }
 
 .card .title {
