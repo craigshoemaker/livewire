@@ -3,7 +3,6 @@
 header {
   @apply border border-gray-200 mb-2 p-3;
 }
-
 .tabs {
   border-bottom: 1px solid #f2f2f2;
   padding-bottom: 5px;
@@ -40,7 +39,6 @@ button.action {
   background-color: #2ea44f;
   @apply text-white rounded-md text-sm p-2;
 }
-
 button.link {
   color: #2b8fe5;
   @apply text-sm p-2;
@@ -51,7 +49,6 @@ button:focus {
   outline: 0;
 }
 
-/* FilterSetting */
 .filter-setting {
   background-color: #eee;
   @apply border p-2 mt-2 mb-2 shadow-xs rounded-sm;
@@ -65,10 +62,6 @@ button:focus {
 
 .filter-setting .options label {
   @apply leading-5 cursor-pointer;
-}
-
-.filter-setting .options input["type='checkbox'"]:hover {
-  @apply border;
 }
 
 .fadeout-5sec-delay {
