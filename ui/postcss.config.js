@@ -1,17 +1,20 @@
 module.exports = {
   plugins: [
-    require("tailwindcss"),
-    require("autoprefixer"),
-    process.env.NODE_ENV === "production" &&
-      require("@fullhuman/postcss-purgecss")({
-        content: ["./src/**/*.vue", "./public/index.html"],
+    require('tailwindcss'),
+    require('autoprefixer'),
+    process.env.NODE_ENV === 'production' &&
+      require('@fullhuman/postcss-purgecss')({
+        content: ['./src/**/*.vue', './public/**/*.html'],
         defaultExtractor: (content) => {
           // Capture as liberally as possible, including things like `h-(screen-1.5)`
-          const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || [];
+          const broadPattern = /[^<>"'`\s]*[^<>"'`\s:]/g;
+          const broadMatches = content.match(broadPattern) || [];
+
           // Capture classes within other delimiters like .block(class="w-1/2") in Pug
-          const innerMatches =
-            content.match(/[^<>"'`\s.()]*[^<>"'`\s.():]/g) || [];
-          return broadMatches.concat(innerMatches);
+          const innerPattern = /[^<>"'`\s.()]*[^<>"'`\s.():]/g;
+          const innerMatches = content.match(innerPattern) || [];
+
+          return [...broadMatches, ...innerMatches];
         },
       }),
   ],

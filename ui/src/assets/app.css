@@ -3,7 +3,6 @@
 header {
   @apply border border-gray-200 mb-2 p-3;
 }
-
 .tabs {
   display: flex;
   border-bottom: 1px solid #f2f2f2;
@@ -42,7 +41,6 @@ button.action {
   @apply text-white rounded-md text-sm p-2;
   height: 37px;
 }
-
 button.link {
   color: #2b8fe5;
   @apply text-sm p-2;
@@ -53,7 +51,6 @@ button:focus {
   outline: 0;
 }
 
-/* FilterSetting */
 .filter-setting {
   background-color: #eee;
   @apply border p-2 mt-2 mb-2 shadow-xs rounded-sm;
@@ -73,10 +70,6 @@ button:focus {
 
 .filter-setting .options label {
   @apply leading-5 cursor-pointer;
-}
-
-.filter-setting .options input["type="checkbox""]:hover {
-  @apply border;
 }
 
 .fadeout-5sec-delay {
@@ -111,7 +104,12 @@ button.search {
 }
 
 .card {
+  min-height: 18rem;
   @apply m-3 rounded-sm overflow-hidden shadow-md bg-white;
+}
+
+.card:hover { 
+  @apply border-gray-500;
 }
 
 .card .title {
@@ -119,11 +117,19 @@ button.search {
 }
 
 .card .title > a {
-    @apply text-blue-500;
+  @apply text-blue-700;
 }
 
 .resource-tag {
-  @apply m-1 inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2;
+  @apply m-1 inline-block bg-gray-200 px-1 py-1 text-sm font-semibold text-gray-700 mr-2;
+}
+
+.facet-label {
+  @apply w-3/12 font-semibold text-xs pt-2 pr-1 text-right;
+}
+
+.facet-list {
+  @apply w-9/12;
 }
 
 @tailwind components;

@@ -82,7 +82,7 @@ export default {
         try {
           this.showUrlBox = false;
           this.message = 'Sending...';
-          const response = await api.post('/addResource', {
+          const response = await api.addResource({
             url: this.url,
           });
 
