@@ -105,7 +105,31 @@ button.search {
 
 .card {
   min-height: 18rem;
-  @apply m-3 rounded-sm overflow-hidden shadow-md bg-white;
+  @apply m-3 rounded-sm overflow-hidden shadow-md bg-white w-full;
+}
+
+@screen sm {
+  .card {
+    @apply w-3/4;
+  }
+}
+
+@screen md {
+  .card {
+    @apply w-1/2;
+  }
+}
+
+@screen lg {
+  .card {
+    @apply w-1/3;
+  }
+}
+
+@screen xl {
+  .card {
+    @apply w-1/4;
+  }
 }
 
 .card:hover { 
