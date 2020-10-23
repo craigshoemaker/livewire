@@ -1,7 +1,7 @@
 {
   "title": "Livewire",
   "description": "Microsoft internal content tools browser.",
-  "videoURL": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   "categories": ["Search"],
   "languages": ["JavaScript", "HTML", "CSS"],
   "technologies": ["Functions", "Node.js", "Vue.js"]
