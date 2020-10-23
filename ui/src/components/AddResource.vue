@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-row pt-2">
-    <div class="w-4/5 text-right pr-3">
+  <div class="flex flex-grow flex-row-reverse sm:flex-row pt-2">
+    <div class="w-4/5 pl-3 sm:text-right sm:pr-3">
       <span v-if="showUrlBox">
         <input
           type="text"
           v-model="url"
-          class="w-3/5 border rounded-md p-1 shadow-sm"
+          class="w-full border rounded-md p-1 shadow-sm"
           placeholder="GitHub repository or VS Code marketplace URL"
           @focus="stopAutoCancel()"
         />
@@ -17,9 +17,9 @@
         >{{ message }}</span
       >
     </div>
-    <div class="w-1/5">
+    <div class="w-1/5 flex flex-row-reverse sm:flex-row">
       <button class="action" v-if="showAddButton" @click="add()">Add</button>
-      <span v-if="showSubmitButton">
+      <span v-if="showSubmitButton" class="flex flex-row-reverse flex-wrap sm:flex-row">
         <button class="action" @click="submit()">Submit</button>
         <button class="link" @click="cancel()">Cancel</button>
       </span>

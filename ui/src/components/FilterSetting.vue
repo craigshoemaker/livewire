@@ -4,22 +4,20 @@
     <input
       type="text"
       v-model="filterText"
-      class="rounded-sm p-1 shadow-xs w-full"
+      class="hidden sm:flex rounded-sm p-1 shadow-xs w-full"
       placeholder="Filter"
     />
-    <div class="options mt-2">
-      <div v-for="name in filteredNames" :key="name">
-        <label :for="name">
-          <input
-            type="checkbox"
-            class="checkbox"
-            @click="selectFacet($event, name)"
-            :id="name"
-            :value="name"
-          />
-          {{ name }}
-        </label>
-      </div>
+    <div v-for="name in filteredNames" :key="name" class="options mt-2">
+      <label :for="name">
+        <input
+          type="checkbox"
+          class="checkbox"
+          @click="selectFacet($event, name)"
+          :id="name"
+          :value="name"
+        />
+        {{ name }}
+      </label>
     </div>
   </div>
 </template>
