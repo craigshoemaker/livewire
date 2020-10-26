@@ -1,11 +1,9 @@
 <template>
-  <div class="resource-list">
-    <div class="px-6 py-4">
-      <div v-if="!resources">Loading...</div>
-      <template v-else v-for="resource in resources">
-        <ResourceCard :resource="resource" :key="resource.RowKey" />
-      </template>
-    </div>
+  <div class="resource-list px-6 py-4">
+    <template v-if="!resources">Loading...</template>
+    <template v-else v-for="resource in resources">
+      <ResourceCard :resource="resource" :key="resource.RowKey" />
+    </template>
   </div>
 </template>
 

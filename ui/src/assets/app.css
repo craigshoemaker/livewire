@@ -69,6 +69,26 @@ button:focus {
   animation: 1s ease 5s normal forwards 1 fadeout;
 }
 
+.card .stats,
+.card .facets {
+  @apply text-xs mt-5;
+}
+
+.card .stats .label,
+.card .facets .label {
+  @apply uppercase font-semibold;
+}
+
+.card .stats div,
+.card .facets div {
+  border-bottom: 1px solid;
+  @apply py-1 border-gray-300;
+}
+
+.resource-tag {
+  @apply inline-block bg-gray-200 p-1 mx-1 font-semibold text-gray-800 rounded-sm mb-1;
+}
+
 @keyframes fadeout {
   0% {
     opacity: 1;
@@ -96,7 +116,7 @@ button.search {
 }
 
 .card {
-  min-height: 18rem;
+  min-height: 28rem;
   @apply inline-block m-3 w-5/12 border rounded-sm overflow-hidden shadow-md bg-white;
 }
 
@@ -110,10 +130,6 @@ button.search {
 
 .card .title > a {
   @apply text-blue-700;
-}
-
-.resource-tag {
-  @apply m-1 inline-block bg-gray-200 px-1 py-1 text-sm font-semibold text-gray-700 mr-2;
 }
 
 .facet-label {

@@ -2,8 +2,30 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './App.vue';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faUserSecret,
+  faCodeBranch,
+  faStar,
+  faEye,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import './assets/app.css';
 import store from './store';
+
+library.add([
+  faUserSecret,
+  faCodeBranch,
+  faYoutube,
+  faStar,
+  faEye,
+  faInfoCircle,
+]);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
