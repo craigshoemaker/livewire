@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <div class="w-1/4">
+  <div class="flex-wrap sm:flex">
+    <div class="block sm:w-1/4">
       <div v-for="setting in filterSettings" :key="setting">
         <FilterSetting
           :title="setting | capitalizeFirstCharacter"
@@ -9,7 +9,7 @@
         />
       </div>
     </div>
-    <div class="w-3/4">
+    <div class="block sm:w-3/4">
       <Search @search="handleSearch($event)" />
       <ResourceCardList :resources="repositories(filters)" />
     </div>

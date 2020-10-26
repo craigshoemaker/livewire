@@ -1,5 +1,5 @@
 <template>
-  <div class="resource-list px-6 py-4">
+  <div class="sm:px-6 py-4 flex flex-wrap">
     <template v-if="!resources">Loading...</template>
     <template v-else v-for="resource in resources">
       <ResourceCard :resource="resource" :key="resource.RowKey" />
