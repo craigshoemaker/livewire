@@ -3,23 +3,26 @@
 header {
   @apply border border-gray-200 mb-2 p-3;
 }
-.tabs {
+
+/* .tabs {
   display: flex;
-  border-bottom: 1px solid #f2f2f2;
-  padding-bottom: 5px;
+} */
+
+hr.tabs-divider {
+  margin-top: -1px;
 }
 
-.tabs li {
+.tab {
   display: inline-block;
   padding: 0.5rem;
   cursor: pointer;
 }
 
-.tabs li:hover {
+.tab:hover {
   background-color: #f2f2f2;
 }
 
-.tabs .selected {
+.selected {
   border-left: 1px solid #e3e3e3;
   border-right: 1px solid #e3e3e3;
   border-top: 3px solid #0065b3;
@@ -130,29 +133,11 @@ button.search {
 
 @screen sm {
   .card {
-    @apply w-3/4;
+    @apply w-2/5;
   }
 }
 
-@screen md {
-  .card {
-    @apply w-1/2;
-  }
-}
-
-@screen lg {
-  .card {
-    @apply w-1/3;
-  }
-}
-
-@screen xl {
-  .card {
-    @apply w-1/4;
-  }
-}
-
-.card:hover { 
+.card:hover {
   @apply border-gray-500;
 }
 

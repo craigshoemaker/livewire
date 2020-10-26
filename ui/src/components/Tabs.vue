@@ -1,16 +1,17 @@
 <template>
-  <div class="container mx-auto">
-    <ul class="tabs">
-      <li
+  <section>
+    <div class="container mx-auto tabs">
+      <span
         v-for="tab in tabs"
         :key="tab.id"
-        :class="{ selected: panel === tab.id }"
+        :class="{ selected: panel === tab.id, tab: true }"
         @click="changeTab(tab.id)"
       >
         {{ tab.title }}
-      </li>
-    </ul>
-  </div>
+      </span>
+    </div>
+    <hr class="tabs-divider" />
+  </section>
 </template>
 
 <script>
