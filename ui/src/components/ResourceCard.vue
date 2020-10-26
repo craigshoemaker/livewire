@@ -18,48 +18,67 @@
         </p>
       </div>
 
-      <div v-if="resource.videoURL" class="mt-4">
-        <a :href="resource.videoURL" target="_blank">Demo video</a>
-      </div>
+      <div class="text-gray-700">
+        <div v-if="resource.videoUrl" class="mt-4">
+          <a :href="resource.videoUrl" target="_blank"
+            ><font-awesome-icon :icon="['fab', 'youtube']" /> Demo video</a
+          >
+        </div>
 
-      <div v-if="/repository/.test(resource.PartitionKey)">
-        <div class="mt-4">
-          <div class="flex">
-            <div class="facet-label">Categories</div>
-            <div class="facet-list">
+        <div class="stats grid grid-cols-1 sm:grid-cols-2">
+          <div class="label">
+            <font-awesome-icon icon="code-branch" /> Forks
+          </div>
+          <div>{{ resource.forks }}</div>
+
+          <div class="label">
+            <font-awesome-icon icon="info-circle" /> Issues
+          </div>
+          <div>{{ resource.issues }}</div>
+
+          <div class="label"><font-awesome-icon icon="star" /> Stars</div>
+          <div>{{ resource.stars }}</div>
+
+          <div class="label"><font-awesome-icon icon="eye" /> Watchers</div>
+          <div>{{ resource.watchers }}</div>
+        </div>
+
+        <template v-if="/repository/.test(resource.PartitionKey)">
+          <div class="facets grid grid-cols-1 sm:grid-cols-2">
+            <div class="label">Categories</div>
+            <div>
               <span
-                class="resource-tag"
                 v-for="category in resource.categories"
                 :key="category"
-                >{{ category }}</span
-              >
-            </div>
-          </div>
-
-          <div class="flex">
-            <div class="facet-label">Technologies</div>
-            <div class="facet-list">
-              <span
                 class="resource-tag"
-                v-for="technology in resource.technologies"
-                :key="technology"
-                >{{ technology }}</span
               >
+                {{ category }}
+              </span>
             </div>
-          </div>
 
-          <div class="flex">
-            <div class="facet-label">Languages</div>
-            <div class="facet-list">
+            <div class="label">Languages</div>
+            <div>
               <span
-                class="resource-tag"
                 v-for="language in resource.languages"
                 :key="language"
-                >{{ language }}</span
+                class="resource-tag"
               >
+                {{ language }}
+              </span>
+            </div>
+
+            <div class="label">Technologies</div>
+            <div>
+              <span
+                v-for="technology in resource.technologies"
+                :key="technology"
+                class="resource-tag"
+              >
+                {{ technology }}
+              </span>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
