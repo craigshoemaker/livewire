@@ -2,7 +2,7 @@
   <div class="pt-4 sm:px-6 sm:pb-4">
     <input
       type="text"
-      class="text-lg p-2 shadow-inner border rounded-md sm:mr-2 w-full"
+      class="text-lg sm:mr-2 w-full"
       placeholder="Search"
       v-model="searchText"
       @input="emitSearchText()"

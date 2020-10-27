@@ -4,9 +4,9 @@ header {
   @apply border border-gray-200 mb-2 p-3;
 }
 
-/* .tabs {
-  display: flex;
-} */
+input[type='text'] {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+}
 
 hr.tabs-divider {
   margin-top: -1px;
@@ -155,6 +155,27 @@ button.search {
 
 .facet-list {
   @apply w-9/12;
+}
+
+.generator-container {
+  background-color: #f2f2f2;
+}
+
+.generator {
+  @apply bg-white shadow-md rounded m-4 p-4 max-w-4xl ml-auto mr-auto;
+}
+
+.generator label {
+  @apply block text-gray-700 text-sm font-semibold mb-2;
+}
+
+.generator label > span {
+  @apply text-gray-600 text-sm font-normal;
+}
+
+pre {
+  background-color: #f2f2f2;
+  @apply p-5 rounded-md border;
 }
 
 @tailwind components;

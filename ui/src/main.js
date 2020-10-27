@@ -9,6 +9,7 @@ import {
   faStar,
   faEye,
   faInfoCircle,
+  faWindowClose,
 } from '@fortawesome/free-solid-svg-icons';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -23,6 +24,7 @@ library.add([
   faStar,
   faEye,
   faInfoCircle,
+  faWindowClose,
 ]);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

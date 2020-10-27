@@ -8,6 +8,7 @@
       @panelChanged="handlePanelChanged($event)"
     />
     <TabPanels :panel="selectedPanel" :panels="panels" />
+    <MetadataGenerator />
     <Footer />
   </div>
 </template>
@@ -18,6 +19,7 @@ import Hero from './components/Hero.vue';
 import Tabs from './components/Tabs.vue';
 import TabPanels from './components/TabPanels.vue';
 import Footer from './components/Footer.vue';
+import MetadataGenerator from './components/MetadataGenerator';
 import { mapActions } from 'vuex';
 
 export default {
@@ -25,6 +27,7 @@ export default {
   components: {
     Header,
     Hero,
+    MetadataGenerator,
     Tabs,
     TabPanels,
     Footer,
