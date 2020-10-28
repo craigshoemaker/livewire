@@ -54,6 +54,7 @@ const getData = (query) => {
     console.log(error);
     console.log(JSON.stringify(error));
     console.log("\n\n");
+    throw error;
   }
 };
 
