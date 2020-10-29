@@ -1,20 +1,28 @@
 const axios = require("axios").default;
+const patterns = require("../utils/patterns");
 
 const _module = {
   getMetadata: async (resource) => {
     const { PartitionKey } = resource;
 
     if (!/repository|extension/.test(PartitionKey)) {
-      throw new Error(
-        `[resourceMetadata.getMetadata] Unknown PartitionKey value: ${PartitionKey}`
-      );
+      const msg = `[resourceMetadata.getMetadata] Unknown PartitionKey value: ${PartitionKey}`;
+      throw new Error(msg);
     }
 
     if (/extension/.test(PartitionKey)) {
       resource = await getExtensionMetadata(resource);
     }
 
-    return await getRepositoryMetadata(resource);
+    const hasGitHubUrl =
+      patterns.GITHUB.test(resource.githubUrl) ||
+      patterns.GITHUB.test(resource.url);
+
+    if (hasGitHubUrl) {
+      resource = await getRepositoryMetadata(resource);
+    }
+
+    return resource;
   },
 
   /* ---------------------------------------- */
@@ -27,28 +35,28 @@ const _module = {
 
   getExtensionMetadata: async (resource) => {
     try {
-      const { RowKey: id } = resource;
-      const url = `https://marketplace.visualstudio.com/items?itemName=${id}`;
-      const { data } = await axios.get(url);
+      const { data } = await axios.get(resource.url);
 
-      let githubUrlMatches = data.match(
-        /(https:\/\/github\.com\/[\w\.@\:\/\-~]+)\.git/
-      );
+      let githubUrl = "";
+      let description = "";
+      let title = resource.RowKey; // default value in case title can't be found
 
-      const [, githubUrl] = githubUrlMatches;
+      const gitHubUrlPattern = /(https:\/\/github\.com\/[\w\.@\:\/\-~]+)\/issues/;
+      const gitHubUrlMatches = data.match(gitHubUrlPattern);
+      if (gitHubUrlMatches) {
+        [, githubUrl = ""] = gitHubUrlMatches;
+      }
 
-      const descriptionMatches = data.match(
-        /<div class=\"ux-item-shortdesc\">(.*?)<\/div>/
-      );
-      const [, description] = descriptionMatches;
+      const descriptionPattern = /<div class=\"ux-item-shortdesc\">(.*?)<\/div>/;
+      const descriptionMatches = data.match(descriptionPattern);
+      if (descriptionMatches) {
+        [, description = ""] = descriptionMatches;
+      }
 
-      const titleMatches = data.match(
-        /<span class=\"ux-item-name\">(.*?)<\/span>/
-      );
-      let [, title] = titleMatches;
-
-      if (!title) {
-        title = githubUrl;
+      const titlePattern = /<span class=\"ux-item-name\">(.*?)<\/span>/;
+      const titleMatches = data.match(titlePattern);
+      if (titleMatches) {
+        [, title = resource.RowKey] = titleMatches;
       }
 
       const metadata = {
