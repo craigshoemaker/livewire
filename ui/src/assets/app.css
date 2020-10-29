@@ -13,9 +13,7 @@ hr.tabs-divider {
 }
 
 .tab {
-  display: inline-block;
-  padding: 0.5rem;
-  cursor: pointer;
+  @apply inline-block p-2 px-3 cursor-pointer;
 }
 
 .tab:hover {
@@ -127,8 +125,15 @@ button.search {
 }
 
 .card {
-  min-height: 28rem;
   @apply m-3 rounded-sm overflow-hidden shadow-md bg-white w-full;
+}
+
+.card .repository {
+  height: 28rem;
+}
+
+.card .extension {
+  height: 16rem;
 }
 
 @screen sm {
