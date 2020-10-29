@@ -1,5 +1,12 @@
 <template>
-  <div class="card p-6">
+  <div
+    :class="{
+      card: true,
+      'p-6': true,
+      repository: /repository/.test(resource.PartitionKey),
+      extension: /extension/.test(resource.PartitionKey),
+    }"
+  >
     <div
       v-if="!/repository|extension/.test(resource.PartitionKey)"
       class="mb-12"
@@ -25,8 +32,18 @@
           >
         </div>
 
-        <div class="stats grid grid-cols-1 sm:grid-cols-2">
-          <div class="label">
+        <div
+          v-if="
+            /extension/.test(resource.PartitionKey) &&
+            !/^https:\/\/github/.test(resource.githubUrl)
+          "
+          class="italic text-gray-500 mt-10 text-sm"
+        >
+          No GitHub information available.
+        </div>
+
+        <div v-else class="stats grid grid-cols-1 sm:grid-cols-2">
+          <div v-if="resource.forks" class="label">
             <font-awesome-icon icon="code-branch" /> Forks
           </div>
           <div>{{ resource.forks }}</div>
