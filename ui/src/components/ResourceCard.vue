@@ -3,14 +3,11 @@
     :class="{
       card: true,
       'p-6': true,
-      repository: /repository/.test(resource.PartitionKey),
-      extension: /extension/.test(resource.PartitionKey),
+      repository: isRepository(resource),
+      extension: isExtension(resource),
     }"
   >
-    <div
-      v-if="!/repository|extension/.test(resource.PartitionKey)"
-      class="mb-12"
-    >
+    <div v-if="!isRepositoryOrExtension(resource)" class="mb-12">
       <h3 class="text-2xl">Unknown Data Type</h3>
       <p>Unknown partition key value: {{ resource.PartitionKey }}</p>
     </div>
@@ -33,10 +30,7 @@
         </div>
 
         <div
-          v-if="
-            /extension/.test(resource.PartitionKey) &&
-            !/^https:\/\/github/.test(resource.githubUrl)
-          "
+          v-if="isExtensionWithoutGitHubUrl(resource)"
           class="italic text-gray-500 mt-10 text-sm"
         >
           No GitHub information available.
@@ -60,7 +54,7 @@
           <div>{{ resource.watchers }}</div>
         </div>
 
-        <template v-if="/repository/.test(resource.PartitionKey)">
+        <template v-if="isRepository(resource)">
           <div class="facets grid grid-cols-1 sm:grid-cols-2">
             <div class="label">Categories</div>
             <div>
@@ -106,6 +100,26 @@ export default {
   name: 'ResourceCard',
   props: {
     resource: { type: Object, default: () => {} },
+  },
+  methods: {
+    isRepository(resource) {
+      return /repository/.test(resource.PartitionKey);
+    },
+
+    isExtension(resource) {
+      return /extension/.test(resource.PartitionKey);
+    },
+
+    isRepositoryOrExtension(resource) {
+      return this.isRepository(resource) || this.isExtension(resource);
+    },
+
+    isExtensionWithoutGitHubUrl(resource) {
+      return (
+        /extension/.test(resource.PartitionKey) &&
+        !/^https:\/\/github/.test(resource.githubUrl)
+      );
+    },
   },
 };
 </script>
