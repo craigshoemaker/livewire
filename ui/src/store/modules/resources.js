@@ -85,7 +85,9 @@ export default {
       let { repositories, extensions } = state;
       repositories = repositories.filter((r) => r.isRecommended);
       extensions = extensions.filter((e) => e.isRecommended);
-      return [...repositories, ...extensions];
+      let resources = [...repositories, ...extensions];
+      resources = resources.sort((a, b) => a.title.localeCompare(b.title));
+      return resources;
     },
     facets: (state) => state.facets,
   },

@@ -42,9 +42,18 @@ const getData = (query) => {
               const record = adapter.adapt(entry);
               data[pluralize(record.PartitionKey)].push(record);
             });
+
+            data.extensions = data.extensions.sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+
+            data.repositories = data.repositories.sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+
+            data.facets = adapter.facets();
           }
 
-          data.facets = adapter.facets();
           resolve(data);
         }
       });

@@ -29,6 +29,10 @@ const deserializeArray = (obj) => {
         facets[lowerCasePropName] = Array.from(
           new Set([...obj[prop], ...facets[lowerCasePropName]])
         );
+
+        facets[lowerCasePropName] = facets[lowerCasePropName].sort((a, b) => {
+          return a.localeCompare(b);
+        });
       }
     }
   }
