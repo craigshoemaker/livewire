@@ -14,7 +14,7 @@
             @click="cancel()"
           />
         </div>
-        <p class="m-5 text-xl">Enter details about your project</p>
+        <p class="m-5 text-xl">Enter details about your project:</p>
         <div class="m-5">
           <label for="name">Name</label>
           <input
