@@ -14,6 +14,7 @@
             @click="cancel()"
           />
         </div>
+        <p class="m-5 text-xl">Enter details about your project</p>
         <div class="m-5">
           <label for="name">Name</label>
           <input
@@ -104,7 +105,13 @@
           />
         </div>
         <div class="m-5 mt-12">
-          <h3 class="text-lg font-mono mb-0">livewire.config.json</h3>
+          <p class="text-xl">
+            Add
+            <code class="bg-gray-100 p-1 rounded-md shadow-sm"
+              >livewire.config.json</code
+            >
+            to the root of your repository:
+          </p>
           <pre>{{ json }}</pre>
         </div>
       </div>
@@ -123,12 +130,15 @@ function createList(value) {
   return list === '""' ? '' : list;
 }
 
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
 export default {
   name: 'MetadataGenerator',
   data() {
     return {
       showForm: false,
-      showCode: false,
       name: '',
       description: '',
       videoUrl: '',
@@ -144,17 +154,18 @@ export default {
       this.generate();
 
       setTimeout(() => {
-        document
-          .getElementById('generator')
-          .scrollIntoView({ behavior: 'smooth' });
+        scrollTo('generator');
       }, 100);
     },
     cancel() {
-      this.showForm = false;
-      this.showCode = false;
+      scrollTo('app');
+
+      const component = this;
+      setTimeout(() => {
+        component.showForm = false;
+      }, 1000);
     },
     generate() {
-      this.showCode = true;
       this.json = `{
   "title": "${this.name}",
   "description": "${this.description}",
