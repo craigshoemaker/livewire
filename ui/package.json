@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "npm run serve-vue && npm run build-css",
-    "build": "set NODE_ENV=production && npm run build-vue & npm run build-css",
+    "build": "npm run build-vue && npm run build-css",
     "lint": "vue-cli-service lint",
     "build-css": "postcss src/assets/app.css -o dist/css/app.css",
     "build-vue": "vue-cli-service build",
