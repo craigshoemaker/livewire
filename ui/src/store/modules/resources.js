@@ -1,4 +1,4 @@
-import api from '../../components/api';
+import { api } from '../../components/api';
 
 import { GET_RESOURCES } from './mutationTypes';
 
