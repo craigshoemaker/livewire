@@ -1,6 +1,6 @@
 {
   "title": "Livewire",
-  "description": "Microsoft internal content tools browser.",
+  "description": "Microsoft internal content tools search app.",
   "videoUrl": "https://youtu.be/CfQ40Ode3O0",
   "categories": ["Search"],
   "languages": ["JavaScript", "HTML", "CSS"],
