@@ -1,8 +1,9 @@
-import axios from 'axios';
+import api from '../../components/api';
+
 import { GET_RESOURCES } from './mutationTypes';
 
 export default {
-  strict: process.env.NODE_ENV !== 'production',
+  strict: /production/i.test(process.env.NODE_ENV),
   namespaced: true,
   state: {
     repositories: [],
@@ -12,7 +13,7 @@ export default {
   actions: {
     async getResourcesAction({ commit }) {
       try {
-        const response = await axios.get('/api/getResources');
+        const response = await api.getResources();
         const { data: resources } = response;
         commit(GET_RESOURCES, resources);
         return resources;

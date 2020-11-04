@@ -117,3 +117,5 @@ pnpm-debug.log*
 
 scratch.js
 debug.js
+
+.env*

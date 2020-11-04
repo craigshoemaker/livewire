@@ -1,16 +1,15 @@
 import axios from 'axios';
 
-const isLocal = /localhost|127\.0\.0\.1/.test(window.location.host);
+const baseURL = process.env.VUE_APP_API_BASE_URL;
+const axiosInstance = axios.create({ baseURL });
 
-const axiosInstance = axios.create({
-  baseURL: isLocal ? 'api/' : `https://livewireapp.azurewebsites.net/api/`,
-});
-
-export const api = {
+export default {
   async addResource(payload) {
-    const key = isLocal
-      ? ''
-      : '?code=JlpSRyXtLrtzLdcerBYJIEWLqbBuqRfaKV5sMDwgqT9UikvYvoOusQ==';
-    return await axiosInstance.post(`./addResource${key}`, payload);
+    const key = `?code=${process.env.VUE_APP_ADD_RESOURCES_FUNCTION_KEY}`;
+    return await axiosInstance.post(`addResource${key}`, payload);
+  },
+  async getResources() {
+    const key = `?code=${process.env.VUE_APP_GET_RESOURCES_FUNCTION_KEY}`;
+    return await axiosInstance.get(`getResources${key}`);
   },
 };
