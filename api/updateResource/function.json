@@ -4,7 +4,7 @@
       "name": "message",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "messages-dev",
+      "queueName": "messages",
       "connection": "STORAGE_CONNECTION_STRING"
     }
   ]
