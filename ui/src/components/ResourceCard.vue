@@ -23,7 +23,10 @@
       </div>
 
       <div class="text-gray-700">
-        <div v-if="resource.videoUrl" class="mt-4">
+        <div
+          v-if="resource.videoUrl && resource.videoUrl.length > 0"
+          class="mt-4"
+        >
           <a :href="resource.videoUrl" target="_blank"
             ><font-awesome-icon :icon="['fab', 'youtube']" /> Demo video</a
           >
