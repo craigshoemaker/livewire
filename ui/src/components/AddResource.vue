@@ -35,10 +35,12 @@ const GITHUB_PATTERN = /https?:\/\/github\.com\//;
 const VSCODE_MARKETPLACE_PATTERN = /https:\/\/marketplace\.visualstudio\.com\/items\?itemName=/;
 
 import { api } from './api';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'AddResource',
   methods: {
+    ...mapActions('resources', ['getResourcesAction']),
     add() {
       this.showAddButton = false;
       this.showSubmitButton = true;
@@ -104,6 +106,7 @@ export default {
             this.showAddButton = true;
             this.showUrlBox = false;
             this.showSubmitButton = false;
+            await this.getResourcesAction();
           }
 
           if (responseState.config404) {
