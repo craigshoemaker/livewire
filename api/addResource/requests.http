@@ -3,8 +3,7 @@ POST http://localhost:7071/api/addResource HTTP/1.1
 content-type: application/json
 
 {
-    "url": "https://github.com/craigshoemaker/livewire",
-    "branch": "default"
+    "url": "https://github.com/craigshoemaker/livewire"
 }
 
 ###
@@ -25,4 +24,13 @@ content-type: application/json
 
 {
     "url": "https://example.com/craigshoemaker/livewire"
+}
+
+###
+
+POST http://localhost:7071/api/addResource HTTP/1.1
+content-type: application/json
+
+{
+    "url": "https://github.com/craigshoemaker/livewire-monorepo/blob/main/src/app1/livewire.config.json"
 }

@@ -133,10 +133,20 @@ const _module = {
   },
 
   getRowKey: (url) => {
-    let key = "";
+    let key = '';
+    let match = ''; // placeholder variable for regex match
 
     if (patterns.GITHUB.test(url)) {
-      key = url.replace(patterns.GITHUB, "").replace("/", "-");
+
+      key = url.replace(patterns.GITHUB, "");
+      
+      if(/\.json$/.test(url)) {
+        let matches = key.match(/(.*?\/.*?)\/.*\.json/);
+        [match, key] = matches;
+      }
+      
+      key = key.replace("/", "-");
+
     } else if (patterns.VSCODE_MARKETPLACE.test(url)) {
       key = url.replace(patterns.VSCODE_MARKETPLACE, "");
     } else {
