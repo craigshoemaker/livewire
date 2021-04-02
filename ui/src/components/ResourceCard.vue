@@ -15,7 +15,7 @@
     <div v-else>
       <div>
         <div class="title">
-          <a :href="resource.url" target="_blank">{{ resource.title }}</a>
+          <a :href="resource | url" target="_blank">{{ resource.title }}</a>
         </div>
         <p class="text-gray-700 text-base">
           {{ resource.description }}
@@ -104,6 +104,17 @@ export default {
   props: {
     resource: { type: Object, default: () => {} },
   },
+  filters: {
+    url(resource) {
+      let value = resource.url;
+
+      if(resource.path && resource.path.length > 0) {
+        value = `${value}/tree/${resource.branch}/${resource.path}`
+      }
+
+      return value;
+    }
+},
   methods: {
     isRepository(resource) {
       return /repository/.test(resource.PartitionKey);
