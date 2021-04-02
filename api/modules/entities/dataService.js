@@ -162,6 +162,11 @@ const _module = {
     const dto = {};
     const { getDTOValue: getValue, createDTO: create } = _module;
     for (let prop in entity) {
+
+      if(entity[prop] === undefined) {
+        entity[prop] = '';
+      }
+
       if (/\.metadata/.test(prop)) {
         dto[prop] = entity[prop]; // do not process
       } else if (Array.isArray(entity[prop])) {
