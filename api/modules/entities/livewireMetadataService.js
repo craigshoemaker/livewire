@@ -2,13 +2,15 @@ const axios = require("axios").default;
 const CONFIG_FILE_NAME = "livewire.config.json";
 
 const _module = {
-  getGitHubAPIUrl: (url, branch) => {
+  getGitHubAPIUrl: (url, branch, path) => {
     url = url
       .replace(/\/$/, "") // remove trailing slash
       .replace("//www.", "//")
       .replace("github.com", "raw.githubusercontent.com");
 
-    url = `${url}/${branch}/${CONFIG_FILE_NAME}`;
+    path = path && path.length > 0 ? `${path}/` : '';
+
+    url = `${url}/${branch}/${path}${CONFIG_FILE_NAME}`;
 
     return url;
   },
@@ -26,7 +28,7 @@ const _module = {
 
   getValues: async (resource) => {
     const url = resource.githubUrl || resource.url;
-    const githubApiUrl = getGitHubAPIUrl(url, resource.branch);
+    const githubApiUrl = getGitHubAPIUrl(url, resource.branch, resource.path);
 
     try {
       let { data } = await axios.get(githubApiUrl);

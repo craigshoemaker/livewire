@@ -23,7 +23,8 @@ const _module = {
     return {
       PartitionKey: getPartitionKey(url),
       RowKey: getRowKey(url),
-      url,
+      url: getUrl(url),
+      path: getPath(url)
     };
   },
 
@@ -132,20 +133,45 @@ const _module = {
     return key;
   },
 
+  getUrl: (url) => {
+
+    if(/\.json$/.test(url)) {
+      // Monorepo URL example:
+      //   https://github.com/craigshoemaker/livewire-monorepo/blob/main/src/app1/livewire.config.json
+      const matches = url.match(/(https?:\/\/github.com\/.*?\/.*?)\//);
+      const [match, urlTrimmed] = matches;
+      url = urlTrimmed;
+    }
+
+    return url;
+  },
+
+  getPath: (url) => {
+    const matches = url.match(/https?:\/\/github.com\/.*?\/.*?\/blob\/.*?\/(.*)\/livewire\.config\.json/);
+    const [match, path] = matches;
+    return path;
+  },
+
   getRowKey: (url) => {
     let key = '';
-    let match = ''; // placeholder variable for regex match
+    let match = '', path = ''; // placeholder variables for regex match
+
 
     if (patterns.GITHUB.test(url)) {
 
       key = url.replace(patterns.GITHUB, "");
       
-      if(/\.json$/.test(url)) {
-        let matches = key.match(/(.*?\/.*?)\/.*\.json/);
-        [match, key] = matches;
+      if(/\.json$/.test(url)) {       
+        let matches = key.match(/(.*?)\/(.*?)\/blob\/.*?\/(.*)\/livewire\.config\.json/);
+        [match, username, reponame, path] = matches;
+        key = `${username}:${reponame}:${path}`;
+      } else {
+        let matches = key.match(/(.*)\/(.*)\/?/);
+        [match, username, reponame] = matches;
+        key = `${username}:${reponame}`;
       }
       
-      key = key.replace("/", "-");
+      key = key.replace(/\//g, '-');
 
     } else if (patterns.VSCODE_MARKETPLACE.test(url)) {
       key = url.replace(patterns.VSCODE_MARKETPLACE, "");
@@ -157,6 +183,6 @@ const _module = {
   },
 };
 
-const { exists, getPartitionKey, getRowKey, validate } = _module;
+const { exists, getPartitionKey, getRowKey, getUrl, getPath, validate } = _module;
 
 module.exports = _module;
