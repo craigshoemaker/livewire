@@ -6,9 +6,11 @@
           type="text"
           v-model="url"
           class="w-full"
-          placeholder="GitHub repository or VS Code marketplace URL"
           @focus="stopAutoCancel()"
         />
+        <span class="text-gray-500 text-xs">
+          Enter a GitHub repository, Livewire config file location, or VS Code marketplace URL.
+        </span>
       </span>
       <span
         v-if="message.length > 0"

@@ -110,7 +110,7 @@
             <code class="bg-gray-100 p-1 rounded-md shadow-sm"
               >livewire.config.json</code
             >
-            to the root of your repository:
+            to the root of your repository or project folder in a monorepo:
           </p>
           <pre>{{ json }}</pre>
         </div>
