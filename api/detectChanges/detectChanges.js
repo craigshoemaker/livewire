@@ -5,6 +5,13 @@ const resourceService = require("../modules/entities/resourceService");
 const _module = {
   run: async () => {
     try {
+
+      // TODO: filter for monorepos
+      //   If repo shows as changed, but only one project
+      //   in a monorepo is actually updated, then the rest
+      //   of the projects in the monorepo will be updated
+      //   as well, wasting cycles and resources
+      
       const response = await dataService.getCollection();
       const { repositories, extensions } = response;
       const resources = [...repositories, ...extensions];
