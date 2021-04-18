@@ -1,5 +1,7 @@
 const axios = require("axios").default;
 const patterns = require("../utils/patterns");
+const config = require("../utils/config");
+const { createAppAuth } = require("@octokit/auth-app");
 
 const _module = {
   getMetadata: async (resource) => {
@@ -12,14 +14,14 @@ const _module = {
 
     if (/extension/.test(PartitionKey)) {
       resource = await getExtensionMetadata(resource);
-    }
-
-    const hasGitHubUrl =
+    } else {
+      const hasGitHubUrl =
       patterns.GITHUB.test(resource.githubUrl) ||
       patterns.GITHUB.test(resource.url);
 
-    if (hasGitHubUrl) {
-      resource = await getRepositoryMetadata(resource);
+      if (hasGitHubUrl) {
+        resource = await getRepositoryMetadata(resource);
+      }
     }
 
     return resource;
@@ -78,7 +80,23 @@ const _module = {
       const url = resource.githubUrl || resource.url;
       const { username, repoName } = getUsernameAndRepoName(url);
       const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
-      const { data: metadata } = await axios.get(apiUrl);
+      const installationId = resource.installationId;
+      var metadata;
+      if (installationId) {
+        const appAuth = createAppAuth({
+          appId: config.GH_APP_ID,
+          privateKey: config.GH_APP_KEY
+        });
+        const instAuth = await appAuth({
+          type: "installation",
+          installationId: installationId
+        });
+        let res = await axios.get(apiUrl, {headers: {'Authorization': `token ${instAuth.token}`,'Accept': 'application/vnd.github.v3+json'}});
+        metadata = res.data;
+      } else {
+        let res = await axios.get(apiUrl);
+        metadata = res.data;
+      }
       const lastUpdate = metadata.updated_at;
 
       resource.hasChanges = !!(resource.lastUpdate !== lastUpdate);
