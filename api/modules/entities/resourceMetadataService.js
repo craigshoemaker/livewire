@@ -17,8 +17,8 @@ const _module = {
     }
 
     const hasGitHubUrl =
-    patterns.GITHUB.test(resource.githubUrl) ||
-    patterns.GITHUB.test(resource.url);
+      patterns.GITHUB.test(resource.githubUrl) ||
+      patterns.GITHUB.test(resource.url);
 
     if (hasGitHubUrl) {
       resource = await getRepositoryMetadata(resource);
