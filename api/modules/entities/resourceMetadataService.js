@@ -81,7 +81,7 @@ const _module = {
       const { username, repoName } = getUsernameAndRepoName(url);
       const apiUrl = `https://api.github.com/repos/${username}/${repoName}`;
       const installationId = resource.installationId;
-      var metadata;
+      let metadata;
       if (installationId) {
         const appAuth = createAppAuth({
           appId: config.GH_APP_ID,

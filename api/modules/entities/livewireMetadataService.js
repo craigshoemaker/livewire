@@ -33,7 +33,7 @@ const _module = {
     const githubApiUrl = getGitHubAPIUrl(url, resource.branch, resource.path);
 
     try {
-      var res;
+      let res;
       if (resource.installationId) {
         const appAuth = createAppAuth({
           appId: config.GH_APP_ID,
