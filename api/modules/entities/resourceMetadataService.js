@@ -14,14 +14,14 @@ const _module = {
 
     if (/extension/.test(PartitionKey)) {
       resource = await getExtensionMetadata(resource);
-    } else {
-      const hasGitHubUrl =
-      patterns.GITHUB.test(resource.githubUrl) ||
-      patterns.GITHUB.test(resource.url);
+    }
 
-      if (hasGitHubUrl) {
-        resource = await getRepositoryMetadata(resource);
-      }
+    const hasGitHubUrl =
+    patterns.GITHUB.test(resource.githubUrl) ||
+    patterns.GITHUB.test(resource.url);
+
+    if (hasGitHubUrl) {
+      resource = await getRepositoryMetadata(resource);
     }
 
     return resource;
