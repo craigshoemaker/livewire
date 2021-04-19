@@ -18,6 +18,7 @@ The following items correspond the the numbers in the above diagram and are the 
 - Clone the repository
 - Make a copy of *local.settings.example.json* and name the file *local.settings.json* and add the appropriate connection string and key values.
 - In the *api* folder, run `npm i` to install dependencies
+  - Set **VUE_APP_API_BASE_URL** environment variable to your function app locally.  Typically `http://localhost:7071/api/`.
 - In the *ui* folder, run `npm i` to install dependencies
 
 ## Running the app
