@@ -42,19 +42,19 @@ export default {
 
       if (filters.categories.length > 0) {
         repositories = repositories.filter((repo) =>
-          repo.categories.includes(...filters.categories),
+          typeof repo.categories !== undefined && repo.categories?.length > 0 && repo.categories.includes(...filters.categories)
         );
       }
 
       if (filters.languages.length > 0) {
-        repositories = repositories.filter((repo) =>
-          repo.languages.includes(...filters.languages),
+        repositories = repositories.filter((repo) => 
+          typeof repo.languages !== undefined && repo.languages?.length > 0 && repo.languages.includes(...filters.languages)
         );
       }
 
       if (filters.technologies.length > 0) {
-        repositories = repositories.filter((repo) =>
-          repo.technologies.includes(...filters.technologies),
+        repositories = repositories.filter((repo) => 
+          typeof repo.technologies !== undefined && repo.technologies?.length > 0 && repo.technologies.includes(...filters.technologies)
         );
       }
 
