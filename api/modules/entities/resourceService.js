@@ -48,9 +48,7 @@ const _module = {
             resource = await resourceMetadataService.getMetadata(resource);
 
             if (isRepo) {
-              const metaValues = await livewireMetadataService.getValues(
-                resource
-              );
+              const metaValues = await livewireMetadataService.getValues(resource);
 
               if (metaValues) {
                 resource.title = metaValues.title;
@@ -138,7 +136,7 @@ const _module = {
     if(/\.json$/.test(url)) {
       // Monorepo URL example:
       //   https://github.com/craigshoemaker/livewire-monorepo/blob/main/src/app1/livewire.config.json
-      const matches = url.match(/(https?:\/\/github.com\/.*?\/.*?)\//);
+      const matches = url.match(/(https?:\/\/github\.com\/.*?\/.*?)\//);
       const [match, urlTrimmed] = matches;
       url = urlTrimmed;
     }
@@ -147,9 +145,13 @@ const _module = {
   },
 
   getPath: (url) => {
-    const matches = url.match(/https?:\/\/github.com\/.*?\/.*?\/blob\/.*?\/(.*)\/livewire\.config\.json/);
-    const [match, path] = matches;
-    return path;
+    if (/\.json$/.test(url)) {
+      const matches = url.match(/https?:\/\/github\.com\/.*?\/.*?\/blob\/.*?\/(.*)\/livewire\.config\.json/);
+      const [match, path] = matches;
+      return path;
+    } else {
+      return null;
+    }
   },
 
   getRowKey: (url) => {
@@ -161,7 +163,7 @@ const _module = {
 
       key = url.replace(patterns.GITHUB, "");
       
-      if(/\.json$/.test(url)) {       
+      if (/\.json$/.test(url)) {
         let matches = key.match(/(.*?)\/(.*?)\/blob\/.*?\/(.*)\/livewire\.config\.json/);
         [match, username, reponame, path] = matches;
         key = `${username}:${reponame}:${path}`;
