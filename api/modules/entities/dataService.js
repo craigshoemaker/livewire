@@ -163,7 +163,7 @@ const _module = {
     const { getDTOValue: getValue, createDTO: create } = _module;
     for (let prop in entity) {
 
-      if(entity[prop] === undefined) {
+      if (typeof entity[prop] === undefined || entity[prop] === null) {
         entity[prop] = '';
       }
 
