@@ -41,21 +41,42 @@ export default {
       let repositories = state.repositories;
 
       if (filters.categories.length > 0) {
-        repositories = repositories.filter((repo) =>
-          repo.categories.includes(...filters.categories),
-        );
+        repositories = repositories.filter((repo) => {
+          if (typeof repo.categories !== undefined) {
+            if (repo.categories?.length > 0) {
+              if (repo.categories.includes(...filters.categories)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        });
       }
 
       if (filters.languages.length > 0) {
-        repositories = repositories.filter((repo) =>
-          repo.languages.includes(...filters.languages),
-        );
+        repositories = repositories.filter((repo) => {
+          if (typeof repo.languages !== undefined) {
+            if (repo.languages?.length > 0) {
+              if (repo.languages.includes(...filters.languages)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        });
       }
 
       if (filters.technologies.length > 0) {
-        repositories = repositories.filter((repo) =>
-          repo.technologies.includes(...filters.technologies),
-        );
+        repositories = repositories.filter((repo) => {
+          if (typeof repo.technologies !== undefined) {
+            if (repo.technologies?.length > 0) {
+              if (repo.technologies.includes(...filters.technologies)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        });
       }
 
       if (filters.searchText.length > 0) {
