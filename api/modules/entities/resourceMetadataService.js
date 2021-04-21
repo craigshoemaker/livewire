@@ -1,7 +1,6 @@
 const axios = require("axios").default;
 const patterns = require("../utils/patterns");
-const config = require("../utils/config");
-const { createAppAuth } = require("@octokit/auth-app");
+const githubApp = require("../utils/github");
 
 const _module = {
   getMetadata: async (resource) => {
@@ -83,19 +82,12 @@ const _module = {
       const installationId = resource.installationId;
       let metadata;
       if (installationId) {
-        const appAuth = createAppAuth({
-          appId: config.GH_APP_ID,
-          privateKey: config.GH_APP_KEY
-        });
-        const instAuth = await appAuth({
-          type: "installation",
-          installationId: installationId
-        });
-        let res = await axios.get(apiUrl, {headers: {'Authorization': `token ${instAuth.token}`,'Accept': 'application/vnd.github.v3+json'}});
-        metadata = res.data;
+        const instToken = await githubApp.getGHInstallationToken(installationId);
+        const { data } = await axios.get(apiUrl, {headers: {'Authorization': `token ${instToken}`,'Accept': 'application/vnd.github.v3+json'}});
+        metadata = data;
       } else {
-        let res = await axios.get(apiUrl);
-        metadata = res.data;
+        const { data } = await axios.get(apiUrl);
+        metadata = data;
       }
       const lastUpdate = metadata.updated_at;
 
