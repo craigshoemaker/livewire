@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@azure/storage-queue": "^12.1.0-preview.1",
+    "@octokit/auth-app": "^3.3.0",
     "axios": "^0.21.1",
     "azure-storage": "^2.10.3",
     "jest": "^26.1.0",
