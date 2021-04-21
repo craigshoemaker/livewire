@@ -42,40 +42,49 @@ export default {
 
       if (filters.categories.length > 0) {
         repositories = repositories.filter((repo) => {
+          let counter = 0;
           if (typeof repo.categories !== undefined) {
             if (repo.categories?.length > 0) {
-              if (repo.categories.includes(...filters.categories)) {
-                return true;
-              }
+              filters.categories.forEach( (filterName) => {
+                if (repo.categories.includes(filterName)) {
+                    counter++;
+                }
+              });
             }
           }
-          return false;
+          return (counter === filters.categories.length);
         });
       }
 
       if (filters.languages.length > 0) {
         repositories = repositories.filter((repo) => {
+          let counter = 0;
           if (typeof repo.languages !== undefined) {
             if (repo.languages?.length > 0) {
-              if (repo.languages.includes(...filters.languages)) {
-                return true;
-              }
+              filters.languages.forEach( (filterName) => {
+                if (repo.languages.includes(filterName)) {
+                  counter++;
+                }
+              });
             }
           }
-          return false;
+          return (counter === filters.languages.length);
         });
       }
 
       if (filters.technologies.length > 0) {
         repositories = repositories.filter((repo) => {
+          let counter = 0;
           if (typeof repo.technologies !== undefined) {
             if (repo.technologies?.length > 0) {
-              if (repo.technologies.includes(...filters.technologies)) {
-                return true;
-              }
+              filters.technologies.forEach( (filterName) => {
+                if (repo.technologies.includes(filterName)) {
+                  counter++;
+                }
+              });
             }
           }
-          return false;
+          return (counter === filters.languages.length);
         });
       }
 
