@@ -17,7 +17,10 @@
         <div class="title">
           <a :href="resource | url" target="_blank">{{ resource.title }}</a>
         </div>
-        <p class="text-gray-700 text-base">
+        <p v-if="resource.description.length > 155" class="text-gray-700 text-base">
+          {{ resource.description.slice(0, 155).trim() }}...
+        </p>
+        <p v-else class="text-gray-700 text-base">
           {{ resource.description }}
         </p>
       </div>
