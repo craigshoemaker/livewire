@@ -15,6 +15,7 @@
           @click="selectFacet($event, name)"
           :id="name"
           :value="name"
+          :checked="isChecked(name)"
         />
         {{ name }}
       </label>
@@ -49,11 +50,20 @@ export default {
         name,
         isAdded: $event.currentTarget.checked,
       });
+      if ($event.currentTarget.checked) {
+        this.checkedOptions.push(name);
+      } else {
+        this.checkedOptions.splice(this.checkedOptions.indexOf(name), 1);
+      }
     },
+    isChecked(name) {
+      return this.checkedOptions.includes(name);
+    }
   },
   data() {
     return {
       filterText: '',
+      checkedOptions: []
     };
   },
 };
