@@ -3,6 +3,7 @@ const patterns = require("../utils/patterns");
 const resourceMetadataService = require("./resourceMetadataService");
 const httpResponses = require("../utils/httpResponses");
 const livewireMetadataService = require("./livewireMetadataService");
+const githubApp = require("../utils/github");
 
 const _module = {
   getChanges: async (resource) => {
@@ -45,6 +46,27 @@ const _module = {
           const isRepo = patterns.GITHUB.test(url);
 
           if (doesNotExist) {
+            if (isRepo) {
+              let ghOrg, ghRepo;
+              ghURL = url.replace(patterns.GITHUB, "");
+      
+              if (/\.json$/.test(url)) {       
+                let matches = ghURL.match(/(.*?)\/(.*?)\/blob\/.*?\/(.*)\/livewire\.config\.json/);
+                [match, ghOrg, ghRepo, path] = matches;
+              } else {
+                let matches = ghURL.match(/(.*)\/(.*)\/?/);
+                [match, ghOrg, ghRepo] = matches;
+              }
+
+              const instId = await githubApp.getGHInstallationID(ghOrg);
+              if (instId !== 0) {
+                const isGHAppInstalledRepo = await githubApp.isGHAppInstalledRepo(instId, ghRepo);
+                if (isGHAppInstalledRepo) {
+                  resource.installationId = instId;
+                }
+              }
+            }
+
             resource = await resourceMetadataService.getMetadata(resource);
 
             if (isRepo) {
