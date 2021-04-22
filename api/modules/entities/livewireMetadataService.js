@@ -1,7 +1,6 @@
 const axios = require("axios").default;
 const CONFIG_FILE_NAME = "livewire.config.json";
-const config = require("../utils/config");
-const { createAppAuth } = require("@octokit/auth-app");
+const githubApp = require("../utils/github");
 
 const _module = {
   getGitHubAPIUrl: (url, branch, path) => {
@@ -35,15 +34,8 @@ const _module = {
     try {
       let res;
       if (resource.installationId) {
-        const appAuth = createAppAuth({
-          appId: config.GH_APP_ID,
-          privateKey: config.GH_APP_KEY
-        });
-        const instAuth = await appAuth({
-          type: "installation",
-          installationId: resource.installationId
-        });
-        res = await axios.get(githubApiUrl, {headers: {'Authorization': `token ${instAuth.token}`,'Accept': 'application/vnd.github.v3+json'}});
+        const instToken = await githubApp.getGHInstallationToken(resource.installationId);
+        res = await axios.get(githubApiUrl, {headers: {'Authorization': `token ${instToken}`,'Accept': 'application/vnd.github.v3+json'}});
       } else {
         res = await axios.get(githubApiUrl);
       }
