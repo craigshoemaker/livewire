@@ -53,8 +53,8 @@ const _module = {
             if (isRepo) {
               let ghOrg, ghRepo;
               ghURL = url.replace(patterns.GITHUB, "");
-      
-              if (/\.json$/.test(url)) {       
+
+              if (/\.json$/.test(url)) {
                 let matches = ghURL.match(/(.*?)\/(.*?)\/blob\/.*?\/(.*)\/livewire\.config\.json/);
                 [match, ghOrg, ghRepo, path] = matches;
               } else {
