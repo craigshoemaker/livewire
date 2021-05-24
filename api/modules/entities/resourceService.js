@@ -5,7 +5,7 @@ const httpResponses = require("../utils/httpResponses");
 const livewireMetadataService = require("./livewireMetadataService");
 const githubApp = require("../utils/github");
 
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.PRODUCTION) {
   require('dotenv').config();
 }
 
