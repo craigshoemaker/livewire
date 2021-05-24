@@ -167,7 +167,7 @@ const _module = {
 
   getUrl: (url) => {
 
-    if(/\.json$/.test(url)) {
+    if (/\.json$/.test(url)) {
       // Monorepo URL example:
       //   https://github.com/craigshoemaker/livewire-monorepo/blob/main/src/app1/livewire.config.json
       const matches = url.match(/(https?:\/\/github\.com\/.*?\/.*?)\//);
@@ -196,7 +196,7 @@ const _module = {
     if (patterns.GITHUB.test(url)) {
 
       key = url.replace(patterns.GITHUB, "");
-      
+
       if (/\.json$/.test(url)) {
         let matches = key.match(/(.*?)\/(.*?)\/blob\/.*?\/(.*)\/livewire\.config\.json/);
         [match, username, reponame, path] = matches;
@@ -206,7 +206,7 @@ const _module = {
         [match, username, reponame] = matches;
         key = `${username}:${reponame}`;
       }
-      
+
       key = key.replace(/\//g, '-');
 
     } else if (patterns.VSCODE_MARKETPLACE.test(url)) {
