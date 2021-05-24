@@ -5,6 +5,10 @@ const httpResponses = require("../utils/httpResponses");
 const livewireMetadataService = require("./livewireMetadataService");
 const githubApp = require("../utils/github");
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const _module = {
   getChanges: async (resource) => {
     try {
