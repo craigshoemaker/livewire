@@ -62,7 +62,15 @@ const _module = {
                 [match, ghOrg, ghRepo] = matches;
               }
 
-              const instId = await githubApp.getGHInstallationID(ghOrg);
+              let instId = 0;
+
+              try {
+                const instId = await githubApp.getGHInstallationID(ghOrg);
+              } catch (ex) {
+                console.log(ex);
+                // TODO: figure out how to not throw errors for repos with no registration
+              }
+
               if (instId !== 0) {
                 const isGHAppInstalledRepo = await githubApp.isGHAppInstalledRepo(instId, ghRepo);
                 if (isGHAppInstalledRepo) {
