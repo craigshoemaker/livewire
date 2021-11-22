@@ -38,7 +38,7 @@ footer {
 }
 
 button.action {
-  background-color: #2ea44f;
+  background-color: #1d6332;
   @apply text-white rounded-md text-sm p-2;
   height: 37px;
 }
