@@ -37,7 +37,7 @@
 
         <div
           v-if="isExtensionWithoutGitHubUrl(resource)"
-          class="italic text-gray-500 mt-10 text-sm"
+          class="italic text-gray-700 mt-10 text-sm"
         >
           No GitHub information available.
         </div>

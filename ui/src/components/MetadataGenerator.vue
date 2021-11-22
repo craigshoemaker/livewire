@@ -1,7 +1,7 @@
 <template>
   <section id="generator">
     <div v-if="!showForm" class="text-center p-5">
-      <button @click="handleShowForm()" class="text-gray-500">
+      <button @click="handleShowForm()" class="text-gray-700">
         Create config file
       </button>
     </div>
@@ -9,7 +9,7 @@
       <div class="generator">
         <div class="text-right">
           <font-awesome-icon
-            class="cursor-pointer text-gray-500"
+            class="cursor-pointer text-gray-700"
             icon="window-close"
             @click="cancel()"
           />

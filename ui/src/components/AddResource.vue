@@ -8,14 +8,14 @@
           class="w-full"
           @focus="stopAutoCancel()"
         />
-        <span class="text-gray-500 text-xs">
+        <span class="text-gray-700 text-xs">
           Enter a GitHub repository, Livewire config file location, or VS Code marketplace URL.
         </span>
       </span>
       <span
         v-if="message.length > 0"
         :class="message.length > 0 ? 'fadeout-5sec-delay' : ''"
-        class="inline-block mt-1 text-gray-500"
+        class="inline-block mt-1 text-gray-700"
         >{{ message }}</span
       >
     </div>

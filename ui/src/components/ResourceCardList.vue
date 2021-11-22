@@ -1,7 +1,7 @@
 <template>
   <div class="sm:px-6 py-4 flex flex-wrap">
     <div
-      class="italic text-xl text-gray-600"
+      class="italic text-xl text-gray-700"
       v-if="!resources || resources.length < 1"
     >
       Loading...
